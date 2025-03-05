@@ -3,7 +3,6 @@ import classNames from "classnames";
 import "./Cylindre.css"
 import { WaveWithLevel } from "../../Wave/Wave.tsx";
 
-
 interface CyclindreProps {WaterLevel : number};
 
 export const Cylindre = ( {WaterLevel} : CyclindreProps  ) : React.JSX.Element => {
