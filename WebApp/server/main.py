@@ -13,6 +13,8 @@ def home():
 def SendWaterLevel():
 
     waterLevel = []
+
+    # Envoyer les données de Tortank
     waterLevel.append(0.25)
     waterLevel.append(0)
     waterLevel.append(0.85) 
