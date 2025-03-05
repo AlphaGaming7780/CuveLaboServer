@@ -10,4 +10,9 @@ def home():
     return app.send_static_file('index.html')
 
 if __name__ == '__main__':
+
+
+    # webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=True, use_reloader=False))
+    # webServerThread.start()
+
     app.run()

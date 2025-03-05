@@ -11,7 +11,7 @@ export function Cuve() : React.JSX.Element {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://api.example.com/data');
+                const response = await fetch('/data');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
