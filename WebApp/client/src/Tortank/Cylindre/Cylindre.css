@@ -1,0 +1,41 @@
+.cylindre{
+	width: 10%;
+	background-color: var(--background-alt); /* rgba(255, 255, 255, 1);*/
+	border-style: solid;
+	border-color: var(--border); /* rgba(231, 231, 231, 1);*/
+	border-width: 0.5rem;
+	border-bottom-width: 0;
+
+  	.graduation {
+		left: 5%;
+		display: none;
+		position: absolute;
+
+	  	&.visible {
+			display: flex;
+			align-items: center;
+			border-radius: 0.25rem;
+			transition-property: top, display;
+			transition-duration: 1s;
+			transition-timing-function: ease-in-out;
+	  	}
+
+
+		.pointer {
+			background-color: var(--selection);;
+			width: 2rem;
+			height: 0.25rem;
+		}
+
+		.panel {
+			width: 3rem;
+			height: 1.5rem;
+			border-radius: 0.25rem;
+			background-color: var(--selection);
+			color: var(--text-main);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

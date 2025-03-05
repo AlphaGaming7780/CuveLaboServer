@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import { Cuve } from './Cuve/Cuve.tsx';
+import { Cuve } from './Tortank/Cuve/Cuve.tsx';
 import { WaterLevelContextProvider } from './API.tsx';
 
 function App() {

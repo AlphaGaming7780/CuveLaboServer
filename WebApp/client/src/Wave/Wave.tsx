@@ -18,32 +18,34 @@ export function Wave() : React.JSX.Element {
     )
 }
 
-
-
-
-function getWaterLevel(level : number) {
+function getWaterLevel( {waterLevel, waveMaxHeight = 0.1} : WaveWithLevelProps) {
     var WaveHeight = 0
     var SeaHeight = 0
 
-    if(level < 0.05) {
-        WaveHeight = level * 2 * 100
+    if(waterLevel < waveMaxHeight / 2) {
+        WaveHeight = waterLevel * 2 * 100
         SeaHeight = 0;
-    } else if (level > 0.95) {
-        WaveHeight = (1 - level) * 2 * 100
+    } else if (waterLevel > 1 - waveMaxHeight / 2) {
+        WaveHeight = (1 - waterLevel) * 2 * 100
         SeaHeight = 100
     } else {
-        WaveHeight = 10
-        SeaHeight = level * 100 - 5
+        WaveHeight = waveMaxHeight * 100
+        SeaHeight = waterLevel * 100 - ( waveMaxHeight / 2 * 100 )
     }
 
     return { WaveHeight, SeaHeight }
 }
 
-export function WaveWithLevel( { waterLevel } : { waterLevel : number} ) : React.JSX.Element {
+export interface WaveWithLevelProps {
+    waterLevel : number;
+    waveMaxHeight? : number;
+}
+
+export function WaveWithLevel( waveWithLevelProps : WaveWithLevelProps ) : React.JSX.Element {
 
     const wave = useMemo( () => <Wave/>, [] )
 
-    const {WaveHeight, SeaHeight} = getWaterLevel(waterLevel)
+    const {WaveHeight, SeaHeight} = getWaterLevel(waveWithLevelProps)
 
     return (
         <div className="waveWithLevel">
