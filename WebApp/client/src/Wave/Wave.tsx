@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./Wave.css"
 
 // https://codepen.io/goodkatz/pen/LYPGxQz?editors=1100
@@ -16,4 +16,41 @@ export function Wave() : React.JSX.Element {
             </g>
         </svg>
     )
-}   
+}
+
+
+
+
+function getWaterLevel(level : number) {
+    var WaveHeight = 0
+    var SeaHeight = 0
+
+    if(level < 0.05) {
+        WaveHeight = level * 2 * 100
+        SeaHeight = 0;
+    } else if (level > 0.95) {
+        WaveHeight = (1 - level) * 2 * 100
+        SeaHeight = 100
+    } else {
+        WaveHeight = 10
+        SeaHeight = level * 100 - 5
+    }
+
+    return { WaveHeight, SeaHeight }
+}
+
+export function WaveWithLevel( { waterLevel } : { waterLevel : number} ) : React.JSX.Element {
+
+    const wave = useMemo( () => <Wave/>, [] )
+
+    const {WaveHeight, SeaHeight} = getWaterLevel(waterLevel)
+
+    return (
+        <div className="waveWithLevel">
+            <div className="wave-container" style={{height:`${WaveHeight}%`}}>
+                {wave}
+            </div>
+            <div className="sea" style={{backgroundColor:"rgba(0, 132, 255, 1)", height:`${SeaHeight}%`, width:"100%"} } />     
+        </div>
+    )
+}

@@ -1,16 +1,44 @@
+import React,{ createContext, useMemo, useState } from "react";
 
 
-export async function getWaterLevel() : Promise<Number[]> {
+// Create a Context
+export const WaterLevelContext = createContext([0, 0, 0]);
 
-    var value : Number[] = []
+
+
+export const WaterLevelContextProvider = ({ children }) => {
+    
+    const [state, setState] = useState([0, 0, 0]);
+
+    useMemo( () => {
+        var valueOld : number[] = [0, 0, 0]
+        setInterval( function() {
+            getWaterLevel().then( (value) => { if(value !== valueOld) {
+                valueOld = value;
+                setState(value)
+            } } );
+        }, 1000 )
+     }, [] )
+  
+    return (
+      <WaterLevelContext.Provider value={ state }>
+        {children}
+      </WaterLevelContext.Provider>
+    );
+};
+
+
+
+export async function getWaterLevel() : Promise<number[]> {
+
+    var value : number[] = []
 
     try {
         const response = await fetch('/GetWaterLevel');
         if (!response.ok) {
             throw new Error(`Bad server response : ${response.statusText}`);
         }
-        const data = await response.json();
-        console.log(data);
+        const data : number[] = await response.json();
         value = data;
     } catch (error) {
         throw new Error("Something went wrong in getWaterLevel().")

@@ -9,15 +9,15 @@ app = Flask(__name__, static_url_path='') ## Changer le __name__ en un vrais nom
 def home():
     return app.send_static_file('index.html')
 
-@app.route('/GetWaterlevel', methods=["GET"])
+@app.route('/GetWaterLevel', methods=["GET"])
 def SendWaterLevel():
 
     waterLevel = []
 
     # Envoyer les données de Tortank
-    waterLevel.append(0.25)
-    waterLevel.append(0)
-    waterLevel.append(0.85) 
+    waterLevel.append(0.5)
+    waterLevel.append(0.05)
+    waterLevel.append(0.975)
     
     rep = jsonify(waterLevel)
     rep.status_code = 200
