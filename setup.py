@@ -17,7 +17,7 @@ setup(
     entry_points={
         'console_scripts': 
         [
-            'TortankWebServer=TortankWebServer.__main__:start' 
+            'TortankWebServer=TortankWebServer.__main__:main' 
         ] 
     }
 )

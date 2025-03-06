@@ -1,6 +1,3 @@
-# Tuto : Flask with React
-# https://nitratine.net/blog/post/how-to-serve-a-react-app-from-a-python-server/ 
-
 import threading
 from flask import Flask, jsonify, render_template, request
 from TortankLib.Tortank import Tortank
@@ -30,7 +27,7 @@ def SendWaterLevel():
     rep.status_code = 200
     return rep
 
-if __name__ == '__main__':
+def main():
     webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=True, use_reloader=False))
     # webServerThread = threading.Thread(target=lambda: app.run(debug=True, use_reloader=False))
     webServerThread.start()
@@ -44,3 +41,6 @@ if __name__ == '__main__':
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
         pass
+
+if __name__ == "__main__":
+    main()
