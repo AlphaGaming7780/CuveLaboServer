@@ -162,7 +162,7 @@ class ADS1115 :
 	# @see ADS1115_MUX.P2_NG
 	# @see ADS1115_MUX.P3_NG
 
-	def getConversion(self, triggerAndPoll : bool) -> int :
+	def getConversion(self, triggerAndPoll : bool = True) -> int :
 		if (triggerAndPoll & self.devMode == ADS1115_MODE.SINGLESHOT) :
 			self.triggerConversion()
 			self.pollConversion(I2CDEV_DEFAULT_READ_TIMEOUT) 
