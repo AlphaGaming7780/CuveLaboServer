@@ -1,8 +1,8 @@
 import threading
 from flask import Flask, jsonify, render_template, request
-# from TortankLib.Tortank import Tortank
+from TortankWebServer.TortankLib.Tortank import Tortank
 
-# tortank : Tortank = Tortank()
+tortank : Tortank = Tortank()
 app = Flask(__name__, static_url_path='') ## Changer le __name__ en un vrais nom ?
 
 @app.route('/')
@@ -15,13 +15,13 @@ def SendWaterLevel():
     waterLevel = []
 
     # Envoyer les données de Tortank
-    # waterLevel.append(tortank.GetWaterLevelCuve1())
-    # waterLevel.append(tortank.GetWaterLevelCuve2())
-    # waterLevel.append(tortank.GetWaterLevelCuve3())
+    waterLevel.append(tortank.GetWaterLevelCuve1())
+    waterLevel.append(tortank.GetWaterLevelCuve2())
+    waterLevel.append(tortank.GetWaterLevelCuve3())
 
-    waterLevel.append(0.5)
-    waterLevel.append(0.05)
-    waterLevel.append(0.975)
+    # waterLevel.append(0.5)
+    # waterLevel.append(0.05)
+    # waterLevel.append(0.975)
     
     rep = jsonify(waterLevel)
     rep.status_code = 200
@@ -33,14 +33,14 @@ def main():
     webServerThread.start()
     # app.run(use_reloader=True)
 
-    # while(True):
+    while(True):
 
-    #     waterLevel = tortank.GetHeigestWaterLevel()
+        waterLevel = tortank.GetHeigestWaterLevel()
 
-    #     if(waterLevel >= tortank.TORTANK_WATER_LEVEL_MAX) :
-    #         tortank.SetMotor1Speed(0)
-    #         tortank.SetMotor2Speed(0)
-    #     pass
+        if(waterLevel >= tortank.TORTANK_WATER_LEVEL_MAX) :
+            tortank.SetMotor1Speed(0)
+            tortank.SetMotor2Speed(0)
+        pass
 
 if __name__ == "__main__":
     main()

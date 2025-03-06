@@ -13,7 +13,7 @@ setup(
         'smbus2',
         'gpiozero'
     ],
-    packages=['TortankWebServer', 'TortankLib', 'static'],
+    packages=['TortankWebServer'],
     entry_points={
         'console_scripts': 
         [
