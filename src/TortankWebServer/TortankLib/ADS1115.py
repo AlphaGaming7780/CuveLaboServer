@@ -112,10 +112,10 @@ class ADS1115 :
 		self.setMultiplexer(ADS1115_MUX.P0_N1)
 		self.setGain(ADS1115_PGA.ADS1115_PGA_2P048)
 		self.setRate(ADS1115_RATE.RATE_128)
-		# self.setComparatorMode(ADS1115_COMP_MODE.HYSTERESIS)
-		# self.setComparatorPolarity(ADS1115_COMP_POL_ACTIVE.LOW)
-		# self.setComparatorLatchEnabled(ADS1115_COMP_LAT.NON_LATCHING)
-		# self.setComparatorQueueMode(ADS1115_COMP_QUE.DISABLE)
+		self.setComparatorMode(ADS1115_COMP_MODE.HYSTERESIS)
+		self.setComparatorPolarity(ADS1115_COMP_POL_ACTIVE.LOW)
+		self.setComparatorLatchEnabled(ADS1115_COMP_LAT.NON_LATCHING)
+		self.setComparatorQueueMode(ADS1115_COMP_QUE.DISABLE)
 
 	def testConnection(self) -> bool :
 		return self.i2c.read16(ADS1115_RA.CONVERSION.value) > 0
