@@ -1,5 +1,6 @@
 from enum import Enum
 from TortankWebServer.TortankLib.I2C import I2C
+import time
 
 ADS1115_ADDRESS_ADDR_GND	= 0x48 # address pin low (GND)
 ADS1115_ADDRESS_ADDR_VDD	= 0x49 # address pin high (VCC)
@@ -120,10 +121,18 @@ class ADS1115 :
 		return self.i2c.read16(ADS1115_RA.CONVERSION.value) > 0
 	
 	def pollConversion(self, max_retries : int) -> bool : 
-		for x in range(max_retries) : 
-			if (self.isConversionReady()) :
-				return True
-		return False
+
+		while(not self.isConversionReady()):
+			max_retries = max_retries - 1
+			if(max_retries <= 0) : return False
+			time.sleep(0.001)
+
+		return True
+
+		# for x in range(max_retries) : 
+		# 	if (self.isConversionReady()) :
+		# 		return True
+		# return False
 	
 	# Read differential value based on current MUX configuration.
 	# The default MUX setting sets the device to get the differential between the
