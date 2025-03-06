@@ -163,7 +163,7 @@ class ADS1115 :
 	# @see ADS1115_MUX.P3_NG
 
 	def getConversion(self, triggerAndPoll : bool = True) -> int :
-		if (triggerAndPoll & self.devMode == ADS1115_MODE.SINGLESHOT) :
+		if (triggerAndPoll and self.devMode == ADS1115_MODE.SINGLESHOT) :
 			self.triggerConversion()
 			self.pollConversion(I2CDEV_DEFAULT_READ_TIMEOUT) 
 		return self.i2c.read16(ADS1115_RA.CONVERSION.value)
@@ -282,7 +282,7 @@ class ADS1115 :
 			return (self.getConversion(triggerAndPoll) * ADS1115_MV.MV_1P024)
 		elif(self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P512) :
 			return (self.getConversion(triggerAndPoll) * ADS1115_MV.MV_0P512)
-		elif(self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256 | self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256B | self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256C) :
+		elif(self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256 or self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256B or self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256C) :
 			return (self.getConversion(triggerAndPoll) * ADS1115_MV.MV_0P256)
 
 	# Return the current multiplier for the PGA setting.
@@ -304,7 +304,7 @@ class ADS1115 :
 			return ADS1115_MV.MV_1P024
 		elif(self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P512) :
 			return ADS1115_MV.MV_0P512
-		elif(self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256 | self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256B | self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256C) :
+		elif(self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256 or self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256B or self.pgaMode == ADS1115_PGA.ADS1115_PGA_0P256C) :
 			return ADS1115_MV.MV_0P256
 		
 	# CONFIG register

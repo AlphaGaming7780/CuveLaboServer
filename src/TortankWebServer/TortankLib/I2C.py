@@ -48,8 +48,6 @@ class I2C :
 
         read = self.read8(reg)
 
-        print(f"writeBits start : {read}, value : {value}, startbit : {startBit}, size : {size}")
-
         mask = 0
 
         for i in range(size):
@@ -57,21 +55,15 @@ class I2C :
 
         mask = ( ~( mask << startBit ) ) & 0b11111111
 
-        print(f"mask : {mask} ")
-
         read = read & mask
 
         read += ( value << startBit )
-
-        print(f"writeBits end : {read}")
 
         self.write8(reg, read)
 
     def read16(self, reg : bytes) -> int :
         data1 = self.read8(reg)
         data2 = self.read8(reg + 1)
-        print(f"data1 : {data1}")
-        print(f"data2 : {data2}")
         return ( (data1 << 8 ) | data2 )
     
     def readBitsW(self, reg : bytes, startBit : int, size : int) -> int:
@@ -109,8 +101,6 @@ class I2C :
 
         read = self.read16(reg)
 
-        print(f"writeBits start : {read}, value : {value}, startbit : {startBit}, size : {size}")
-
         mask = 0
 
         for i in range(size):
@@ -118,12 +108,8 @@ class I2C :
 
         mask = ( ~( mask << startBit ) ) & 0b11111111
 
-        print(f"mask : {mask} ")
-
         read = read & mask
 
         read += ( value << startBit )
-
-        print(f"writeBits end : {read}")
 
         self.write16(reg, read)
