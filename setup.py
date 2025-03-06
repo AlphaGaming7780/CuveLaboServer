@@ -9,7 +9,7 @@ setup(name="Tortank WebServer",
     url='https://github.com/matiascodesal/git-for-pip-example',
     install_requires=[
         'Flask',
-        'threading',
+        # 'threading',
         # 'enum',
         'smbus2',
         'gpiozero'
