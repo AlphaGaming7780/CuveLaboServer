@@ -14,19 +14,23 @@ def SendWaterLevel():
 
     waterLevel = []
 
-    v1 = tortank.GetWaterLevelCuve1()
-    v2 = tortank.GetWaterLevelCuve1()
-    v3 = tortank.GetWaterLevelCuve1()
+    # v1 = tortank.GetWaterLevelCuve1()
+    # v2 = tortank.GetWaterLevelCuve1()
+    # v3 = tortank.GetWaterLevelCuve1()
 
-    print(f"Value start : {[v1, v2, v3]}")
+    # print(f"Value start : {[v1, v2, v3]}")
 
-    # Envoyer les données de Tortank
-    waterLevel.append(tortank.GetWaterLevelCuve1() / 32768 / 4.096)
-    waterLevel.append(tortank.GetWaterLevelCuve2() / 32768 / 4.096)
-    waterLevel.append(tortank.GetWaterLevelCuve3() / 32768 / 4.096)
+    # # Envoyer les données de Tortank
+    # waterLevel.append(tortank.GetWaterLevelCuve1() / 32768 / 4.096)
+    # waterLevel.append(tortank.GetWaterLevelCuve2() / 32768 / 4.096)
+    # waterLevel.append(tortank.GetWaterLevelCuve3() / 32768 / 4.096)
 
+    # print(f"Value end : {waterLevel}")
+
+    waterLevel.append(tortank.GetWaterLevelCuve1() / 4.096)
+    waterLevel.append(tortank.GetWaterLevelCuve2() / 4.096)
+    waterLevel.append(tortank.GetWaterLevelCuve3() / 4.096)
     print(f"Value end : {waterLevel}")
-
     # waterLevel.append(0.5)
     # waterLevel.append(0.05)
     # waterLevel.append(0.975)
@@ -45,7 +49,7 @@ def main():
 
     while(True):
 
-        waterLevel = tortank.GetHeigestWaterLevel() / 32767 / 4.096
+        waterLevel = tortank.GetHeigestWaterLevel() / 4.096
 
         if(waterLevel >= tortank.TORTANK_WATER_LEVEL_MAX) :
             tortank.SetMotor1Speed(0)

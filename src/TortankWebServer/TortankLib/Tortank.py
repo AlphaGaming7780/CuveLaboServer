@@ -1,5 +1,6 @@
 from gpiozero import Motor
-from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
+# from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
+from TortankWebServer.TortankLib.bad_ADS1115 import ADS1115
 
 class Tortank(object):
     
@@ -17,8 +18,8 @@ class Tortank(object):
         self._motor1 = Motor(17, 27)
         self._motor2 = Motor(23, 24)
         self.ads = ADS1115()
-        self.ads.setMode(ADS1115_MODE.SINGLESHOT)
-        self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
+        # self.ads.setMode(ADS1115_MODE.SINGLESHOT)
+        # self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
         pass
     
     def SetMotor1Speed(self, speed : int):
@@ -55,6 +56,7 @@ class Tortank(object):
 
     def GetWaterLevelCuve1(self) -> int:
         return self.ads.getConversionP0GND()
+        return 
     
     def GetWaterLevelCuve2(self) -> int:
         return self.ads.getConversionP1GND()
