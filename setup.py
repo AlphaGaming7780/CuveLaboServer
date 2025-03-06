@@ -1,4 +1,4 @@
-from distutils.core import setup, find_packages
+from distutils.core import setup
 
 setup(name="Tortank WebServer",
     version="0.1.0",
