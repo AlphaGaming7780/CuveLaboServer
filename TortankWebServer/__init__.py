@@ -1,2 +1,1 @@
-
-print("__init__")
+from . import *
