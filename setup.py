@@ -14,5 +14,5 @@ setup(
         'gpiozero'
     ],
     packages=['TortankWebServer'],
-    entry_points={ 'console_scripts': ['TortankWebServer = TortankWebServer.__main__' ] }
+    entry_points={ 'console_scripts': ['TortankWebServer = TortankWebServer.__main__::start' ] }
 )
