@@ -95,14 +95,14 @@ class ADS1115 :
 	def __init__(self, device_adress = ADS1115_DEFAULT_ADDRESS):
 		self.devAddr = device_adress
 		self.i2c = I2C(device_adress)
-		# setMultiplexer(ADS1115_MUX_P0_N1)
-		# setGain(ADS1115_PGA_2P048)
-		# setMode(ADS1115_MODE_SINGLESHOT)
-		# setRate(ADS1115_RATE_128)
-		# setComparatorMode(ADS1115_COMP_MODE_HYSTERESIS)
-		# setComparatorPolarity(ADS1115_COMP_POL_ACTIVE_LOW)
-		# setComparatorLatchEnabled(ADS1115_COMP_LAT_NON_LATCHING)
-		# setComparatorQueueMode(ADS1115_COMP_QUE_DISABLE)
+		self.setMultiplexer(ADS1115_MUX_P0_N1)
+		self.setGain(ADS1115_PGA_2P048)
+		self.setMode(ADS1115_MODE_SINGLESHOT)
+		self.setRate(ADS1115_RATE_128)
+		self.setComparatorMode(ADS1115_COMP_MODE_HYSTERESIS)
+		self.setComparatorPolarity(ADS1115_COMP_POL_ACTIVE_LOW)
+		self.setComparatorLatchEnabled(ADS1115_COMP_LAT_NON_LATCHING)
+		self.setComparatorQueueMode(ADS1115_COMP_QUE_DISABLE)
 
 	def testConnection(self) -> bool :
 		return self.i2c.read16(ADS1115_RA_CONVERSION) > 0
