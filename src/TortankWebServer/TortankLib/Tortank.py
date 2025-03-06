@@ -1,5 +1,5 @@
 from gpiozero import Motor
-from ADS1115 import ADS1115, ADS1115_MODE
+from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE
 
 class Tortank(object):
     
