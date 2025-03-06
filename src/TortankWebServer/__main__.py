@@ -5,36 +5,14 @@ from TortankWebServer.TortankLib.Tortank import Tortank
 tortank : Tortank = Tortank()
 app = Flask(__name__, static_url_path='') ## Changer le __name__ en un vrais nom ?
 
+waterLevel = [0, 0, 0]
+
 @app.route('/')
 def home():
     return app.send_static_file('index.html')
 
 @app.route('/GetWaterLevel', methods=["GET"])
 def SendWaterLevel():
-
-    waterLevel = []
-
-    # v1 = tortank.GetWaterLevelCuve1()
-    # v2 = tortank.GetWaterLevelCuve1()
-    # v3 = tortank.GetWaterLevelCuve1()
-
-    # print(f"Value start : {[v1, v2, v3]}")
-
-    # # Envoyer les données de Tortank
-    # waterLevel.append(tortank.GetWaterLevelCuve1() / 32768 / 4.096)
-    # waterLevel.append(tortank.GetWaterLevelCuve2() / 32768 / 4.096)
-    # waterLevel.append(tortank.GetWaterLevelCuve3() / 32768 / 4.096)
-
-    # print(f"Value end : {waterLevel}")
-
-    waterLevel.append(tortank.GetWaterLevelCuve1() / 4.096)
-    waterLevel.append(tortank.GetWaterLevelCuve2() / 4.096)
-    waterLevel.append(tortank.GetWaterLevelCuve3() / 4.096)
-    print(f"Value end : {waterLevel}")
-    # waterLevel.append(0.5)
-    # waterLevel.append(0.05)
-    # waterLevel.append(0.975)
-    
     rep = jsonify(waterLevel)
     rep.status_code = 200
     return rep
@@ -49,9 +27,13 @@ def main():
 
     while(True):
 
-        waterLevel = tortank.GetHeigestWaterLevel() / 4.096
+        waterLevel[0] = tortank.GetWaterLevelCuve1() / 32768 / 4.096
+        waterLevel[1] = tortank.GetWaterLevelCuve2() / 32768 / 4.096
+        waterLevel[2] = tortank.GetWaterLevelCuve3() / 32768 / 4.096
 
-        if(waterLevel >= tortank.TORTANK_WATER_LEVEL_MAX) :
+        waterLevelMax = max(waterLevel)
+
+        if(waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX) :
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
         pass
