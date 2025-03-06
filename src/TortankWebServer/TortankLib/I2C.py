@@ -92,7 +92,7 @@ class I2C :
         return ( (v & mask) > 0 )
     
     def write16(self, reg : bytes, val : int) -> int :
-        return bus.write_workd_data(self.device_addr, reg, val)
+        return bus.write_word_data(self.device_addr, reg, val)
     
     def writeBitW(self, reg : bytes, bit : int, value : bool):
         v = self.read16(reg)
