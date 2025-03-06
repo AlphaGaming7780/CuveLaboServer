@@ -2,8 +2,8 @@
 from .TortankWebServer.server import main
 
 def start():
+    print("__main__")
     main()
 
 if __name__ == "__main__":
-    print("__main__")
     start()
