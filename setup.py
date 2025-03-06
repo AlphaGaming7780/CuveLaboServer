@@ -27,5 +27,5 @@ setup(
             'TortankWebServer=TortankWebServer.__main__:main' 
         ] 
     },
-    include_dirs=["static"],
+    # include_dirs=["static"],
 )
