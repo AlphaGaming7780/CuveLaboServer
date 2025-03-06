@@ -10,7 +10,7 @@ setup(name="Tortank WebServer",
     install_requires=[
         'Flask',
         'threading',
-        'Enum',
+        # 'enum',
         'smbus2',
         'gpiozero'
         # Add other dependencies here
