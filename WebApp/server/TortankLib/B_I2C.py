@@ -2,7 +2,7 @@
 
 from types import *
 
-import smbus2, time
+import smbus2
 
 bus = smbus2.SMBus(1)
 
