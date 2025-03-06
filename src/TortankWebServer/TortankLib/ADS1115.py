@@ -352,7 +352,7 @@ class ADS1115 :
 
 	def setMultiplexer(self, mux : ADS1115_MUX) :
 		# if (I2Cdev::writeBitsW(devAddr, ADS1115_RA.CONFIG, ADS1115_CFG.MUX_BIT, ADS1115_CFG.MUX_LENGTH, mux)) {
-		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.MUX_BIT, ADS1115_CFG.MUX_LENGTH, mux)
+		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.MUX_BIT, ADS1115_CFG.MUX_LENGTH, mux.value)
 		self.muxMode = mux
 		if (self.devMode == ADS1115_MODE.CONTINUOUS) :
         #  Force a stop/start
@@ -386,7 +386,7 @@ class ADS1115 :
 	# @see ADS1115_CFG.PGA_LENGTH
 
 	def setGain(self, gain : ADS1115_CFG) :
-		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.PGA_BIT, ADS1115_CFG.PGA_LENGTH, gain)
+		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.PGA_BIT, ADS1115_CFG.PGA_LENGTH, gain.value)
 		self.pgaMode = gain
 		if (self.devMode == ADS1115_MODE.CONTINUOUS) :
             # Force a stop/start
@@ -413,7 +413,7 @@ class ADS1115 :
 	# @see ADS1115_CFG.MODE_BIT
 
 	def setMode(self, mode : ADS1115_MODE) :
-		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.MODE_BIT, mode)
+		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.MODE_BIT, mode.value)
 		self.devMode = mode
 
 	#  Get data rate.
@@ -440,7 +440,7 @@ class ADS1115 :
 	# @see ADS1115_CFG.DR_LENGTH
 
 	def setRate(self, rate : ADS1115_RATE) :
-		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.DR_BIT, ADS1115_CFG.DR_LENGTH, rate)
+		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.DR_BIT, ADS1115_CFG.DR_LENGTH, rate.value)
 
 	# Get comparator mode.
 	# @return Current comparator mode
@@ -460,7 +460,7 @@ class ADS1115 :
 	# @see ADS1115_CFG.COMP_MODE_BIT
 
 	def setComparatorMode(self, mode : ADS1115_COMP_MODE) :
-		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_MODE_BIT, mode)
+		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_MODE_BIT, mode.value)
 
 	# Get comparator polarity setting.
 	# @return Current comparator polarity setting
@@ -480,7 +480,7 @@ class ADS1115 :
 	# @see ADS1115_CFG.COMP_POL_BIT
 
 	def setComparatorPolarity(self, polarity : ADS1115_COMP_POL_ACTIVE) :
-		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_POL_BIT, polarity)
+		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_POL_BIT, polarity.value)
 
 	# Get comparator latch enabled value.
 	# @return Current comparator latch enabled value
@@ -500,7 +500,7 @@ class ADS1115 :
 	# @see ADS1115_CFG.COMP_LAT_BIT
 
 	def setComparatorLatchEnabled(self, enabled : ADS1115_COMP_LAT) :
-		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_LAT_BIT, enabled)
+		self.i2c.writeBitW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_LAT_BIT, enabled.value)
 
 	# Get comparator queue mode.
 	# @return Current comparator queue mode
@@ -513,14 +513,14 @@ class ADS1115 :
 	# @see ADS1115_CFG.COMP_QUE_LENGTH
 
 	def getComparatorQueueMode(self) -> ADS1115_COMP_QUE :
-		return self.i2c.readBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_QUE_BIT, ADS1115_CFG.COMP_QUE_LENGTH)
+		return ADS1115_COMP_QUE(self.i2c.readBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_QUE_BIT, ADS1115_CFG.COMP_QUE_LENGTH))
 
 	def setComparatorQueueMode(self, mode : ADS1115_COMP_QUE) :
 		"""
 		Set comparator queue mode.\n
 		`@param` mode New comparator queue mode\n
 		"""
-		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_QUE_BIT, ADS1115_CFG.COMP_QUE_LENGTH, mode)
+		self.i2c.writeBitsW(ADS1115_RA.CONFIG, ADS1115_CFG.COMP_QUE_BIT, ADS1115_CFG.COMP_QUE_LENGTH, mode.value)
 
 
 	# *_THRESH registers
