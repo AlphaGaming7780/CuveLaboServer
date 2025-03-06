@@ -9,8 +9,8 @@ class Tortank(object):
     _motor2Speed : int
 
     def __init__(self):
-        self._motor1 = Motor()
-        self._motor2 = Motor()
+        self._motor1 = Motor(17, 27)
+        self._motor2 = Motor(23, 24)
         pass
     
     def SetMotor1Speed(self, speed : int):
