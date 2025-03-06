@@ -2,7 +2,7 @@ var path = require('path');
 const fs = require("fs");
 
 const targetSource = './build'; // Relative path to copy files from
-const targetDestination = '../server/static'; // Relative path to copy files to
+const targetDestination = '../TortankWebServer/static'; // Relative path to copy files to
 
 /**
  * Remove directory recursively
