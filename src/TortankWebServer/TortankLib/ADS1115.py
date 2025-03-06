@@ -1,5 +1,5 @@
 from enum import Enum
-from src.TortankWebServer.TortankLib.I2C import I2C
+from TortankWebServer.TortankLib.I2C import I2C
 
 ADS1115_ADDRESS_ADDR_GND	= 0x48 # address pin low (GND)
 ADS1115_ADDRESS_ADDR_VDD	= 0x49 # address pin high (VCC)
