@@ -107,9 +107,9 @@ class ADS1115 :
 	def __init__(self, device_adress = ADS1115_DEFAULT_ADDRESS):
 		self.devAddr = device_adress
 		self.i2c = I2C(device_adress)
+		self.setMode(ADS1115_MODE.SINGLESHOT)
 		self.setMultiplexer(ADS1115_MUX.P0_N1)
 		self.setGain(ADS1115_PGA.ADS1115_PGA_2P048)
-		self.setMode(ADS1115_MODE.CONTINUOUS)
 		self.setRate(ADS1115_RATE.RATE_128)
 		self.setComparatorMode(ADS1115_COMP_MODE.HYSTERESIS)
 		self.setComparatorPolarity(ADS1115_COMP_POL_ACTIVE.LOW)
