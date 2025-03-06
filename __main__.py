@@ -1,5 +1,5 @@
 # my_package/main.py
-from .server import main
+from .TortankWebServer.server import main
 
 def start():
     main()
