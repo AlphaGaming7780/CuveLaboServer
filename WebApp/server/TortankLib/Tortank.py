@@ -1,4 +1,5 @@
 from gpiozero import Motor
+from ADS1115 import ADS1115, ADS1115_MODE
 
 class Tortank(object):
     
@@ -9,10 +10,14 @@ class Tortank(object):
 
     _motor1Speed : int
     _motor2Speed : int
+    
+    ads : ADS1115
 
     def __init__(self):
-        self._motor1 = Motor(16, 17)
+        self._motor1 = Motor(17, 27)
         self._motor2 = Motor(23, 24)
+        self.ads = ADS1115()
+        self.ads.setMode(ADS1115_MODE.CONTINUOUS)
         pass
     
     def SetMotor1Speed(self, speed : int):
@@ -48,13 +53,13 @@ class Tortank(object):
         return self._motor2Speed
 
     def GetWaterLevelCuve1(self) -> int:
-        return 0.5
+        return self.ads.getConversionP0GND()
     
     def GetWaterLevelCuve2(self) -> int:
-        return 0.025
+        return self.ads.getConversionP1GND()
     
     def GetWaterLevelCuve3(self) -> int:
-        return 0.975
+        return self.ads.getConversionP2GND()
     
     def GetHeigestWaterLevel(self) -> int:
 
