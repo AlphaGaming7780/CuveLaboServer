@@ -1,19 +1,18 @@
 from distutils.core import setup
 
-setup(name="Tortank WebServer",
+setup(
+    name="TortankWebServer",
     version="0.1.0",
     description="An example package for showing how to pip install from a git repo",
     license='MIT',
-    author="Matias Codesal",
+    author="Triton Supreme",
     authoer_email="matias.codesal@gmail.com",
-    url='https://github.com/matiascodesal/git-for-pip-example',
+    url='https://github.com/AlphaGaming7780/TortankWebServer',
     install_requires=[
         'Flask',
-        # 'threading',
-        # 'enum',
         'smbus2',
         'gpiozero'
-        # Add other dependencies here
     ],
-    packages=['TortankWebServer']
+    packages=['TortankWebServer'],
+    entry_points={ 'console_scripts': ['TortankWebServer = TortankWebServer.__main__' ] }
 )

@@ -31,8 +31,6 @@ def SendWaterLevel():
     return rep
 
 if __name__ == '__main__':
-
-
     webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=True, use_reloader=False))
     # webServerThread = threading.Thread(target=lambda: app.run(debug=True, use_reloader=False))
     webServerThread.start()
