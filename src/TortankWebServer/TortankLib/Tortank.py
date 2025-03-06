@@ -1,5 +1,5 @@
 from gpiozero import Motor
-from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE
+from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
 
 class Tortank(object):
     
@@ -17,7 +17,8 @@ class Tortank(object):
         self._motor1 = Motor(17, 27)
         self._motor2 = Motor(23, 24)
         self.ads = ADS1115()
-        self.ads.setMode(ADS1115_MODE.CONTINUOUS)
+        self.ads.setMode(ADS1115_MODE.SINGLESHOT)
+        self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
         pass
     
     def SetMotor1Speed(self, speed : int):
