@@ -7,5 +7,5 @@ setup(name="Tortank WebServer",
       author="Matias Codesal",
       authoer_email="matias.codesal@gmail.com",
       url='https://github.com/matiascodesal/git-for-pip-example',
-      packages=['flask', 'threading', 'enum', 'smbus2', 'gpiozero']
+      packages=['Flask', 'threading', 'Enum', 'smbus2', 'gpiozero']
 )
