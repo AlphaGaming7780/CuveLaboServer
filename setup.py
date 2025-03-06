@@ -14,6 +14,6 @@ setup(name="Tortank WebServer",
         'smbus2',
         'gpiozero'
         # Add other dependencies here
-    ]
-    # packages=find_packages()
+    ],
+    packages=['TortankWebServer']
 )
