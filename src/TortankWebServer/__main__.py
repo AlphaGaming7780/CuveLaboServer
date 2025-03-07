@@ -31,6 +31,8 @@ def main():
         waterLevel[1] = tortank.GetWaterLevelCuve2() / 32768 / 4.096
         waterLevel[2] = tortank.GetWaterLevelCuve3() / 32768 / 4.096
 
+        print(waterLevel)
+
         waterLevelMax = max(waterLevel)
 
         if(waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX) :
