@@ -99,11 +99,11 @@ const data : ChartData<"line">  = {
 
 function AddValueToDataSet(WaterLevel : number[], MotorSpeed : number[]) {
 	data.labels?.push(new Date().toLocaleTimeString())
-	data.datasets[0].data.push(WaterLevel[0])
-	data.datasets[1].data.push(WaterLevel[1])
-	data.datasets[2].data.push(WaterLevel[2])
-	data.datasets[3].data.push(MotorSpeed[0])
-	data.datasets[4].data.push(MotorSpeed[1])
+	data.datasets[0].data.push(WaterLevel[0] * 100)
+	data.datasets[1].data.push(WaterLevel[1] * 100)
+	data.datasets[2].data.push(WaterLevel[2] * 100)
+	data.datasets[3].data.push(MotorSpeed[0] * 100)
+	data.datasets[4].data.push(MotorSpeed[1] * 100)
 }
 
 export function Graph() : React.JSX.Element {
@@ -125,12 +125,13 @@ export function Graph() : React.JSX.Element {
 
 	useEffect( () => {
 
-	},  )
+		AddValueToDataSet(WaterLevel, MotorSpeed)
+		if(ref.current == null) return
+		ref.current.data = data
+		ref.current.update()
+		console.log(ref.current.data)
 
-
-	AddValueToDataSet(WaterLevel, MotorSpeed)
-
-	console.log(data)
+	}, [WaterLevel, MotorSpeed, ref]  )
 
     return (
         <Line ref={ref} options={options} data={data} />
