@@ -1,5 +1,6 @@
 # from types import *
 from smbus2 import SMBus
+import time
 
 class I2C : 
 
@@ -82,8 +83,11 @@ class I2C :
         # return ( (v & mask) > 0 )
 
     def writeBitW(self, reg : int, bit : int, value : bool) -> None:
+        time.sleep(1)
         v = self.read16(reg)
+        print(f"writeBitW v1 : {v}")
         v = (v | (1 << bit)) if value else (v & ~(1 << bit))
+        print(f"writeBitW v2 : {v}")
         self.write16(reg, v)
         # if(value) : 
         #     v |= (1 << bit)
