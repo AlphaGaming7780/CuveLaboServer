@@ -13,8 +13,7 @@ import {
 	ChartType
   } from 'chart.js';
 import { Line, ChartJSOrUndefined } from 'react-chartjs-2';
-import { MotorSpeedContext } from "../API/MotorSpeed.tsx";
-import { WaterLevelContext } from "../API/WaterLevel.tsx";
+import { UpdatedValueContext } from "../API/UpdatedValue.tsx";
 
 const options : ChartOptions<"line"> = {
     responsive: true,
@@ -120,8 +119,7 @@ export function Graph() : React.JSX.Element {
 
 	const ref = useRef<ChartJSOrUndefined<"line">>(null)
 
-	const WaterLevel = useContext(MotorSpeedContext)
-	const MotorSpeed = useContext(WaterLevelContext)
+	const { WaterLevel, MotorSpeed } = useContext(UpdatedValueContext)
 
 	useEffect( () => {
 

@@ -1,8 +1,8 @@
 import React, {useContext, useMemo} from "react";
 import "./Cuve.css"
 import { WaveWithLevel } from "../../Wave/Wave.tsx";
-import { WaterLevelContext } from "../../API/WaterLevel.tsx";
 import { Cylindre } from "../Cylindre/Cylindre.tsx";
+import { UpdatedValueContext } from "../../API/UpdatedValue.tsx";
 
 
 const CylindreContainer = (WaterLevel : number[]) => {
@@ -17,7 +17,7 @@ const CylindreContainer = (WaterLevel : number[]) => {
 
 export function Cuve() : React.JSX.Element {
 
-    const WaterLevel = useContext(WaterLevelContext)
+    const { WaterLevel } = useContext(UpdatedValueContext)
     const CylindreContainerMemo = useMemo( () => CylindreContainer(WaterLevel), [WaterLevel] )
 
     return (

@@ -11,6 +11,12 @@ waterLevel = [0, 0, 0]
 def home():
     return app.send_static_file('index.html')
 
+@app.route('/GetUpdatedValue', methods=["GET"])
+def SendGetUpdatedValue():
+    rep = jsonify({"WaterLevel":waterLevel, "MotorSpeed":[1, 1]})
+    rep.status_code = 200
+    return rep
+
 @app.route('/GetWaterLevel', methods=["GET"])
 def SendWaterLevel():
     rep = jsonify(waterLevel)
