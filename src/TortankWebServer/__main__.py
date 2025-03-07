@@ -13,7 +13,7 @@ def home():
 
 @app.route('/GetUpdatedValue', methods=["GET"])
 def SendGetUpdatedValue():
-    rep = jsonify({"WaterLevel":waterLevel, "MotorSpeed":[1, 1]})
+    rep = jsonify({"WaterLevel":waterLevel, "MotorSpeed":[tortank.GetMotor1Speed(), tortank.GetMotor2Speed()]})
     rep.status_code = 200
     return rep
 
