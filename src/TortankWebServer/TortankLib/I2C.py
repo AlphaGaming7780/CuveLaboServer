@@ -74,7 +74,8 @@ class I2C :
         # return ((data & 0xFF) << 8) | (data >> 8) # Conversion big endian
 
     def write16(self, reg : int, val : int) -> None :
-        self.bus.write_word_data(self.device_addr, reg, ((val & 0xFF) << 8) | (val >> 8))
+        self.bus.write_word_data(self.device_addr, reg, val)
+        # self.bus.write_word_data(self.device_addr, reg, ((val & 0xFF) << 8) | (val >> 8))
 
     def readBitW(self, reg : int, bit : int) -> bool:
         return (self.read16(reg) & (1 << bit)) != 0
@@ -83,11 +84,8 @@ class I2C :
         # return ( (v & mask) > 0 )
 
     def writeBitW(self, reg : int, bit : int, value : bool) -> None:
-        time.sleep(1)
         v = self.read16(reg)
-        print(f"writeBitW v1 : {v}")
         v = (v | (1 << bit)) if value else (v & ~(1 << bit))
-        print(f"writeBitW v2 : {v}")
         self.write16(reg, v)
         # if(value) : 
         #     v |= (1 << bit)
