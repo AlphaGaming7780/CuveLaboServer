@@ -18,8 +18,8 @@ class Tortank(object):
         self._motor1 = Motor(17, 27)
         self._motor2 = Motor(23, 24)
         self.ads = ADS1115()
-        # self.ads.setMode(ADS1115_MODE.SINGLESHOT)
-        # self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
+        self.ads.setMode(ADS1115_MODE.SINGLESHOT)
+        self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
         pass
     
     def SetMotor1Speed(self, speed : int):
@@ -55,13 +55,13 @@ class Tortank(object):
         return self._motor2Speed
 
     def GetWaterLevelCuve1(self) -> int:
-        return self.ads.getConversionP0GND() / 4.096
+        return self.ads.getConversionP0GND() / 32768 / 4.096
     
     def GetWaterLevelCuve2(self) -> int:
-        return self.ads.getConversionP1GND() / 4.096
+        return self.ads.getConversionP1GND() / 32768 / 4.096
     
     def GetWaterLevelCuve3(self) -> int:
-        return self.ads.getConversionP2GND() / 4.096
+        return self.ads.getConversionP2GND() / 32768 / 4.096
     
     def GetHeigestWaterLevel(self) -> int:
 
