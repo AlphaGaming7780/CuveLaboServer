@@ -174,8 +174,13 @@ class ADS1115 :
 	def getConversion(self, triggerAndPoll : bool = True) -> int :
 		if (triggerAndPoll and self.devMode == ADS1115_MODE.SINGLESHOT) :
 			self.triggerConversion()
-			self.pollConversion(I2CDEV_DEFAULT_READ_TIMEOUT) 
-		return self.i2c.read16(ADS1115_RA.CONVERSION.value)
+			# self.pollConversion(I2CDEV_DEFAULT_READ_TIMEOUT)
+			time.sleep(0.1) 
+
+		raw_adc = self.i2c.read16(ADS1115_RA.CONVERSION.value)
+		if raw_adc > 0x7FFF:
+			raw_adc -= 0x10000
+		return raw_adc
 	
 	# Get AIN0/N1 differential.
 	# This changes the MUX setting to AIN0/N1 if necessary, triggers a new
