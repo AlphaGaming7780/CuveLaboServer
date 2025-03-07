@@ -1,3 +1,4 @@
+# from types import *
 from smbus2 import SMBus
 
 class I2C : 
@@ -68,7 +69,7 @@ class I2C :
         data2 = self.read8(reg + 1)
         return ( (data1 << 8 ) | data2 )
 
-        # data = self.bus.rea(self.device_addr, reg)
+        # data = self.bus.read_word_data(self.device_addr, reg)
         # return ((data & 0xFF) << 8) | (data >> 8) # Conversion big endian
 
     def write16(self, reg : int, val : int) -> None :
