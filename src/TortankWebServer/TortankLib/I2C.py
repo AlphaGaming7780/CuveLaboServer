@@ -1,12 +1,16 @@
-import smbus2
+from smbus2 import SMBus
 
 class I2C : 
-    def __init__(self, device_addr : int, bus_id : int = 1) -> None:
+
+    device_addr : bytes
+    bus : SMBus
+
+    def __init__(self, device_addr : bytes, bus_id : int = 1) -> None:
         self.device_addr = device_addr
-        self.bus = smbus2.SMBus(bus_id)
+        self.bus = SMBus(bus_id)
 
     def read8(self, reg : int) -> int: 
-         return self.bus.read_byte_data(self.device_addr, reg)
+        return self.bus.read_byte_data(self.device_addr, reg)
     
     def write8(self, reg : int, val : int) -> None :
         self.bus.write_byte_data(self.device_addr, reg, val)
