@@ -1,6 +1,6 @@
 from gpiozero import Motor
-# from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
-from TortankWebServer.TortankLib.bad_ADS1115 import ADS1115
+from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
+# from TortankWebServer.TortankLib.bad_ADS1115 import ADS1115
 
 class Tortank(object):
     
@@ -55,13 +55,13 @@ class Tortank(object):
         return self._motor2Speed
 
     def GetWaterLevelCuve1(self) -> int:
-        return self.ads.getConversionP0GND()
+        return self.ads.getConversionP0GND() / 4.096
     
     def GetWaterLevelCuve2(self) -> int:
-        return self.ads.getConversionP1GND()
+        return self.ads.getConversionP1GND() / 4.096
     
     def GetWaterLevelCuve3(self) -> int:
-        return self.ads.getConversionP2GND()
+        return self.ads.getConversionP2GND() / 4.096
     
     def GetHeigestWaterLevel(self) -> int:
 

@@ -1,19 +1,16 @@
 import React,{ createContext, useMemo, useState } from "react";
 
-
 // Create a Context
-export const WaterLevelContext = createContext([0, 0, 0]);
+export const MotorSpeedContext = createContext([0, 0, 0]);
 
-
-
-export const WaterLevelContextProvider = ({ children }) => {
+export const MotorSpeedContextProvider = ({ children }) => {
     
     const [state, setState] = useState([0, 0, 0]);
 
     useMemo( () => {
         var valueOld : number[] = [0, 0, 0]
         setInterval( function() {
-            getWaterLevel().then( (value) => { if(value !== valueOld) {
+            getMotorSpeed().then( (value) => { if(value !== valueOld) {
                 valueOld = value;
                 setState(value)
             } } );
@@ -21,27 +18,25 @@ export const WaterLevelContextProvider = ({ children }) => {
      }, [] )
   
     return (
-      <WaterLevelContext.Provider value={ state }>
+      <MotorSpeedContext.Provider value={ state }>
         {children}
-      </WaterLevelContext.Provider>
+      </MotorSpeedContext.Provider>
     );
 };
 
-
-
-export async function getWaterLevel() : Promise<number[]> {
+export async function getMotorSpeed() : Promise<number[]> {
 
     var value : number[] = []
 
     try {
-        const response = await fetch('/GetWaterLevel');
+        const response = await fetch('/GetMotorSpeed');
         if (!response.ok) {
             throw new Error(`Bad server response : ${response.statusText}`);
         }
         const data : number[] = await response.json();
         value = data;
     } catch (error) {
-        throw new Error("Something went wrong in getWaterLevel().")
+        throw new Error("Something went wrong in getMotorSpeed().")
     }
 
     return value

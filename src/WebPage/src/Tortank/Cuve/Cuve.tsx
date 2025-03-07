@@ -1,7 +1,7 @@
 import React, {useContext, useMemo} from "react";
 import "./Cuve.css"
 import { WaveWithLevel } from "../../Wave/Wave.tsx";
-import { WaterLevelContext } from "../../API.tsx";
+import { WaterLevelContext } from "../../API/WaterLevel.tsx";
 import { Cylindre } from "../Cylindre/Cylindre.tsx";
 
 
