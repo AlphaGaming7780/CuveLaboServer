@@ -174,7 +174,8 @@ class ADS1115 :
 	def getConversion(self, triggerAndPoll : bool = True) -> int :
 		if (triggerAndPoll and self.devMode == ADS1115_MODE.SINGLESHOT) :
 			self.triggerConversion()
-			self.pollConversion(I2CDEV_DEFAULT_READ_TIMEOUT) 
+			# self.pollConversion(I2CDEV_DEFAULT_READ_TIMEOUT)
+			time.sleep(0.1) 
 		return self.i2c.read16(ADS1115_RA.CONVERSION.value)
 	
 	# Get AIN0/N1 differential.
