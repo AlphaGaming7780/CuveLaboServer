@@ -1,8 +1,8 @@
 import threading
 from flask import Flask, jsonify, render_template, request
-# from TortankWebServer.TortankLib.Tortank import Tortank
+from TortankWebServer.TortankLib.Tortank import Tortank
 
-# tortank : Tortank = Tortank()
+tortank : Tortank = Tortank()
 app = Flask(__name__, static_url_path='') ## Changer le __name__ en un vrais nom ?
 
 waterLevel = [0, 0, 0]
@@ -33,22 +33,22 @@ def main():
 
     while(True):
 
-        # waterLevel[0] = tortank.GetWaterLevelCuve1()
-        # waterLevel[1] = tortank.GetWaterLevelCuve2()
-        # waterLevel[2] = tortank.GetWaterLevelCuve3()
+        waterLevel[0] = tortank.GetWaterLevelCuve1()
+        waterLevel[1] = tortank.GetWaterLevelCuve2()
+        waterLevel[2] = tortank.GetWaterLevelCuve3()
 
-        waterLevel[0] = 0.5
-        waterLevel[1] = 0.025
-        waterLevel[2] = 0.975
+        # waterLevel[0] = 0.5
+        # waterLevel[1] = 0.025
+        # waterLevel[2] = 0.975
 
-        # print(waterLevel)
+        print(waterLevel)
 
-        # waterLevelMax = max(waterLevel)
+        waterLevelMax = max(waterLevel)
 
-        # if(waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX) :
-        #     tortank.SetMotor1Speed(0)
-        #     tortank.SetMotor2Speed(0)
-        # pass
+        if(waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX) :
+            tortank.SetMotor1Speed(0)
+            tortank.SetMotor2Speed(0)
+        pass
 
 if __name__ == "__main__":
     main()
