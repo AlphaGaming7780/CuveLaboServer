@@ -1,8 +1,30 @@
 from gpiozero import Motor
-from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
+import board
+import busio
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+# DEPRECATED
+# from TortankWebServer.TortankLib.ADS1115 import ADS1115, ADS1115_MODE, ADS1115_PGA
 # from TortankWebServer.TortankLib.bad_ADS1115 import ADS1115
 
 class Tortank(object):
+
+    i2c = busio.I2C(board.SCL, board.SDA) # Verifier si la lib Board marche avec le pi 5 sinon changer par les bonnes pins à la mano
+
+    ads = ADS.ADS1115(i2c)
+    chan0 = AnalogIn(ads, ADS.P0)
+    chan1 = AnalogIn(ads, ADS.P1)
+    chan2 = AnalogIn(ads, ADS.P2)
+
+    ads.gain = 1
+
+    # PGA Settings :
+    # 2/3 = +-6.144v
+    # 1 = +-4.069v
+    # 2 = +-2.048v
+    # 4 = +-1.024v
+    # 8 = +-0.512v
+    # 16 = +-0.256v
     
     TORTANK_WATER_LEVEL_MAX = 0.95
 
@@ -11,15 +33,13 @@ class Tortank(object):
 
     _motor1Speed : int
     _motor2Speed : int
-    
-    ads : ADS1115
 
     def __init__(self):
         self._motor1 = Motor(17, 27)
         self._motor2 = Motor(23, 24)
-        self.ads = ADS1115()
-        self.ads.setMode(ADS1115_MODE.SINGLESHOT)
-        self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
+        # self.ads = ADS1115()
+        # self.ads.setMode(ADS1115_MODE.SINGLESHOT)
+        # self.ads.setGain(ADS1115_PGA.ADS1115_PGA_4P096)
         pass
     
     def SetMotor1Speed(self, speed : int):
@@ -55,13 +75,17 @@ class Tortank(object):
         return self._motor2Speed
 
     def GetWaterLevelCuve1(self) -> int:
-        return self.ads.getConversionP0GND() / 32768 / 4.096
+        # return self.ads.getConversionP0GND() / 32768 / 4.096
+        return self.chan0.voltage   # raw data not affected by the gain
+    #   return self.chan0.value     # data affected by the gain
     
     def GetWaterLevelCuve2(self) -> int:
-        return self.ads.getConversionP1GND() / 32768 / 4.096
+        # return self.ads.getConversionP1GND() / 32768 / 4.096
+        return self.chan1.voltage
     
     def GetWaterLevelCuve3(self) -> int:
-        return self.ads.getConversionP2GND() / 32768 / 4.096
+        # return self.ads.getConversionP2GND() / 32768 / 4.096
+        return self.chan2.voltage
     
     def GetHeigestWaterLevel(self) -> int:
 

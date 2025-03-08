@@ -19,8 +19,10 @@ license = "MIT"
 license-files = ["LICEN[CS]E*"]
 dependencies = [
 	'Flask',
-	'smbus2',
-	'gpiozero'
+	'gpiozero',
+	'board',
+	'busio',
+	'adafruit-circuitpython-ads1x15'
 ]
 
 [project.scripts]
