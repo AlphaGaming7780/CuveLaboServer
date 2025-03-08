@@ -3,7 +3,7 @@ from flask import Flask, jsonify, render_template, request
 from TortankWebServer.TortankLib.Tortank import Tortank
 
 tortank : Tortank = Tortank()
-app = Flask(__name__, static_url_path='') ## Changer le __name__ en un vrais nom ?
+app = Flask("TortankWebServer", static_url_path='')
 
 waterLevel = [0, 0, 0]
 
@@ -13,7 +13,15 @@ def home():
 
 @app.route('/GetUpdatedValue', methods=["GET"])
 def SendGetUpdatedValue():
-    rep = jsonify({"WaterLevel":waterLevel, "MotorSpeed":[tortank.GetMotor1Speed(), tortank.GetMotor2Speed()]})
+    rep = jsonify(
+        {
+            "WaterLevel": waterLevel, 
+            "MotorSpeed": [
+                tortank.GetMotor1Speed(), 
+                tortank.GetMotor2Speed()
+            ]
+        }
+    )
     rep.status_code = 200
     return rep
 
@@ -25,12 +33,17 @@ def SendWaterLevel():
 
 @app.route('/GetMotorSpeed', methods=["GET"])
 def SendMotorSpeed():
-    rep = jsonify([1,1])
+    rep = jsonify( 
+        [ 
+            tortank.GetMotor1Speed(), 
+            tortank.GetMotor2Speed() 
+        ] 
+    )
     rep.status_code = 200
     return rep
 
 def main():
-    webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=True, use_reloader=False))
+    webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=False, use_reloader=False))
     # webServerThread = threading.Thread(target=lambda: app.run(debug=True, use_reloader=False))
     webServerThread.start()
     # app.run(use_reloader=True)
