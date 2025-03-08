@@ -76,16 +76,16 @@ class Tortank(object):
 
     def GetWaterLevelCuve1(self) -> int:
         # return self.ads.getConversionP0GND() / 32768 / 4.096
-        return self.chan0.voltage   # raw data not affected by the gain
-    #   return self.chan0.value     # data affected by the gain
+        # return self.chan0.voltage   # raw data not affected by the gain
+        return self.chan0.value  / 65535  / 4.096   # data affected by the gain
     
     def GetWaterLevelCuve2(self) -> int:
         # return self.ads.getConversionP1GND() / 32768 / 4.096
-        return self.chan1.voltage
+        return self.chan1.value  / 65535  / 4.096
     
     def GetWaterLevelCuve3(self) -> int:
         # return self.ads.getConversionP2GND() / 32768 / 4.096
-        return self.chan2.voltage
+        return self.chan2.value  / 65535  / 4.096
     
     def GetHeigestWaterLevel(self) -> int:
 
