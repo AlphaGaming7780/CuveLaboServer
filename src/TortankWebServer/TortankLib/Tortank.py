@@ -78,6 +78,12 @@ class Tortank(object):
 		return self._motor2Speed
 
 	def ConvertRawWaterValue(self, rawADC : int) : 
+
+		# Gestion du signe (valeur sur 16 bits, en complément à 2)
+		if raw_adc > 0x7FFF:
+			raw_adc -= 0x10000
+			# raw_adc = 0
+
 		return rawADC / 32767
 
 	def GetWaterLevelCuve1(self) -> int:
