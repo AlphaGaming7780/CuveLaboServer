@@ -49,6 +49,7 @@ def main():
     # app.run(use_reloader=True)
 
     # tortank.SetMotor1Speed(1)
+    # tortank.SetMotor2Speed(1)
 
     while(True):
 
