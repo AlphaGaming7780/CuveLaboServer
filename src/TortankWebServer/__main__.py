@@ -64,8 +64,9 @@ def main():
         print(waterLevel)
 
         waterLevelMax = max(waterLevel)
+        voltageMax = max( tortank.cuve1.voltage, tortank.cuve2.voltage, tortank.cuve3.voltage )
 
-        if(waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX) :
+        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX or voltageMax >= 5 ) :
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
         pass

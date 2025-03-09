@@ -18,9 +18,9 @@ class Tortank(object):
 	i2c : I2C
 
 	ads : ADS1115
-	chan0 : AnalogIn
-	chan1 : AnalogIn
-	chan2 : AnalogIn
+	cuve1 : AnalogIn
+	cuve2 : AnalogIn
+	cuve3 : AnalogIn
 
 	def __init__(self):
 		self._motor1 = Motor(17, 27)
@@ -30,9 +30,9 @@ class Tortank(object):
 		self.i2c = I2C(board.SCL, board.SDA) 
 
 		self.ads = ADS1115(self.i2c)
-		self.chan0 = AnalogIn(self.ads, ADS.P0)
-		self.chan1 = AnalogIn(self.ads, ADS.P1)
-		self.chan2 = AnalogIn(self.ads, ADS.P2)
+		self.cuve1 = AnalogIn(self.ads, ADS.P0)
+		self.cuve2 = AnalogIn(self.ads, ADS.P1)
+		self.cuve3 = AnalogIn(self.ads, ADS.P2)
 
 
 		# PGA Settings :
@@ -87,11 +87,35 @@ class Tortank(object):
 		return rawADC / 32767
 
 	def GetWaterLevelCuve1(self) -> int:
-		return self.ConvertRawWaterValue(self.chan0.value)
+		return self.ConvertRawWaterValue(self.cuve1.value)
 
 	def GetWaterLevelCuve2(self) -> int:
-		return self.ConvertRawWaterValue(self.chan1.value)
-	
+		return self.ConvertRawWaterValue(self.cuve2.value)
 	
 	def GetWaterLevelCuve3(self) -> int:
-		return self.ConvertRawWaterValue(self.chan2.value)
+		return self.ConvertRawWaterValue(self.cuve3.value)
+	
+	def GetGainInTension(self) -> float:
+
+		# PGA Settings :
+		# 2/3 = +-6.144v
+		# 1 = +-4.069v
+		# 2 = +-2.048v
+		# 4 = +-1.024v
+		# 8 = +-0.512v
+		# 16 = +-0.256v
+		match(self.ads.gain):
+			case 2/3 :
+				return 6.144
+			case 1 :
+				return 4.069
+			case 2 :
+				return 2.048
+			case 4 :
+				return 1.024
+			case 8 :
+				return 0.512
+			case 16 :
+				return 0.256
+			case _ :
+				return 1
