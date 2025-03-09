@@ -1,3 +1,8 @@
+// Plugin simpa pour le chartJS
+// https://chartjs-plugin-datalabels.netlify.app/samples/scriptable/interactions.html
+// https://github.com/AbelHeinsbroek/chartjs-plugin-crosshair
+// https://github.com/Makanz/chartjs-plugin-trendline
+
 import React, { useContext, useEffect, useRef } from "react";
 import {
     Chart as ChartJS,
@@ -10,7 +15,7 @@ import {
     Legend,
     ChartData, 
     ChartOptions,
-	ChartType
+    ChartDataset,
   } from 'chart.js';
 import { Line, ChartJSOrUndefined } from 'react-chartjs-2';
 import { UpdatedValueContext } from "../API/UpdatedValue.tsx";
@@ -44,60 +49,85 @@ const options : ChartOptions<"line"> = {
 			min: 0,
 			max: 100,
         },
-      },
-  };
+    },
+    // animation: {
+    //     duration: 1000,
+    //     easing: "linear",
+    // },
+    animations: {
+        x: {
+            properties: ["x"],
+            duration: 1100, // Animation de 2s
+            easing: 'linear',
+            loop: false
+        },
+        y: {
+            properties: ["y"],
+            duration: 1,
+            easing: 'linear',
+            loop: false,
+        }
+    }
+};
 
-// const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-const labels = [];
+const commonDatasetoption : Partial<ChartDataset<"line">> = {
+    pointRadius: 0, // Supprime les points
+    fill: false,    // Remplis la zone sous la courbe
+    // tension: 0.1,   // Rend la ligne fluid
+}
 
 const data : ChartData<"line">  = {
     labels: [],
     datasets: [
         {
             label: 'Cuve 1 water level',
-            // data: labels.map(() => Math.random() * 100),
-            data: [],
             borderColor: 'rgb(99, 219, 255)',
             backgroundColor: 'rgba(99, 219, 255, 0.5)',
             yAxisID: 'WaterLevel',
+            data: [],
+            ...commonDatasetoption,
         },
         {
             label: 'Cuve 2 water level',
             // data: labels.map(() => Math.random() * 100),
-            data: [],
             borderColor: 'rgb(99, 193, 255)',
             backgroundColor: 'rgba(99, 193, 255, 0.5)',
             yAxisID: 'WaterLevel',
+            data: [],
+            ...commonDatasetoption,
         },
         {
             label: 'Cuve 3 water level',
             // data: labels.map(() => Math.random() * 100),
-            data: [],
             borderColor: 'rgb(99, 148, 255)',
             backgroundColor: 'rgba(99, 148, 255, 0.5)',
             yAxisID: 'WaterLevel',
+            data: [],
+            ...commonDatasetoption,
         },
         {
             label: 'Motor 1 Speed',
             // data: labels.map(() => Math.random() * 100),
-            data: [],
             borderColor: 'rgb(92, 168, 73)',
             backgroundColor: 'rgba(92, 168, 73, 0.5)',
             yAxisID: 'MotorSpeed',
+            data: [],
+            ...commonDatasetoption,
         },
         {
             label: 'Motor 2 Speed',
             // data: labels.map(() => Math.random() * 100),
-            data: [],
             borderColor: 'rgb(51, 187, 39)',
             backgroundColor: 'rgba(51, 187, 39, 0.5)',
             yAxisID: 'MotorSpeed',
+            data: [],
+            ...commonDatasetoption,
         },
     ],
 };
 
-function AddValueToDataSet(WaterLevel : number[], MotorSpeed : number[]) {
-	data.labels?.push(new Date().toLocaleTimeString())
+function AddValueToDataSet(time: string, WaterLevel : number[], MotorSpeed : number[]) {
+	data.labels?.push(time)
 	data.datasets[0].data.push(WaterLevel[0] * 100)
 	data.datasets[1].data.push(WaterLevel[1] * 100)
 	data.datasets[2].data.push(WaterLevel[2] * 100)
@@ -119,19 +149,19 @@ export function Graph() : React.JSX.Element {
 
 	const ref = useRef<ChartJSOrUndefined<"line">>(null)
 
-	const { WaterLevel, MotorSpeed } = useContext(UpdatedValueContext)
+	const updatedValue = useContext(UpdatedValueContext)
 
 	useEffect( () => {
 
-		AddValueToDataSet(WaterLevel, MotorSpeed)
+		AddValueToDataSet(updatedValue.time, updatedValue.WaterLevel, updatedValue.MotorSpeed)
 		if(ref.current == null) return
 		ref.current.data = data
 		ref.current.update()
 		console.log(ref.current.data)
 
-	}, [WaterLevel, MotorSpeed, ref]  )
+	}, [updatedValue, ref]  )
 
     return (
-        <Line ref={ref} options={options} data={data} />
+        <Line title="Title" ref={ref} options={options} data={data} /> //plugins={[ChartDataLabels]}
     )
 }

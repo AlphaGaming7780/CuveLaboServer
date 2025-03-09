@@ -1,9 +1,11 @@
 import threading
-from flask import Flask, jsonify, render_template, request
+import time
+import json
+from flask import Flask, Response, jsonify, render_template, request, stream_with_context
 from TortankWebServer.TortankLib.Tortank import Tortank
 
 tortank : Tortank = Tortank()
-app = Flask("TortankWebServer", static_url_path='')
+app = Flask(__name__, static_url_path='')
 
 waterLevel = [0, 0, 0]
 
@@ -11,12 +13,37 @@ waterLevel = [0, 0, 0]
 def home():
     return app.send_static_file('index.html')
 
+@app.route('/event', methods=["GET"])  
+def event():
+    # @stream_with_context
+    def generate():
+            while True:
+
+                obj = {
+                    'time': time.strftime("%H:%M:%S", time.localtime()),
+                    'WaterLevel': waterLevel, 
+                    'MotorSpeed': [
+                        tortank.GetMotor1Speed(), 
+                        tortank.GetMotor2Speed(),
+                        # 1,1,
+                    ]
+                }
+
+                v = json.dumps(obj)
+
+                yield f"data:{v}\n\n"
+            
+                time.sleep(1)
+
+    return Response( generate(), mimetype='text/event-stream', content_type='text/event-stream', headers={ "Cache-Control": "no-cache", "Connection": "keep-alive" })
+
 @app.route('/GetUpdatedValue', methods=["GET"])
 def SendGetUpdatedValue():
-    rep = jsonify(
+    rep = jsonify(  
         {
             "WaterLevel": waterLevel, 
-            "MotorSpeed": [
+            "MotorSpeed": [ 
+                # 1, 1
                 tortank.GetMotor1Speed(), 
                 tortank.GetMotor2Speed()
             ]
@@ -35,6 +62,7 @@ def SendWaterLevel():
 def SendMotorSpeed():
     rep = jsonify( 
         [ 
+            # 1, 1
             tortank.GetMotor1Speed(), 
             tortank.GetMotor2Speed() 
         ] 
@@ -43,7 +71,7 @@ def SendMotorSpeed():
     return rep
 
 def main():
-    webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=False, use_reloader=False))
+    webServerThread = threading.Thread(target=lambda: app.run(host='0.0.0.0', debug=True, use_reloader=False))
     # webServerThread = threading.Thread(target=lambda: app.run(debug=True, use_reloader=False))
     webServerThread.start()
     # app.run(use_reloader=True)

@@ -1,10 +1,11 @@
-import React,{ createContext, useMemo, useState } from "react";
+import React,{ createContext, useEffect, useMemo, useState } from "react";
 
-export const defaultUpdatedValue : UpdatedValue = {WaterLevel:[0,0,0], MotorSpeed:[0,0]}
+export const defaultUpdatedValue : UpdatedValue = {time:new Date().toLocaleTimeString(), WaterLevel:[0,0,0], MotorSpeed:[0,0]}
 // Create a Context
 export const UpdatedValueContext = createContext(defaultUpdatedValue);
 
 export interface UpdatedValue {
+    time: string,
     WaterLevel:number[], 
     MotorSpeed: number[],
 }
@@ -12,16 +13,44 @@ export interface UpdatedValue {
 export const UpdatedValueContextProvider = ({ children }) => {
     
     const [state, setState] = useState(defaultUpdatedValue);
-
-    useMemo( () => {
+  
+    useEffect(() => {
         var valueOld : UpdatedValue = defaultUpdatedValue
-        setInterval( function() {
-            getUpdatedValue().then( (value) => { if(value !== valueOld) {
-                valueOld = value;
-                setState(value)
-            } } );
-        }, 1000 )
-     }, [] )
+        const eventSource = new EventSource('/event');  
+        eventSource.onmessage = (event) => {
+            // console.log(event)
+            const data = JSON.parse(event.data)
+            if(data !== valueOld) {
+                valueOld = data;
+                setState(data)
+            }
+        };  
+
+        eventSource.onerror = () => {  
+
+            console.error('SSE connection error');  
+
+            eventSource.close();  
+
+        };  
+
+        return () => {  
+
+            eventSource.close();  
+
+        };  
+    }, []);  
+
+
+    // useMemo( () => {
+    //     var valueOld : UpdatedValue = defaultUpdatedValue
+    //     setInterval( function() {
+    //         getUpdatedValue().then( (value) => { if(value !== valueOld) {
+    //             valueOld = value;
+    //             setState(value)
+    //         } } );
+    //     }, 1000 )
+    //  }, [] )
   
     return (
       <UpdatedValueContext.Provider value={ state }>
@@ -32,7 +61,7 @@ export const UpdatedValueContextProvider = ({ children }) => {
 
 export async function getUpdatedValue() : Promise<UpdatedValue> {
 
-    var value : UpdatedValue = {WaterLevel:[0,0,0], MotorSpeed:[0,0]}
+    var value : UpdatedValue = defaultUpdatedValue
 
     try {
         const response = await fetch('/GetUpdatedValue');
