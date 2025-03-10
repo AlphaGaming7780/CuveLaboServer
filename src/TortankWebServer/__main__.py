@@ -94,14 +94,14 @@ def main():
 
         rawValue = [tortank.ads.readADC(0), tortank.ads.readADC(1), tortank.ads.readADC(2)]
         print(f"RawValue : {rawValue}")
-        
+
         voltage = [tortank.ads.toVoltage(rawValue[0]), tortank.ads.toVoltage(rawValue[1]), tortank.ads.toVoltage(rawValue[2])]
         print(f"Voltage : {voltage}")
 
         waterLevelMax = max(waterLevel)
         voltageMax = max( voltage )
 
-        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX or voltageMax >= 5 ) :
+        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX or voltageMax >= tortank.ads.getMaxVoltage() ) :
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
         pass
