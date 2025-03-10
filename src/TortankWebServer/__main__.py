@@ -101,7 +101,7 @@ def main():
         waterLevelMax = max(waterLevel)
         voltageMax = max( voltage )
 
-        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX or voltageMax >= tortank.ads.getMaxVoltage() - tortank.ads.getMaxVoltage() * 0.1 ) :
+        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX or voltageMax >= 4 ) :
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
         pass

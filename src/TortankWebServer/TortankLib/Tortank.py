@@ -27,7 +27,7 @@ class Tortank(object):
 		self._motor2 = Motor(23, 24)
 
 		self.ads = ADS1115(1)
-		self.ads.setGain(1)
+		self.ads.setGain(0)
 		self.ads.setMode(self.ads.MODE_SINGLE)
 		pass
 	
