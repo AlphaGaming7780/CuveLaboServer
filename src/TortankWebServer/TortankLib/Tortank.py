@@ -1,5 +1,4 @@
 from gpiozero import Motor
-import board
 from busio import I2C
 
 # https://github.com/chandrawi/ADS1x15-ADC
