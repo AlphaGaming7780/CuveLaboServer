@@ -1,13 +1,14 @@
 import threading
 import time
 import json
-from flask import Flask, Response, jsonify, render_template, request, stream_with_context
+import random
+from flask import Flask, Response, jsonify
 from TortankWebServer.TortankLib.Tortank import Tortank
 
 tortank : Tortank = Tortank()
 app = Flask(__name__, static_url_path='')
 
-waterLevel = [0, 0, 0]
+waterLevel = [0.0, 0.0, 0.0]
 
 @app.route('/')
 def home():
@@ -20,12 +21,12 @@ def event():
             while True:
 
                 obj = {
-                    'time': time.strftime("%H:%M:%S", time.localtime()),
+                    'time': time.strftime("%H:%M:%S", time.localtime()), # Pas vraiment bon, il peut dcp y avoir un décalage
                     'WaterLevel': waterLevel, 
                     'MotorSpeed': [
                         tortank.GetMotor1Speed(), 
                         tortank.GetMotor2Speed(),
-                        # 1,1,
+                        # random.random(), random.random()
                     ]
                 }
 
@@ -43,7 +44,7 @@ def SendGetUpdatedValue():
         {
             "WaterLevel": waterLevel, 
             "MotorSpeed": [ 
-                # 1, 1
+                # random.random(), random.random()
                 tortank.GetMotor1Speed(), 
                 tortank.GetMotor2Speed()
             ]
@@ -62,7 +63,7 @@ def SendWaterLevel():
 def SendMotorSpeed():
     rep = jsonify( 
         [ 
-            # 1, 1
+            # random.random(), random.random()
             tortank.GetMotor1Speed(), 
             tortank.GetMotor2Speed() 
         ] 
@@ -76,8 +77,8 @@ def main():
     webServerThread.start()
     # app.run(use_reloader=True)
 
-    # tortank.SetMotor1Speed(1)
-    # tortank.SetMotor2Speed(1)
+    tortank.SetMotor1Speed(1)
+    tortank.SetMotor2Speed(1)
 
     while(True):
 
@@ -85,11 +86,13 @@ def main():
         waterLevel[1] = tortank.GetWaterLevelCuve2()
         waterLevel[2] = tortank.GetWaterLevelCuve3()
 
-        # waterLevel[0] = 0.5
-        # waterLevel[1] = 0.025
-        # waterLevel[2] = 0.975
+        # waterLevel[0] = random.random()
+        # waterLevel[1] = random.random()
+        # waterLevel[2] = random.random()
 
-        print(waterLevel)
+        print(f"WaterLevel : {waterLevel}")
+        print(f"RawValue : {[tortank.cuve1.value, tortank.cuve2.value, tortank.cuve3.value]}")
+        print(f"Voltage : {[tortank.cuve1.voltage, tortank.cuve2.voltage, tortank.cuve3.voltage]}")
 
         waterLevelMax = max(waterLevel)
         voltageMax = max( tortank.cuve1.voltage, tortank.cuve2.voltage, tortank.cuve3.voltage )
