@@ -6,6 +6,21 @@
     align-items: center;
     flex-direction: column;
 
+    .top {
+
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        height: 70%;
+
+        .cylindre-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+    }
+
     .tank {
         width: 100%;
         height: 30%;
@@ -15,12 +30,5 @@
         border-style: solid;
         border-color: var(--border); /* rgba(231, 231, 231, 1);*/
         border-width: 0.5rem;
-    }
-
-    .cylindre-container {
-        width: 100%;
-        height: 70%;
-        display: flex;
-        justify-content: space-around;
     }
 }

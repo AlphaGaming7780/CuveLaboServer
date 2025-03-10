@@ -1,0 +1,22 @@
+.Motor {
+    height: 3rem;
+    width: 3rem;
+    -webkit-border-radius: 1.5rem;
+    -moz-border-radius: 1.5rem;
+    border-radius: 1.5rem;
+    background: rgb(0, 52, 112);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+
+    .inner {
+        height: 2rem;
+        width: 2rem;
+        -webkit-border-radius: 1rem;
+        -moz-border-radius: 1rem;
+        border-radius: 1rem;
+        background: rgb(36, 36, 36);
+    }
+
+}
