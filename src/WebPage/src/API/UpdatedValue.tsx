@@ -1,6 +1,6 @@
 import React,{ createContext, useEffect, useMemo, useState } from "react";
 
-export const defaultUpdatedValue : UpdatedValue = {time:new Date().toLocaleTimeString(), WaterLevel:[0,0,0], MotorSpeed:[0,0]}
+export const defaultUpdatedValue : UpdatedValue = {time:"null", WaterLevel:[-1,-1,-1], MotorSpeed:[-1,-1]}
 // Create a Context
 export const UpdatedValueContext = createContext(defaultUpdatedValue);
 

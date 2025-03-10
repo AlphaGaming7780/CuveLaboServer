@@ -22,10 +22,10 @@ class Tortank(object):
 	CUVE_1_MIN = 620
 	CUVE_1_MAX = 21228
 
-	CUVE_2_MIN = 1275
+	CUVE_2_MIN = 500 #1275
 	CUVE_2_MAX = 22367
 
-	CUVE_3_MIN = 2160
+	CUVE_3_MIN = 1900 #1900
 	CUVE_3_MAX = 23107
 
 	def __init__(self):
@@ -77,6 +77,7 @@ class Tortank(object):
 			# rawADC = 0
 
 		return rawADC / 32767
+	
 
 	def GetWaterLevelCuve1(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve1.value)
