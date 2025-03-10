@@ -18,9 +18,15 @@ class Tortank(object):
 	_motor2Speed : int = 0
 
 	ads : ADS1115
-	# cuve1 : AnalogIn
-	# cuve2 : AnalogIn
-	# cuve3 : AnalogIn
+
+	CUVE_1_MIN = 620
+	CUVE_1_MAX = 21228
+
+	CUVE_2_MIN = 1275
+	CUVE_2_MAX = 22367
+
+	CUVE_3_MIN = 2160
+	CUVE_3_MAX = 23107
 
 	def __init__(self):
 		self._motor1 = Motor(17, 27)
@@ -74,15 +80,15 @@ class Tortank(object):
 
 	def GetWaterLevelCuve1(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve1.value)
-		return self.ConvertRawWaterValue(self.ads.readADC(0))
+		return ( self.ads.readADC(0) - self.CUVE_1_MIN) / ( self.CUVE_1_MAX - self.CUVE_1_MIN ) 
 
 	def GetWaterLevelCuve2(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve2.value)
-		return self.ConvertRawWaterValue(self.ads.readADC(1))
+		return ( self.ads.readADC(1) - self.CUVE_2_MIN) / ( self.CUVE_2_MAX - self.CUVE_2_MIN ) 
 	
 	def GetWaterLevelCuve3(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve3.value)
-		return self.ConvertRawWaterValue(self.ads.readADC(2))
+		return ( self.ads.readADC(2) - self.CUVE_3_MIN) / ( self.CUVE_3_MAX - self.CUVE_3_MIN ) 
 	
 	# def GetGainInTension(self) -> float:
 

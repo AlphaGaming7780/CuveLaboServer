@@ -80,6 +80,9 @@ def main():
     tortank.SetMotor1Speed(1)
     tortank.SetMotor2Speed(1)
 
+    hitTheLimit = False
+    motorSpeedBeforHitTheLimit = [0,0]
+
     while(True):
 
         waterLevel[0] = tortank.GetWaterLevelCuve1()
@@ -99,11 +102,15 @@ def main():
         print(f"Voltage : {voltage}")
 
         waterLevelMax = max(waterLevel)
-        voltageMax = max( voltage )
 
-        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX or voltageMax >= 4 ) :
+        if( waterLevelMax >= tortank.TORTANK_WATER_LEVEL_MAX ) :
+            if( not hitTheLimit ) : motorSpeedBeforHitTheLimit = [ tortank.GetMotor1Speed(), tortank.GetMotor2Speed() ]
+            hitTheLimit = True
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
+        elif ( hitTheLimit ) : 
+            tortank.SetMotor1Speed(motorSpeedBeforHitTheLimit[0])
+            tortank.SetMotor2Speed(motorSpeedBeforHitTheLimit[1])
         pass
 
 if __name__ == "__main__":
