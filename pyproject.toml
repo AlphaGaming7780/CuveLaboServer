@@ -20,7 +20,7 @@ license-files = ["LICEN[CS]E*"]
 dependencies = [
 	'Flask',
 	'gpiozero',
-	'adafruit-circuitpython-ads1x15'
+	'ADS1x15-ADC'
 ]
 
 [project.scripts]

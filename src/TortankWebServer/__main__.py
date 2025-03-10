@@ -91,8 +91,9 @@ def main():
         # waterLevel[2] = random.random()
 
         print(f"WaterLevel : {waterLevel}")
-        print(f"RawValue : {[tortank.cuve1.value, tortank.cuve2.value, tortank.cuve3.value]}")
-        print(f"Voltage : {[tortank.cuve1.voltage, tortank.cuve2.voltage, tortank.cuve3.voltage]}")
+        rawValue = [tortank.ads.readADC(0), tortank.ads.readADC(1), tortank.ads.readADC(2)]
+        print(f"RawValue : {rawValue}")
+        print(f"Voltage : {[tortank.ads.toVoltage(rawValue[0]), tortank.ads.toVoltage(rawValue[1]), tortank.ads.toVoltage(rawValue[2])]}")
 
         waterLevelMax = max(waterLevel)
         voltageMax = max( tortank.cuve1.voltage, tortank.cuve2.voltage, tortank.cuve3.voltage )

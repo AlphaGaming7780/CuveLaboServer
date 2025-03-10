@@ -1,9 +1,13 @@
 from gpiozero import Motor
 import board
 from busio import I2C
-import adafruit_ads1x15.ads1115 as ADS
-from adafruit_ads1x15.ads1115 import ADS1115
-from adafruit_ads1x15.analog_in import AnalogIn
+
+# https://github.com/chandrawi/ADS1x15-ADC
+from ADS1x15 import ADS1115
+
+# import adafruit_ads1x15.ads1115 as ADS
+# from adafruit_ads1x15.ads1115 import ADS1115
+# from adafruit_ads1x15.analog_in import AnalogIn
 
 class Tortank(object):
 
@@ -18,9 +22,9 @@ class Tortank(object):
 	i2c : I2C
 
 	ads : ADS1115
-	cuve1 : AnalogIn
-	cuve2 : AnalogIn
-	cuve3 : AnalogIn
+	# cuve1 : AnalogIn
+	# cuve2 : AnalogIn
+	# cuve3 : AnalogIn
 
 	def __init__(self):
 		self._motor1 = Motor(17, 27)
@@ -30,19 +34,12 @@ class Tortank(object):
 		self.i2c = I2C(5, 3) 
 
 		self.ads = ADS1115(self.i2c)
-		self.cuve1 = AnalogIn(self.ads, ADS.P0)
-		self.cuve2 = AnalogIn(self.ads, ADS.P1)
-		self.cuve3 = AnalogIn(self.ads, ADS.P2)
+		# self.cuve1 = AnalogIn(self.ads, ADS.P0)
+		# self.cuve2 = AnalogIn(self.ads, ADS.P1)
+		# self.cuve3 = AnalogIn(self.ads, ADS.P2)
 
-
-		# PGA Settings :
-		# 2/3 = +-6.144v
-		# 1 = +-4.069v
-		# 2 = +-2.048v
-		# 4 = +-1.024v
-		# 8 = +-0.512v
-		# 16 = +-0.256v
-		self.ads.gain = 2/3
+		self.ads.setGain(0)
+		self.ads.setMode(self.ads.MODE_SINGLE)
 		pass
 	
 	def SetMotor1Speed(self, speed : int):
@@ -87,13 +84,16 @@ class Tortank(object):
 		return rawADC / 32767
 
 	def GetWaterLevelCuve1(self) -> int:
-		return self.ConvertRawWaterValue(self.cuve1.value)
+		# return self.ConvertRawWaterValue(self.cuve1.value)
+		return self.ConvertRawWaterValue(self.ads.readADC(0))
 
 	def GetWaterLevelCuve2(self) -> int:
-		return self.ConvertRawWaterValue(self.cuve2.value)
+		# return self.ConvertRawWaterValue(self.cuve2.value)
+		return self.ConvertRawWaterValue(self.ads.readADC(1))
 	
 	def GetWaterLevelCuve3(self) -> int:
-		return self.ConvertRawWaterValue(self.cuve3.value)
+		# return self.ConvertRawWaterValue(self.cuve3.value)
+		return self.ConvertRawWaterValue(self.ads.readADC(2))
 	
 	# def GetGainInTension(self) -> float:
 
