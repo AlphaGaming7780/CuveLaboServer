@@ -27,7 +27,7 @@ class Tortank(object):
 		self._motor2 = Motor(23, 24)
 
 		# Verifier si la lib Board marche avec le pi 5 sinon changer par les bonnes pins à la mano
-		self.i2c = I2C(board.SCL, board.SDA) 
+		self.i2c = I2C(5, 3) 
 
 		self.ads = ADS1115(self.i2c)
 		self.cuve1 = AnalogIn(self.ads, ADS.P0)
