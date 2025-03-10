@@ -1,5 +1,4 @@
 from gpiozero import Motor
-from busio import I2C
 
 # https://github.com/chandrawi/ADS1x15-ADC
 from ADS1x15 import ADS1115
@@ -18,8 +17,6 @@ class Tortank(object):
 	_motor1Speed : int = 0
 	_motor2Speed : int = 0
 
-	i2c : I2C
-
 	ads : ADS1115
 	# cuve1 : AnalogIn
 	# cuve2 : AnalogIn
@@ -29,14 +26,7 @@ class Tortank(object):
 		self._motor1 = Motor(17, 27)
 		self._motor2 = Motor(23, 24)
 
-		# Verifier si la lib Board marche avec le pi 5 sinon changer par les bonnes pins à la mano
-		self.i2c = I2C(5, 3) 
-
-		self.ads = ADS1115(self.i2c)
-		# self.cuve1 = AnalogIn(self.ads, ADS.P0)
-		# self.cuve2 = AnalogIn(self.ads, ADS.P1)
-		# self.cuve3 = AnalogIn(self.ads, ADS.P2)
-
+		self.ads = ADS1115(1)
 		self.ads.setGain(0)
 		self.ads.setMode(self.ads.MODE_SINGLE)
 		pass
@@ -76,9 +66,9 @@ class Tortank(object):
 	def ConvertRawWaterValue(self, rawADC : int) : 
 
 		# Gestion du signe (valeur sur 16 bits, en complément à 2)
-		if raw_adc > 0x7FFF:
-			raw_adc -= 0x10000
-			# raw_adc = 0
+		if rawADC > 0x7FFF:
+			rawADC -= 0x10000
+			# rawADC = 0
 
 		return rawADC / 32767
 
