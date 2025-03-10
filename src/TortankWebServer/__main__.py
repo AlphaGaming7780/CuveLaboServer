@@ -83,9 +83,7 @@ def main():
     while(True):
 
         waterLevel[0] = tortank.GetWaterLevelCuve1()
-        time.sleep(0.01)
         waterLevel[1] = tortank.GetWaterLevelCuve2()
-        time.sleep(0.01)
         waterLevel[2] = tortank.GetWaterLevelCuve3()
 
         # waterLevel[0] = random.random()
@@ -93,17 +91,10 @@ def main():
         # waterLevel[2] = random.random()
 
         print(f"WaterLevel : {waterLevel}")
-        # rawValue = [tortank.ads.readADC(0), tortank.ads.readADC(1), tortank.ads.readADC(2)]
-        rawValue = []
 
-        time.sleep(0.01)
-        rawValue[0] = tortank.ads.readADC(0)
-        time.sleep(0.01)
-        rawValue[1] = tortank.ads.readADC(1)
-        time.sleep(0.01)
-        rawValue[2] = tortank.ads.readADC(2)
-
+        rawValue = [tortank.ads.readADC(0), tortank.ads.readADC(1), tortank.ads.readADC(2)]
         print(f"RawValue : {rawValue}")
+        
         voltage = [tortank.ads.toVoltage(rawValue[0]), tortank.ads.toVoltage(rawValue[1]), tortank.ads.toVoltage(rawValue[2])]
         print(f"Voltage : {voltage}")
 
