@@ -4,7 +4,7 @@ import { WaveWithLevel } from "../../Wave/Wave.tsx";
 import { Cylindre } from "../Cylindre/Cylindre.tsx";
 import { UpdatedValueContext } from "../../API/UpdatedValue.tsx";
 import { Motor } from "../motor/motor.tsx";
-
+import { Tooltip, TooltipDirection } from "../../Tooltip/Tooltip.tsx";
 
 const CylindreContainer = (WaterLevel : number[]) => {
     return (
@@ -18,7 +18,7 @@ const CylindreContainer = (WaterLevel : number[]) => {
 
 export function Cuve() : React.JSX.Element {
 
-    const { WaterLevel } = useContext(UpdatedValueContext)
+    const { WaterLevel, MotorSpeed } = useContext(UpdatedValueContext)
     const CylindreContainerMemo = useMemo( () => CylindreContainer(WaterLevel), [WaterLevel] )
 
     return (
@@ -26,8 +26,8 @@ export function Cuve() : React.JSX.Element {
 
             <div className="top">
                 <div>
-                    <Motor/>
-                    <Motor/>
+                    <Tooltip content={`${(MotorSpeed[0]*100).toFixed(1)}%`} direction={TooltipDirection.Left} alwaysDisplay={true}><Motor/></Tooltip>
+                    <Tooltip content={`${(MotorSpeed[1]*100).toFixed(1)}%`} direction={TooltipDirection.Left} alwaysDisplay={true} ><Motor/></Tooltip>
                 </div>
 
                 {CylindreContainerMemo}

@@ -1,6 +1,5 @@
 import React from "react";
 import "./Motor.css"
-import { Tooltip } from "chart.js";
 
 export const Motor = () : any => {
     return (
@@ -10,6 +9,5 @@ export const Motor = () : any => {
             </div>
             
         </div>
-
     )
 }
