@@ -69,8 +69,8 @@ def SetMotorsSpeed():
     obj = {"Motor1Speed": -1.0, "Motor2Speed": -1.0}
     obj = request.json
 
-    # canRunMotor = tortank.CanMotorRun(waterLevels)
-    canRunMotor = True
+    canRunMotor = tortank.CanMotorRun(waterLevels)
+    # canRunMotor = True
 
     if(obj["Motor1Speed"] >= 0 and canRunMotor) :
         tortank.SetMotor1Speed(obj["Motor1Speed"])
