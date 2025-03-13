@@ -26,8 +26,8 @@ export function Cuve() : React.JSX.Element {
 
             <div className="top">
                 <div>
-                    <Tooltip content={`${(MotorSpeed[0]*100).toFixed(1)}%`} direction={TooltipDirection.Left} alwaysDisplay={true}><Motor/></Tooltip>
-                    <Tooltip content={`${(MotorSpeed[1]*100).toFixed(1)}%`} direction={TooltipDirection.Left} alwaysDisplay={true} ><Motor/></Tooltip>
+                    <Motor MotorSpeed={MotorSpeed[0]} />
+                    <Motor MotorSpeed={MotorSpeed[1]} />
                 </div>
 
                 {CylindreContainerMemo}

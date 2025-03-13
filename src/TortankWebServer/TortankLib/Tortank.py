@@ -91,27 +91,8 @@ class Tortank(object):
 		# return self.ConvertRawWaterValue(self.cuve3.value)
 		return ( self.ads.readADC(2) - self.CUVE_3_MIN) / ( self.CUVE_3_MAX - self.CUVE_3_MIN ) 
 	
-	# def GetGainInTension(self) -> float:
 
-	# 	# PGA Settings :
-	# 	# 2/3 = +-6.144v
-	# 	# 1 = +-4.069v
-	# 	# 2 = +-2.048v
-	# 	# 4 = +-1.024v
-	# 	# 8 = +-0.512v
-	# 	# 16 = +-0.256v
-	# 	match(self.ads.gain):
-	# 		case 2/3 : // <--- Fonctionne pas
-	# 			return 6.144
-	# 		case 1 :
-	# 			return 4.069
-	# 		case 2 :
-	# 			return 2.048
-	# 		case 4 :
-	# 			return 1.024
-	# 		case 8 :
-	# 			return 0.512
-	# 		case 16 :
-	# 			return 0.256
-	# 		case _ :
-	# 			return 1
+	def CanMotorRun(self, waterLevels : list[float]) : 
+		maxValue = max(waterLevels)
+		return maxValue < self.TORTANK_WATER_LEVEL_MAX
+

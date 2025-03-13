@@ -20,3 +20,11 @@
     }
 
 }
+
+.MotorTooltip {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 12rem;
+    height: 2rem;
+}

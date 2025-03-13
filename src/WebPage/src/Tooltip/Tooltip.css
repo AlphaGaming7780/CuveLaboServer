@@ -16,8 +16,9 @@
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
+        transform: scale(1);
     
-        &.Top {
+        /* &.Top {
             transform: translateX(-50%) translateY(-100%) scale(1);
         }
     
@@ -31,7 +32,7 @@
     
         &.Right {
             transform: translateX(50%) translateY(50%) scale(1);
-        }
+        } */
     
     }
 
@@ -39,8 +40,9 @@
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
+        transform: scale(1);
     
-        &.Top {
+        /* &.Top {
             transform: translateX(-50%) translateY(-100%) scale(1);
         }
     
@@ -54,7 +56,7 @@
     
         &.Right {
             transform: translateX(50%) translateY(50%) scale(1);
-        }
+        } */
     }
 
     .tooltip-child {
@@ -69,48 +71,67 @@
 }
   
 .tooltip {
+
     position: absolute;
     top: calc(-1 * var(--margin));
-    left: 50%;
-    transform: translateX(-50%) translateY(0%) scale(0);
-    padding: 0.3em 0.6em;
+    /* left: 50%; */
     opacity: 0;
     pointer-events: none;
     transition: all 0.2s;
+    transform: translateX(0%) translateY(0%) scale(0);
+    z-index: 99999;
+
+    /* position: relative; */
+    /* display: block; */
+    padding: 0.3em 0.6em;
     background: var(--tooltip-bg);
     color: var(--tooltip-color);
     border-radius: 0.5rem;
-    z-index: 99999;
     font-size: 17px;
+    /* width: 100%; */
+    /* height: 100%; */
+}  
 
-    &::before {
-        position: absolute;
-        content: "";
-        height: 0.6em;
-        width: 0.6em;
-        bottom: -0.2em;
-        transform: translate(-50%) rotate(45deg);
-        background: var(--tooltip-bg);
-        border-bottom-right-radius: 0.175rem;
+.tooltip-panel {
+    position: absolute;
+    top: calc(-1 * var(--margin));
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s;
+    transform: translateX(-50%) translateY(0%) scale(0);
+    z-index: 99999;
+    width: fit-content;
+    height: fit-content;
+    display: block;
+}
 
-    }
+.Tooltip-panel-marker {
+    display: block;
+    position: absolute;
+    content: "";
+    height: 0.6em;
+    width: 0.6em;
+    /* bottom: -0.2em; */
+    transform: translate(-50%) rotate(45deg);
+    background: var(--tooltip-bg);
+    border-bottom-right-radius: 0.175rem;
 
-    &.Top::before {
+    &.Top {
         left: 50%;
     }
 
-    &.Bottom::before {
+    &.Bottom {
         top: -50%;
         left: 50%;
     }
 
-    &.Left::before {
+    &.Left {
         left: 100%;
         top: 35%
     }
 
-    &.Right::before {
+    &.Right {
         top: 35%
     }
-
-}  
+}
