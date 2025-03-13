@@ -34,8 +34,6 @@ export function Cuve() : React.JSX.Element {
 
             </div>
 
-            
-
             <div className="tank">
                 <WaveWithLevel waterLevel={0.5} waveMaxHeight={0.5} />
             </div>

@@ -10,7 +10,6 @@ export interface MotorProps {
 export const Motor = (  {MotorSpeed}  : MotorProps) : any => {
 
     if(MotorSpeed < 0) MotorSpeed = 0;
-
     const [motorSpeed, SetMotorSpeed] = useState(MotorSpeed)
 
     const MotorTooltip = () => {

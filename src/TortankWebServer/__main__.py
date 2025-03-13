@@ -116,13 +116,13 @@ def main():
 
 
         if( not tortank.CanMotorRun(waterLevels) ) :
-            if( not hitTheLimit ) : motorSpeedBeforHitTheLimit = [ tortank.GetMotor1Speed(), tortank.GetMotor2Speed() ]
-            hitTheLimit = True
+            # if( not hitTheLimit ) : motorSpeedBeforHitTheLimit = [ tortank.GetMotor1Speed(), tortank.GetMotor2Speed() ]
+            # hitTheLimit = True
             tortank.SetMotor1Speed(0)
             tortank.SetMotor2Speed(0)
-        elif ( hitTheLimit ) : 
-            tortank.SetMotor1Speed(motorSpeedBeforHitTheLimit[0])
-            tortank.SetMotor2Speed(motorSpeedBeforHitTheLimit[1])
+        # elif ( hitTheLimit ) : 
+        #     tortank.SetMotor1Speed(motorSpeedBeforHitTheLimit[0])
+        #     tortank.SetMotor2Speed(motorSpeedBeforHitTheLimit[1])
         pass
 
 if __name__ == "__main__":
