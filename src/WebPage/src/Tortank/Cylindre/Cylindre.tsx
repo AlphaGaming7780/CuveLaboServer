@@ -6,7 +6,7 @@ import { WaveWithLevel } from "../../Wave/Wave.tsx";
 interface CyclindreProps {WaterLevel : number};
 
 export const Cylindre = ( {WaterLevel} : CyclindreProps  ) : React.JSX.Element => {
-    if(WaterLevel < 0) WaterLevel = 0
+    WaterLevel = Math.max(0, Math.min(1, WaterLevel))
     const relativeRef = useRef<HTMLDivElement>(null);
     const graduationRef = useRef<HTMLDivElement>(null);
     const [absolutePosition, setAbsolutePosition] = useState({ top: 0, left: 0 });
