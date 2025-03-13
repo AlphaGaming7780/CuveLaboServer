@@ -19,7 +19,6 @@ export const Motor = (  {MotorSpeed}  : MotorProps) : any => {
                 <label form="MotorSpeedRangeInput" style={{marginLeft:"0.5rem", marginBottom:"0"}} >{`${(motorSpeed*100).toFixed(1)}%`}</label>
             </div>
         )
-
     }
 
     return (
