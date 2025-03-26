@@ -1,4 +1,5 @@
 from gpiozero import Motor
+from gpiozero import LED
 
 # https://github.com/chandrawi/ADS1x15-ADC
 from ADS1x15 import ADS1115
@@ -17,6 +18,8 @@ class Tortank(object):
 	_motor1Speed : int = 0
 	_motor2Speed : int = 0
 
+	Output1 : LED
+
 	ads : ADS1115
 
 	CUVE_1_MIN = 620
@@ -28,9 +31,15 @@ class Tortank(object):
 	CUVE_3_MIN = 1900 #1900
 	CUVE_3_MAX = 23107
 
+
+	
+
 	def __init__(self):
 		self._motor1 = Motor(17, 27)
 		self._motor2 = Motor(23, 24)
+
+		self.Output1 = LED(26)
+		self.Output1.on
 
 		self.ads = ADS1115(1)
 		self.ads.setGain(0)
