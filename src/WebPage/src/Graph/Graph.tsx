@@ -13,6 +13,7 @@ import {
 	Title,
 	Tooltip,
 	Legend,
+	Decimation,
   } from 'chart.js';
 import { Line, ChartJSOrUndefined } from 'react-chartjs-2';
 import { defaultUpdatedValue, UpdatedValueContext } from "../API/UpdatedValue.tsx";
@@ -38,7 +39,8 @@ export function Graph() : React.JSX.Element {
 		LineElement,
 		Title,
 		Tooltip,
-		Legend
+		Legend,
+		Decimation
 	);
 
 	const ref = useRef<ChartJSOrUndefined<"line">>(null)

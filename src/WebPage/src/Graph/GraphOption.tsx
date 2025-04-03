@@ -11,6 +11,11 @@ export const graphOptions : ChartOptions<"line"> = {
         display: true,
         text: 'Chart.js Line Chart',
       },
+      decimation: {
+        enabled: true,
+        algorithm: 'min-max',
+      },
+      
     },
     scales: {
         y: {
