@@ -24,10 +24,7 @@ export const BaseDataContextProvider = async ({ children }) => {
             // request.then( async (response) => {
             if(!response.ok) return;
     
-            const json = await response.json();
-    
-            data = JSON.parse(json);
-                
+            data = await response.json();
             // })
         } catch (error) {
             console.error(error.message);
