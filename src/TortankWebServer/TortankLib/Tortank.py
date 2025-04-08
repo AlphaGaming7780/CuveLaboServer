@@ -42,7 +42,8 @@ class Tortank(object):
 		self.Output1.on
 
 		self.ads = ADS1115(1)
-		self.ads.setGain(0)
+		# self.ads.setGain(0)
+		self.ads.setGain(self.ads.PGA_0_256V)
 		self.ads.setMode(self.ads.MODE_SINGLE)
 		pass
 	
@@ -88,9 +89,16 @@ class Tortank(object):
 		return rawADC / 32767
 	
 
+	# def GetWaterLevelCuve1(self) -> int:
+	# 	# return self.ConvertRawWaterValue(self.cuve1.value)
+	# 	return ( self.ads.readADC(0) - self.CUVE_1_MIN) / ( self.CUVE_1_MAX - self.CUVE_1_MIN ) 
+	
 	def GetWaterLevelCuve1(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve1.value)
-		return ( self.ads.readADC(0) - self.CUVE_1_MIN) / ( self.CUVE_1_MAX - self.CUVE_1_MIN ) 
+		# Le 5.8838 vient de la conversion 60cm d'eau en kPa, 1 cm d'eau c 0.058838 bar.
+		val = abs( self.ads.readADC_Differential_0_1() )
+		print(f"Raw value : {val}")
+		return val / (5.8838 * 2.5)
 
 	def GetWaterLevelCuve2(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve2.value)

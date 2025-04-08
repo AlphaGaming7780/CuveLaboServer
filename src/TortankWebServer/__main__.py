@@ -102,6 +102,8 @@ def main():
         waterLevels[1] = tortank.GetWaterLevelCuve2()
         waterLevels[2] = tortank.GetWaterLevelCuve3()
 
+        print(f"Final value: {waterLevels[0]}")
+
         # waterLevels[0] = random.random()
         # waterLevels[1] = random.random()
         # waterLevels[2] = random.random()
