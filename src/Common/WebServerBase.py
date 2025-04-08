@@ -1,9 +1,10 @@
 import threading
 import time
 import json
-import random
 from flask import Flask, Response, jsonify, request
 from Common.LaboBase import LaboBase
+
+app = Flask(__name__, static_url_path='')
 
 class WebServerBase(object) :
 
@@ -13,12 +14,8 @@ class WebServerBase(object) :
 
     def __init__(self, labo : LaboBase):
         self._labo = labo
-        self._app = Flask(__name__, static_url_path='')
+        self._app = app
         self._waterLevels = [0.0, 0.0, 0.0]
-
-    @property
-    def app(self) -> Flask:
-        return self._app
 
     @app.route('/')
     def home(self):
