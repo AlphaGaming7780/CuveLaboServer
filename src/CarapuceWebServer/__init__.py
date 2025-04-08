@@ -1,1 +1,1 @@
-from CarapuceWebServer.CarapuceLib.Carapuce import Carapuce as Carapuce
+from CarapuceWebServer.Carapuce import Carapuce as Carapuce
