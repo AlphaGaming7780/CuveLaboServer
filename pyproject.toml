@@ -25,6 +25,9 @@ dependencies = [
 	'ADS1x15-ADC'
 ]
 
+[tool.hatch.build]
+sources = ["src"]
+
 [project.scripts]
 TortankWebServer = "TortankWebServer.__main__:main"
 CarapuceWebServer = "CarapuceWebServer.__main__:main"
