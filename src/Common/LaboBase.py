@@ -20,7 +20,7 @@ class LaboBase(object):
 		self._WaterMaxLevel = waterMaxLevel
 
 		for i in range(0, motors.__len__()):
-			self._MotorsCurrentSpeed[i] = 0
+			self._MotorsCurrentSpeed.append(0)
 
 		pass
 	
