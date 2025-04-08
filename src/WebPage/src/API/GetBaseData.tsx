@@ -19,6 +19,8 @@ export const BaseDataContextProvider = async ({ children }) => {
         try {
             const response = await fetch('/GetBaseData');
     
+            console.log(response)
+
             // request.then( async (response) => {
             if(!response.ok) return;
     

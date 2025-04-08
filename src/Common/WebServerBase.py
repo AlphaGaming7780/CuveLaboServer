@@ -4,34 +4,29 @@ import json
 from flask import Flask, Response, jsonify, request
 from Common.LaboBase import LaboBase
 
-app = Flask(__name__, static_url_path='')
-
 class WebServerBase:
     def __init__(self, labo: LaboBase):
         self._labo = labo
         self._waterLevels = [0.0, 0.0, 0.0]
+        self._app = Flask(__name__, static_url_path='')
 
-        # Bind routes
-        app.add_url_rule('/', view_func=self.home)
-        app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
-        app.add_url_rule('/event', view_func=self.event, methods=["GET"])
-        app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
-        app.add_url_rule('/GetMotorSpeed', view_func=self.get_motor_speed, methods=["GET"])
-        app.add_url_rule('/SetMotorsSpeed', view_func=self.set_motors_speed, methods=["POST"])
+        # Bind routes to the correct app instance (self._app)
+        self._app.add_url_rule('/', view_func=self.home)
+        self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
+        self._app.add_url_rule('/event', view_func=self.event, methods=["GET"])
+        self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
+        self._app.add_url_rule('/GetMotorSpeed', view_func=self.get_motor_speed, methods=["GET"])
+        self._app.add_url_rule('/SetMotorsSpeed', view_func=self.set_motors_speed, methods=["POST"])
 
     def home(self):
-        return app.send_static_file('index.html')
+        return self._app.send_static_file('index.html')
 
     def send_base_data(self):
         data = {
             "numberOfCuve": self._labo._NbCuve,
             "numberOfMotor": self._labo._NbMotor
         }
-
-        rep = jsonify(data)
-        rep.status_code = 200
-
-        return rep
+        return jsonify(data), 200
 
     def event(self):
         def generate():
@@ -69,7 +64,7 @@ class WebServerBase:
 
     def Run(self):
         def flask_thread():
-            app.run(host='0.0.0.0', debug=True, use_reloader=False)
+            self._app.run(host='0.0.0.0', debug=True, use_reloader=False)
 
         web_server_thread = threading.Thread(target=flask_thread)
         web_server_thread.start()
@@ -81,4 +76,4 @@ class WebServerBase:
             if not self._labo.CanMotorRun(self._waterLevels):
                 self._labo.StopAllMotors()
 
-            time.sleep(1)  # Ajout d'un petit sleep pour éviter une boucle trop agressive
+            time.sleep(1)
