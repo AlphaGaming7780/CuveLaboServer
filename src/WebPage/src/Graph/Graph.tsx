@@ -19,15 +19,27 @@ import { Line, ChartJSOrUndefined } from 'react-chartjs-2';
 import { defaultUpdatedValue, UpdatedValueContext } from "../API/UpdatedValue.tsx";
 import { graphData } from "./GraphData.tsx";
 import { graphOptions } from "./GraphOption.tsx";
+import { BaseDataContext } from "../API/GetBaseData.tsx";
 
 
 function AddValueToDataSet(time: string, WaterLevel : number[], MotorSpeed : number[]) {
 	graphData.labels?.push(time)
-	graphData.datasets[0].data.push(WaterLevel[0] * 100)
-	graphData.datasets[1].data.push(WaterLevel[1] * 100)
-	graphData.datasets[2].data.push(WaterLevel[2] * 100)
-	graphData.datasets[3].data.push(MotorSpeed[0] * 100)
-	graphData.datasets[4].data.push(MotorSpeed[1] * 100)
+
+	const { numberOfCuve, numberOfMotor } = useContext(BaseDataContext)
+
+	for(let i = 0; i < numberOfCuve; i++) {
+		graphData.datasets[i].data.push(WaterLevel[i] * 100)
+	}
+
+	for(let i = 0; i < numberOfMotor; i++) {
+		graphData.datasets[i + 3].data.push(MotorSpeed[i] * 100)
+	} // The + 3 should be "+ numberOfCuve", but the graph is alway going to have 3 water level for now
+
+	// graphData.datasets[0].data.push(WaterLevel[0] * 100)
+	// graphData.datasets[1].data.push(WaterLevel[1] * 100)
+	// graphData.datasets[2].data.push(WaterLevel[2] * 100)
+	// graphData.datasets[3].data.push(MotorSpeed[0] * 100)
+	// graphData.datasets[4].data.push(MotorSpeed[1] * 100)
 }
 
 export function Graph() : React.JSX.Element {

@@ -1,4 +1,6 @@
 import { ChartData, ChartDataset } from "chart.js";
+import { useContext } from "react";
+import { BaseDataContext } from "../API/GetBaseData";
 
 const commonDatasetoption : Partial<ChartDataset<"line">> = {
     pointRadius: 0, // Supprime les points
