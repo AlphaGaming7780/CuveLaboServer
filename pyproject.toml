@@ -28,6 +28,13 @@ dependencies = [
 [tool.hatch.build]
 sources = ["src"]
 
+[tool.hatch.build.targets.wheel]
+packages = [
+  "TortankWebServer",
+  "CarapuceWebServer",
+  "Common"
+]
+
 [project.scripts]
 TortankWebServer = "TortankWebServer.__main__:main"
 CarapuceWebServer = "CarapuceWebServer.__main__:main"
