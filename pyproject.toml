@@ -30,9 +30,9 @@ sources = ["src"]
 
 [tool.hatch.build.targets.wheel]
 packages = [
-  "TortankWebServer",
-  "CarapuceWebServer",
-  "Common"
+  "src/TortankWebServer",
+  "src/CarapuceWebServer",
+  "src/Common"
 ]
 
 [project.scripts]
