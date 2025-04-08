@@ -1,14 +1,14 @@
 
 export interface SetMotorsSpeedProps {
-    Motor1Speed?: number, 
-    Motor2Speed?: number
+    MotorIndex : number,
+    MotorSpeed : number,
 }
 
-export const SetMotorsSpeed = ( {Motor1Speed = -1, Motor2Speed = -1 } : SetMotorsSpeedProps) => {
+export const SetMotorsSpeed = ( {MotorIndex = -1, MotorSpeed = -1 } : SetMotorsSpeedProps) => {
 
     var data = {
-        "Motor1Speed": Motor1Speed,
-        "Motor2Speed": Motor2Speed
+        "MotorIndex": MotorIndex,
+        "MotorSpeed": MotorSpeed
     }
 
     fetch('/SetMotorsSpeed', {

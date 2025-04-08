@@ -21,6 +21,12 @@ class WebServerBase(object) :
     def home(self):
         return self._app.send_static_file('index.html')
 
+    @app.route('/GetBaseData', methods=["GET"])
+    def SendBaseData(self):
+        rep = jsonify( { "numberOfCuve": self._labo._NbCuve, "numberOfMotor": self._labo._NbMotor })
+        rep.status_code = 200
+        return rep
+
     @app.route('/event', methods=["GET"])  
     def event(self):
         # @stream_with_context
@@ -56,13 +62,13 @@ class WebServerBase(object) :
     @app.route('/SetMotorsSpeed', methods=["POST"])
     def SetMotorsSpeed(self):
 
-        obj = {"idx": -1.0, "speed": -1.0}
+        obj = {"MotorIndex": -1.0, "MotorSpeed": -1.0}
         obj = request.json
 
         canRunMotor = self._labo.CanMotorRun(self._waterLevels)
 
         if(canRunMotor):
-            self._labo.SetMotorSpeed(obj["idx"], obj["speed"])
+            self._labo.SetMotorSpeed(obj["MotorIndex"], obj["MotorSpeed"])
         
         return Response(status=200)
 
