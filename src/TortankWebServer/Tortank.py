@@ -20,12 +20,12 @@ class Tortank(LaboBase):
 		super().__init__(3, [ Motor(17, 27), Motor(23, 24) ])
 
 		self.ads1 = ADS1115(1)
-		self.ads1.setGain(self.ads.PGA_0_256V)
-		self.ads1.setMode(self.ads.MODE_SINGLE)
+		self.ads1.setGain(self.ads1.PGA_0_256V)
+		self.ads1.setMode(self.ads1.MODE_SINGLE)
 
 		self.ads2 = ADS1115(1, 0x49)
-		self.ads2.setGain(self.ads.PGA_0_256V)
-		self.ads2.setMode(self.ads.MODE_SINGLE)
+		self.ads2.setGain(self.ads2.PGA_0_256V)
+		self.ads2.setMode(self.ads2.MODE_SINGLE)
 		pass
 
 	def GetWaterLevels(self) -> list[float]:
