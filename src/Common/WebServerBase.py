@@ -1,4 +1,3 @@
-from array import array
 import threading
 import time
 import json
@@ -10,7 +9,7 @@ class WebServerBase(object) :
 
     labo : LaboBase
     app : Flask
-    waterLevels : array[float]
+    waterLevels : list[float]
 
     def __init__(self, labo : LaboBase):
         self.labo = labo

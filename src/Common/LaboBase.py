@@ -1,5 +1,4 @@
 from abc import *
-from array import array
 from gpiozero import Motor
 from gpiozero import LED
 
@@ -11,10 +10,10 @@ class LaboBase(object):
 	_WaterMaxLevel : float
 	_NbCuve : int
 	_NbMotor : int
-	_Motors : array[Motor]
-	_MotorsCurrentSpeed : array[float]
+	_Motors : list[Motor]
+	_MotorsCurrentSpeed : list[float]
 
-	def __init__(self, nbCuve : int, motors : array[Motor], waterMaxLevel : float = 0.95):
+	def __init__(self, nbCuve : int, motors : list[Motor], waterMaxLevel : float = 0.95):
 		self._NbCuve = nbCuve
 		self._Motors = motors
 		self._NbMotor = motors.__len__()
@@ -26,16 +25,16 @@ class LaboBase(object):
 		pass
 	
 	@abstractmethod
-	def GetWaterLevels(self) -> array[float]:
+	def GetWaterLevels(self) -> list[float]:
 		raise NotImplementedError("Subclass must implement abstract method")
 	
-	def CanMotorRun(self, waterLevels : array[float]) -> bool :
+	def CanMotorRun(self, waterLevels : list[float]) -> bool :
 		maxValue = max(waterLevels)
 		return maxValue < self._WaterMaxLevel
 
-	def GetMotorsSpeed(self) -> array[float]:
+	def GetMotorsSpeed(self) -> list[float]:
 
-		data : array[float]	= []
+		data : list[float]	= []
 		for i in range(0, self._NbMotor):
 			data[i] = self._MotorsCurrentSpeed[i]
 
