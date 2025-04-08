@@ -1,4 +1,3 @@
-from array import array
 from gpiozero import Motor
 from gpiozero import LED
 
@@ -21,7 +20,7 @@ class Carapuce(LaboBase):
 		self.ads.setMode(self.ads.MODE_SINGLE)
 		pass
 	
-	def GetWaterLevels(self) -> array[float]:
+	def GetWaterLevels(self) -> list[float]:
 		return [self.GetWaterLevel1()]
 	
 	def GetWaterLevel1(self) -> float : 

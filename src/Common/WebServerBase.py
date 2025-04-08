@@ -7,18 +7,22 @@ from Common.LaboBase import LaboBase
 
 class WebServerBase(object) :
 
-    labo : LaboBase
-    app : Flask
-    waterLevels : list[float]
+    _labo : LaboBase
+    _app : Flask
+    _waterLevels : list[float]
 
     def __init__(self, labo : LaboBase):
-        self.labo = labo
-        self.app = Flask(__name__, static_url_path='')
-        self.waterLevels = [0.0, 0.0, 0.0]
+        self._labo = labo
+        self._app = Flask(__name__, static_url_path='')
+        self._waterLevels = [0.0, 0.0, 0.0]
+
+    @property
+    def app(self) -> Flask:
+        return self._app
 
     @app.route('/')
     def home(self):
-        return self.app.send_static_file('index.html')
+        return self._app.send_static_file('index.html')
 
     @app.route('/event', methods=["GET"])  
     def event(self):
@@ -28,8 +32,8 @@ class WebServerBase(object) :
 
                     obj = {
                         'time': time.strftime("%H:%M:%S", time.localtime()), # Pas vraiment bon, il peut dcp y avoir un décalage
-                        'WaterLevel': self.waterLevels, 
-                        'MotorSpeed': self.labo.GetMotorSpeed()
+                        'WaterLevel': self._waterLevels, 
+                        'MotorSpeed': self._labo.GetMotorSpeed()
                     }
 
                     v = json.dumps(obj)
@@ -42,13 +46,13 @@ class WebServerBase(object) :
 
     @app.route('/GetWaterLevel', methods=["GET"])
     def GetWaterLevel(self):
-        rep = jsonify(self.waterLevels)
+        rep = jsonify(self._waterLevels)
         rep.status_code = 200
         return rep
 
     @app.route('/GetMotorSpeed', methods=["GET"])
     def GetMotorSpeed(self):
-        rep = jsonify( self.labo.GetMotorSpeed() )
+        rep = jsonify( self._labo.GetMotorSpeed() )
         rep.status_code = 200
         return rep
 
@@ -58,23 +62,23 @@ class WebServerBase(object) :
         obj = {"idx": -1.0, "speed": -1.0}
         obj = request.json
 
-        canRunMotor = self.labo.CanMotorRun(self.waterLevels)
+        canRunMotor = self._labo.CanMotorRun(self._waterLevels)
 
         if(canRunMotor):
-            self.labo.SetMotorSpeed(obj["idx"], obj["speed"])
+            self._labo.SetMotorSpeed(obj["idx"], obj["speed"])
         
         return Response(status=200)
 
     def Run(self):
-        webServerThread = threading.Thread(target=lambda: self.app.run(host='0.0.0.0', debug=True, use_reloader=False))
+        webServerThread = threading.Thread(target=lambda: self._app.run(host='0.0.0.0', debug=True, use_reloader=False))
         webServerThread.start()
 
         while(webServerThread.is_alive()):
 
-            waterLevels = self.labo.GetWaterLevels()
-            print(f"Final value: {waterLevels[0]}")
+            _waterLevels = self._labo.GetWaterLevels()
+            print(f"Final value: {_waterLevels[0]}")
 
-            if( not self.labo.CanMotorRun(waterLevels) ) :
-                self.labo.StopAllMotors()
+            if( not self._labo.CanMotorRun(_waterLevels) ) :
+                self._labo.StopAllMotors()
 
             pass
