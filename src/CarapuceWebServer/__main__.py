@@ -1,5 +1,5 @@
 from Common.WebServerBase import WebServerBase
-from CarapuceWebServer.CarapuceLib.Carapuce import Carapuce
+from CarapuceWebServer.Carapuce import Carapuce
 
 def main():
     carapuce : Carapuce = Carapuce()

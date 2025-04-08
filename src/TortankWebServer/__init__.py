@@ -1,1 +1,1 @@
-from TortankWebServer.TortankLib.Tortank import Tortank as Tortank
+from TortankWebServer.Tortank import Tortank as Tortank
