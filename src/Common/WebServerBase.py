@@ -27,7 +27,11 @@ class WebServerBase:
             "numberOfCuve": self._labo._NbCuve,
             "numberOfMotor": self._labo._NbMotor
         }
-        return jsonify(data), 200
+
+        rep = jsonify(data)
+        rep.status_code = 200
+
+        return rep
 
     def event(self):
         def generate():
