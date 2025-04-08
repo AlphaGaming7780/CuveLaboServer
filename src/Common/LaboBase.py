@@ -11,7 +11,7 @@ class LaboBase(object):
 	_NbCuve : int
 	_NbMotor : int
 	_Motors : list[Motor]
-	_MotorsCurrentSpeed : list[float]
+	_MotorsCurrentSpeed : list[float] = []
 
 	def __init__(self, nbCuve : int, motors : list[Motor], waterMaxLevel : float = 0.95):
 		self._NbCuve = nbCuve
