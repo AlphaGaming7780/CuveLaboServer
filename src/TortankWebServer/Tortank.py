@@ -34,14 +34,14 @@ class Tortank(LaboBase):
 	def GetWaterLevel1(self) -> float : 
 		val = self.ads1.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 25 * ( 32767 / 256 ) )
+		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
 	
 	def GetWaterLevel2(self) -> float : 
 		val = self.ads1.readADC_Differential_2_3()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 25 * ( 32767 / 256 ) )
+		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
 	
 	def GetWaterLevel3(self) -> float : 
 		val = self.ads2.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 25 * ( 32767 / 256 ) )
+		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )

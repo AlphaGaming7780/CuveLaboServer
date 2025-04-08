@@ -26,5 +26,5 @@ class Carapuce(LaboBase):
 	def GetWaterLevel1(self) -> float : 
 		val = self.ads.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 25 * ( 32767 / 256 ) )
+		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
 
