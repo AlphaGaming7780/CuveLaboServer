@@ -96,9 +96,9 @@ class Tortank(object):
 	def GetWaterLevelCuve1(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve1.value)
 		# Le 5.8838 vient de la conversion 60cm d'eau en kPa, 1 cm d'eau c 0.058838 bar.
-		val = abs( self.ads.readADC_Differential_0_1() )
+		val = self.ads.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 2.5 * 32767)
+		return val / (5.8838 * 0.0025 * 32767)
 
 	def GetWaterLevelCuve2(self) -> int:
 		# return self.ConvertRawWaterValue(self.cuve2.value)
