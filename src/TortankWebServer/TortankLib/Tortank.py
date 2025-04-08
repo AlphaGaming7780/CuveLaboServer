@@ -10,13 +10,13 @@ from ADS1x15 import ADS1115
 
 class Tortank(object):
 
-	TORTANK_WATER_LEVEL_MAX = 0.95
+	WATER_LEVEL_MAX = 0.95
 
 	_motor1 : Motor
 	_motor2 : Motor
 
-	_motor1Speed : int = 0
-	_motor2Speed : int = 0
+	_motor1Speed : float = 0
+	_motor2Speed : float = 0
 
 	Output1 : LED
 
@@ -47,32 +47,40 @@ class Tortank(object):
 		self.ads.setMode(self.ads.MODE_SINGLE)
 		pass
 	
-	def SetMotor1Speed(self, speed : int):
+	def SetMotor1Speed(self, speed : float):
 		"""
 		Set the speed of the motor 1.\n
 		`speed` : int, take a number between 0 and 1. 0 stop, 1 full speed.
 		"""
+
+		if(speed > 1) : speed = 1
+		if(speed < 0) : speed = 0
+
 		self._motor1Speed = speed
 		self._motor1.forward(speed)
 		pass
 
-	def GetMotor1Speed(self) -> int:
+	def GetMotor1Speed(self) -> float:
 		"""
 		Return the speed of the motor 1.\n
 		`return` : int, a number between 0 and 1. 0 stop, 1 full speed.
 		"""
 		return self._motor1Speed
 
-	def SetMotor2Speed(self, speed : int):
+	def SetMotor2Speed(self, speed : float):
 		"""
 		Set the speed of the motor 2.\n
 		`speed` : int, take a number between 0 and 1. 0 stop, 1 full speed.
 		"""
+
+		if(speed > 1) : speed = 1
+		if(speed < 0) : speed = 0
+
 		self._motor2Speed = speed
 		self._motor2.forward(speed)
 		pass
 	
-	def GetMotor2Speed(self) -> int:
+	def GetMotor2Speed(self) -> float:
 		"""
 		Return the speed of the motor 2.\n
 		`return` : int, a number between 0 and 1. 0 stop, 1 full speed.
@@ -93,23 +101,23 @@ class Tortank(object):
 	# 	# return self.ConvertRawWaterValue(self.cuve1.value)
 	# 	return ( self.ads.readADC(0) - self.CUVE_1_MIN) / ( self.CUVE_1_MAX - self.CUVE_1_MIN ) 
 	
-	def GetWaterLevelCuve1(self) -> int:
+	def GetWaterLevelCuve1(self) -> float:
 		# return self.ConvertRawWaterValue(self.cuve1.value)
 		# Le 5.8838 vient de la conversion 60cm d'eau en kPa, 1 cm d'eau c 0.058838 bar.
 		val = self.ads.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
 		return val / (5.8838 * 25 * ( 32767 / 256 ) )
 
-	def GetWaterLevelCuve2(self) -> int:
+	def GetWaterLevelCuve2(self) -> float:
 		# return self.ConvertRawWaterValue(self.cuve2.value)
 		return ( self.ads.readADC(1) - self.CUVE_2_MIN) / ( self.CUVE_2_MAX - self.CUVE_2_MIN ) 
 	
-	def GetWaterLevelCuve3(self) -> int:
+	def GetWaterLevelCuve3(self) -> float:
 		# return self.ConvertRawWaterValue(self.cuve3.value)
 		return ( self.ads.readADC(2) - self.CUVE_3_MIN) / ( self.CUVE_3_MAX - self.CUVE_3_MIN ) 
 	
 
 	def CanMotorRun(self, waterLevels : list[float]) : 
 		maxValue = max(waterLevels)
-		return maxValue < self.TORTANK_WATER_LEVEL_MAX
+		return maxValue < self.WATER_LEVEL_MAX
 

@@ -6,7 +6,9 @@ build-backend = "hatchling.build"
 name = "TortankWebServer"
 version = "0.1.0"
 authors = [
-  	{ name="Example Author", email="author@example.com" },
+  	{ name="Trioen Loïc", email="trioen.loic@gmail.com" },
+  	{ name="Mathys Deboever", email="" },
+  	{ name="Samy", email="" },
 ]
 description = "A small example package"
 readme = "README.md"
@@ -25,6 +27,7 @@ dependencies = [
 
 [project.scripts]
 TortankWebServer = "TortankWebServer.__main__:main"
+CarapuceWebServer = "CarapuceWebServer.__main__:main"
 
 [project.urls]
 Repository = "https://github.com/AlphaGaming7780/TortankWebServer.git"

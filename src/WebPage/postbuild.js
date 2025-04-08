@@ -2,7 +2,7 @@ var path = require('path');
 const fs = require("fs");
 
 const targetSource = './build'; // Relative path to copy files from
-const targetDestination = '../TortankWebServer/static'; // Relative path to copy files to
+const targetDestination = ['../TortankWebServer/static', '../CarapuceWebServer/static']; // Relative path to copy files to
 
 /**
  * Remove directory recursively
@@ -67,14 +67,18 @@ function copyFolderRecursiveSync(source, target, root = false) {
     }
 }
 
-// Calculate absolute paths using the relative paths we defined at the top
-const sourceFolder = path.resolve(targetSource);
-const destinationFolder = path.resolve(targetDestination);
+targetDestination.forEach( (value) => {
 
-// Remove destination folder if it exists to clear it
-if (fs.existsSync(destinationFolder)) {
-    rimraf(destinationFolder)
-}
+    // Calculate absolute paths using the relative paths we defined at the top
+    const sourceFolder = path.resolve(targetSource);
+    const destinationFolder = path.resolve(value);
 
-// Copy the build over
-copyFolderRecursiveSync(sourceFolder, destinationFolder, true)
+    // Remove destination folder if it exists to clear it
+    if (fs.existsSync(destinationFolder)) {
+        rimraf(destinationFolder)
+    }
+
+    // Copy the build over
+    copyFolderRecursiveSync(sourceFolder, destinationFolder, true)
+} )
+

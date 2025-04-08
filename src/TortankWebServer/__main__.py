@@ -11,10 +11,6 @@ app = Flask(__name__, static_url_path='')
 
 waterLevels = [0.0, 0.0, 0.0]
 
-motor1Speed : float = 0.0
-motor2Speed : float = 0.0
-
-
 @app.route('/')
 def home():
     return app.send_static_file('index.html')

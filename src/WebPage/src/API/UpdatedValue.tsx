@@ -13,7 +13,8 @@ export interface UpdatedValue {
 export const UpdatedValueContextProvider = ({ children }) => {
     
     const [state, setState] = useState(defaultUpdatedValue);
-  
+
+
     useEffect(() => {
         var valueOld : UpdatedValue = defaultUpdatedValue
         const eventSource = new EventSource('/event');  
@@ -40,17 +41,6 @@ export const UpdatedValueContextProvider = ({ children }) => {
 
         };  
     }, []);  
-
-
-    // useMemo( () => {
-    //     var valueOld : UpdatedValue = defaultUpdatedValue
-    //     setInterval( function() {
-    //         getUpdatedValue().then( (value) => { if(value !== valueOld) {
-    //             valueOld = value;
-    //             setState(value)
-    //         } } );
-    //     }, 1000 )
-    //  }, [] )
   
     return (
       <UpdatedValueContext.Provider value={ state }>
