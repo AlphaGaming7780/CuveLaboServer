@@ -7,7 +7,7 @@ import { BaseDataContext, BaseDataContextProvider, defaultBaseData } from './API
 import { useContext } from 'react';
 
 
-const InApp = (children) => {
+const InApp = ({children}) => {
 	// let data = useContext(BaseDataContext)
 
 	// if(data === defaultBaseData) return <></>
