@@ -1,6 +1,6 @@
 import React,{ createContext, useEffect, useState } from "react";
 
-export const defaultBaseData : BaseData = { numberOfCuve:0, numberOfMotor: 0 }
+export const defaultBaseData : BaseData = { numberOfCuve: -1, numberOfMotor: -1 }
 // Create a Context
 export const BaseDataContext = createContext(defaultBaseData);
 

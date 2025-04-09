@@ -11,10 +11,8 @@ const WaitForData = ({children}) => {
 	let data = useContext(BaseDataContext)
 	let data2 = useContext(UpdatedValueContext)
 
-	let value = data === defaultBaseData || data2 === defaultUpdatedValue
-
-	// if(data === defaultBaseData || data2 === defaultUpdatedValue) return <></>
-
+	let value = ( data === defaultBaseData || data2 === defaultUpdatedValue )
+	
 	return (
 		<div style={{display: value ? "none" : "block", transition: "ease-in-out", transitionProperty: "display", transitionDelay: "1s", transitionBehavior: "normal" }}>
 			{children}
