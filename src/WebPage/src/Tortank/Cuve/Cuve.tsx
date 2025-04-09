@@ -9,6 +9,8 @@ import { BaseDataContext } from "../../API/GetBaseData.tsx";
 
 const CylindreContainer = ( numberOfCuve : number, WaterLevel : number[]) => {
     
+    console.log(`number of cuve : ${numberOfCuve}, water levels : ${WaterLevel.length}`)
+
     if(numberOfCuve !== WaterLevel.length) return <></>
     
     return (
