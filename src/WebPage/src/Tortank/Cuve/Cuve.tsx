@@ -8,11 +8,7 @@ import { SetMotorsSpeed } from "../../API/SetMotorsSpeed.tsx";
 import { BaseDataContext } from "../../API/GetBaseData.tsx";
 
 const CylindreContainer = ( numberOfCuve : number, WaterLevel : number[]) => {
-    
-    console.log(`number of cuve : ${numberOfCuve}, water levels : ${WaterLevel.length}`)
-
-    if(numberOfCuve !== WaterLevel.length) return <></>
-    
+        
     return (
         <div className="cylindre-container" >
             {WaterLevel.map( (waterLevel) => { 
@@ -32,8 +28,11 @@ export function Cuve() : React.JSX.Element {
 
     let data : Array<JSX.Element> = []
 
+    if(MotorSpeed.length !== numberOfMotor) return <></>
+    if(WaterLevel.length !== numberOfCuve ) return <></>
+
     for (let i = 0; i < numberOfMotor; i++) {
-        data[i] = <Motor MotorSpeed={MotorSpeed[0]} OnMotorSpeedChange={(value) => SetMotorsSpeed({ MotorIndex:i, MotorSpeed:value })}/>
+        data[i] = <Motor MotorSpeed={MotorSpeed[i]} OnMotorSpeedChange={(value) => SetMotorsSpeed({ MotorIndex:i, MotorSpeed:value })}/>
     }
 
     return (
