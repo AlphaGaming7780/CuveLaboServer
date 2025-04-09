@@ -36,7 +36,7 @@ class LaboBase(object):
 
 		data : list[float]	= []
 		for i in range(0, self._NbMotor):
-			data[i] = self._MotorsCurrentSpeed[i]
+			data.append(self._MotorsCurrentSpeed[i])
 
 		return data
 
