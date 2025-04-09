@@ -1,6 +1,6 @@
 import React,{ createContext, useEffect, useMemo, useState } from "react";
 
-export const defaultUpdatedValue : UpdatedValue = {time:"null", WaterLevel:[-1,-1,-1], MotorSpeed:[-1,-1]}
+export const defaultUpdatedValue : UpdatedValue = {time:"null", WaterLevel:[], MotorSpeed:[]}
 // Create a Context
 export const UpdatedValueContext = createContext(defaultUpdatedValue);
 
