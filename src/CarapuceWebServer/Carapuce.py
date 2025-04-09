@@ -8,7 +8,7 @@ from ADS1x15 import ADS1115
 
 class Carapuce(LaboBase):
 
-	NUMBER_OF_CUVE = 2
+	NUMBER_OF_CUVE = 1
 
 	ads : ADS1115
 
