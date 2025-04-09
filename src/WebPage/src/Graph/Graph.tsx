@@ -22,10 +22,8 @@ import { graphOptions } from "./GraphOption.tsx";
 import { BaseDataContext } from "../API/GetBaseData.tsx";
 
 
-function AddValueToDataSet(time: string, WaterLevel : number[], MotorSpeed : number[]) {
+function AddValueToDataSet(time: string, WaterLevel : number[], MotorSpeed : number[], numberOfCuve : number, numberOfMotor : number) {
 	graphData.labels?.push(time)
-
-	const { numberOfCuve, numberOfMotor } = useContext(BaseDataContext)
 
 	for(let i = 0; i < numberOfCuve; i++) {
 		graphData.datasets[i].data.push(WaterLevel[i] * 100)
@@ -58,14 +56,15 @@ export function Graph() : React.JSX.Element {
 	const ref = useRef<ChartJSOrUndefined<"line">>(null)
 
 	const updatedValue = useContext(UpdatedValueContext)
+	const { numberOfCuve, numberOfMotor } = useContext(BaseDataContext)
 
 	useEffect( () => {
 		if(updatedValue === defaultUpdatedValue || ref.current == null) return
-		AddValueToDataSet(updatedValue.time, updatedValue.WaterLevel, updatedValue.MotorSpeed)
+		AddValueToDataSet(updatedValue.time, updatedValue.WaterLevel, updatedValue.MotorSpeed, numberOfCuve, numberOfMotor)
 		ref.current.data = graphData
 		ref.current.update()
 
-	}, [updatedValue, ref]  )
+	}, [updatedValue, ref, numberOfCuve, numberOfMotor]  )
 
 	return (
 		<Line title="Title" ref={ref} options={graphOptions} data={graphData} />
