@@ -34,7 +34,7 @@ class WebServerBase:
                 obj = {
                     'time': time.strftime("%H:%M:%S", time.localtime()),
                     'WaterLevel': self._waterLevels,
-                    'MotorSpeed': self._labo.GetMotorSpeed()
+                    'MotorSpeed': self._labo.GetMotorsSpeed()
                 }
                 yield f"data:{json.dumps(obj)}\n\n"
                 time.sleep(1)
