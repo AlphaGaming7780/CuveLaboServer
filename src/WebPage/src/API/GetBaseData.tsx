@@ -1,4 +1,4 @@
-import React,{ createContext, useState } from "react";
+import React,{ createContext, useEffect, useState } from "react";
 
 export const defaultBaseData : BaseData = { numberOfCuve:0, numberOfMotor: 0 }
 // Create a Context
@@ -9,40 +9,35 @@ export interface BaseData {
     numberOfMotor: number
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-export const BaseDataContextProvider = async ({ children }) => {
-    
-    const [state, setState] = useState(defaultBaseData);
+export const BaseDataContextProvider = ({ children }) => {
+    const [state, setState] = useState<BaseData>(defaultBaseData);
   
-    let data : BaseData = defaultBaseData;
-
-    while(data === defaultBaseData || data === undefined) {
+    useEffect(() => {
+      const fetchData = async () => {
         try {
-            const response = await fetch('/GetBaseData');
-    
-            console.log(response)
-
-            // request.then( async (response) => {
-            if(!response.ok) return;
-    
-            data = await response.json();
-            // })
+          const response = await fetch('/GetBaseData');
+          if (!response.ok) {
+            console.error("Erreur de réponse serveur :", response.status);
+            return;
+          }
+  
+          const data = await response.json();
+          setState(data);
         } catch (error) {
-            console.error(error.message);
+          console.error("Erreur lors du fetch de base data:", error.message);
         }
-        
-        // await sleep(1000);
-    
-    }
-
-    setState(data);
+      };
+  
+      // Lancer le fetch seulement si on est à l’état par défaut
+      if (state === defaultBaseData) {
+        fetchData();
+      }
+  
+    }, [state]);
   
     return (
-      <BaseDataContext.Provider value={ state }>
+      <BaseDataContext.Provider value={state}>
         {children}
       </BaseDataContext.Provider>
     );
-};
+  };
