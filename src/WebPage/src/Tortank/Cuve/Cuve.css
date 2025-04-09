@@ -12,6 +12,7 @@
         flex-direction: row;
         align-items: flex-end;
         height: 70%;
+        width: 100%;
 
         .cylindre-container {
             width: 100%;
