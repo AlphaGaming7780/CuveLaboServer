@@ -8,9 +8,9 @@ import { useContext } from 'react';
 
 
 const InApp = (children) => {
-	let data = useContext(BaseDataContext)
+	// let data = useContext(BaseDataContext)
 
-	if(data === defaultBaseData) return <></>
+	// if(data === defaultBaseData) return <></>
 
 	return (
 		<>

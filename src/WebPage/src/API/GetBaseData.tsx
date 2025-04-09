@@ -34,7 +34,7 @@ export const BaseDataContextProvider = async ({ children }) => {
             console.error(error.message);
         }
         
-        await sleep(1000);
+        // await sleep(1000);
     
     }
 
