@@ -16,7 +16,7 @@ const WaitForData = ({children}) => {
 	// if(data === defaultBaseData || data2 === defaultUpdatedValue) return <></>
 
 	return (
-		<div style={{display: value ? "none" : "flex", transition: "ease-in-out", transitionProperty: "display", transitionDelay: "1s", transitionBehavior: "normal" }}>
+		<div style={{display: value ? "none" : "block", transition: "ease-in-out", transitionProperty: "display", transitionDelay: "1s", transitionBehavior: "normal" }}>
 			{children}
 		</div>
 	)
