@@ -2,15 +2,16 @@
 import './App.css';
 import { Cuve } from './Tortank/Cuve/Cuve.tsx';
 import { Graph } from './Graph/Graph.tsx';
-import { UpdatedValueContextProvider } from './API/UpdatedValue.tsx';
+import { defaultUpdatedValue, UpdatedValueContext, UpdatedValueContextProvider } from './API/UpdatedValue.tsx';
 import { BaseDataContext, BaseDataContextProvider, defaultBaseData } from './API/GetBaseData.tsx';
 import { useContext } from 'react';
 
 
-const InApp = ({children}) => {
-	// let data = useContext(BaseDataContext)
+const WaitForData = ({children}) => {
+	let data = useContext(BaseDataContext)
+	let data2 = useContext(UpdatedValueContext)
 
-	// if(data === defaultBaseData) return <></>
+	if(data === defaultBaseData || data2 === defaultUpdatedValue) return <></>
 
 	return (
 		<>
@@ -24,14 +25,14 @@ function App() {
   return (
     <div className="App">
 		<BaseDataContextProvider>
-			<InApp>
-				<UpdatedValueContextProvider>
+			<UpdatedValueContextProvider>
+				<WaitForData>
 					<div style={{width:"50rem", height:"25rem"}}>
 						<Cuve />
 					</div>
 					<Graph/>
-				</UpdatedValueContextProvider>	
-			</InApp>
+				</WaitForData>
+			</UpdatedValueContextProvider>	
 		</BaseDataContextProvider>
     </div>
   );
