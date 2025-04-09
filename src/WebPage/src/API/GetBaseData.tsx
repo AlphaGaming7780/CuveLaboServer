@@ -9,6 +9,10 @@ export interface BaseData {
     numberOfMotor: number
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const BaseDataContextProvider = async ({ children }) => {
     
     const [state, setState] = useState(defaultBaseData);
@@ -29,6 +33,9 @@ export const BaseDataContextProvider = async ({ children }) => {
         } catch (error) {
             console.error(error.message);
         }
+        
+        await sleep(1000);
+    
     }
 
     setState(data);

@@ -26,7 +26,7 @@ const CylindreContainer = ( numberOfCuve : number, WaterLevel : number[]) => {
 export function Cuve() : React.JSX.Element {
     const { numberOfCuve, numberOfMotor } = useContext(BaseDataContext)
     const { WaterLevel, MotorSpeed } = useContext(UpdatedValueContext)
-    const CylindreContainerMemo = useMemo( () => CylindreContainer(numberOfCuve, WaterLevel), [WaterLevel] )
+    const CylindreContainerMemo = useMemo( () => CylindreContainer(numberOfCuve, WaterLevel), [WaterLevel, numberOfCuve] )
 
     let data : Array<JSX.Element> = []
 

@@ -7,18 +7,15 @@ import { BaseDataContext, BaseDataContextProvider, defaultBaseData } from './API
 import { useContext } from 'react';
 
 
-function InApp() {
+const InApp = (children) => {
 	let data = useContext(BaseDataContext)
 
 	if(data === defaultBaseData) return <></>
 
 	return (
-		<UpdatedValueContextProvider>
-			<div style={{width:"50rem", height:"25rem"}}>
-				<Cuve />
-			</div>
-			<Graph/>
-		</UpdatedValueContextProvider>		
+		<>
+			{children}
+		</>
 	)
 
 }
@@ -27,7 +24,14 @@ function App() {
   return (
     <div className="App">
 		<BaseDataContextProvider>
-			{InApp}
+			<InApp>
+				<UpdatedValueContextProvider>
+					<div style={{width:"50rem", height:"25rem"}}>
+						<Cuve />
+					</div>
+					<Graph/>
+				</UpdatedValueContextProvider>	
+			</InApp>
 		</BaseDataContextProvider>
     </div>
   );
