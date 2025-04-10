@@ -1,4 +1,4 @@
-import React,{ createContext, useEffect, useMemo, useState } from "react";
+import React,{ createContext, useEffect, useState } from "react";
 
 export const defaultUpdatedValue : UpdatedValue = {time:"null", WaterLevel:[], MotorSpeed:[]}
 // Create a Context
@@ -17,7 +17,7 @@ export const UpdatedValueContextProvider = ({ children }) => {
 
     useEffect(() => {
         var valueOld : UpdatedValue = defaultUpdatedValue
-        const eventSource = new EventSource('/event');  
+        const eventSource = new EventSource('/DataStream');  
         eventSource.onmessage = (event) => {
             // console.log(event)
             const data = JSON.parse(event.data)

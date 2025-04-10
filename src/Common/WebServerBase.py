@@ -1,37 +1,78 @@
 import threading
 import time
 import json
+from typing import List, TypedDict
 from flask import Flask, Response, jsonify, request
 from Common.LaboBase import LaboBase
 
 class WebServerBase:
+
+    class Client(TypedDict):
+        Ip : str
+        Name : str
+        lastPing : float
+
     def __init__(self, labo: LaboBase):
         self._labo = labo
         self._waterLevels = [0.0, 0.0, 0.0]
         self._app = Flask(__name__, static_url_path='')
+        self._ClientList : List[WebServerBase.Client] = []
 
         # Bind routes to the correct app instance (self._app)
         self._app.add_url_rule('/', view_func=self.home)
+        self._app.add_url_rule('/RegisterClient', view_func=self.RegisterClient, methods=["POST"])
+        self._app.add_url_rule('/UnregisterClient', view_func=self.UnregisterClient, methods=["POST"])
+        self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
         self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
-        self._app.add_url_rule('/event', view_func=self.event, methods=["GET"])
         self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
         self._app.add_url_rule('/GetWaterLevels', view_func=self.get_water_levels, methods=["GET"])
         self._app.add_url_rule('/GetMotorSpeed', view_func=self.get_motor_speed, methods=["GET"])
         self._app.add_url_rule('/SetMotorSpeed', view_func=self.set_motor_speed, methods=["POST"])
         self._app.add_url_rule('/GetMotorsSpeed', view_func=self.get_motors_speed, methods=["GET"])
         self._app.add_url_rule('/SetMotorsSpeed', view_func=self.set_motors_speed, methods=["POST"])
-
+        
     def home(self):
         return self._app.send_static_file('index.html')
 
-    def send_base_data(self):
-        data = {
-            "numberOfCuve": self._labo._NbCuve,
-            "numberOfMotor": self._labo._NbMotor
-        }
-        return jsonify(data), 200
+    def RegisterClient(self):
+        data = request.get_json()
+        ip = request.remote_addr
+        name = data.get("Name", ip)
 
-    def event(self):
+        isAlreadyInList = False
+        i : int = 0
+        for i in range(0, self._ClientList.__len__()):
+            if(self._ClientList[i]["Ip"] == ip): 
+                isAlreadyInList = True
+                break
+
+        if(isAlreadyInList):
+            self._ClientList[i]["Name"] = name
+            self._ClientList[i]["lastPing"] = time.time()
+        
+        else:
+            self._ClientList.append({"Ip": ip, "Name": name, "lastPing": time.time()})
+
+        return 200
+    
+    def UnregisterClient(self):
+
+        ip = request.remote_addr
+
+        isInList = False
+        i : int = 0
+        for i in range(0, self._ClientList.__len__()):
+            if(self._ClientList[i]["Ip"] == ip): 
+                isInList = True
+                break
+        
+        if(not isInList): return 500, "Not in list."
+
+        del self._ClientList[i]
+        
+        return 200
+
+    def DataStream(self):
         def generate():
             while True:
                 obj = {
@@ -46,6 +87,13 @@ class WebServerBase:
             "Cache-Control": "no-cache",
             "Connection": "keep-alive"
         })
+
+    def send_base_data(self):
+        data = {
+            "numberOfCuve": self._labo._NbCuve,
+            "numberOfMotor": self._labo._NbMotor
+        }
+        return jsonify(data), 200
 
     def get_water_level(self):
         cuveIndex = request.args.get("CuveIndex", -1, type=int)
