@@ -3,18 +3,19 @@ import { graphAnimation } from "./GraphAnimation.tsx";
 
 export const graphOptions : ChartOptions<"line"> = {
     responsive: true,
+    parsing: false,
     plugins: {
       legend: {
         position: 'top' as const,
       },
       title: {
         display: true,
-        text: 'Chart.js Line Chart',
+        text: 'Data Graph',
       },
       decimation: {
         enabled: true,
         algorithm: 'min-max',
-      },
+      }
       
     },
     scales: {
