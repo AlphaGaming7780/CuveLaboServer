@@ -14,9 +14,11 @@ class WebServerBase:
         self._app.add_url_rule('/', view_func=self.home)
         self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
         self._app.add_url_rule('/event', view_func=self.event, methods=["GET"])
-        self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
+        self._app.add_url_rule('/GetWaterLevels', view_func=self.get_water_levels, methods=["GET"])
         self._app.add_url_rule('/GetMotorSpeed', view_func=self.get_motor_speed, methods=["GET"])
         self._app.add_url_rule('/SetMotorSpeed', view_func=self.set_motor_speed, methods=["POST"])
+        self._app.add_url_rule('/GetMotorsSpeed', view_func=self.get_motors_speed, methods=["GET"])
+        self._app.add_url_rule('/SetMotorsSpeed', view_func=self.set_motors_speed, methods=["POST"])
 
     def home(self):
         return self._app.send_static_file('index.html')
@@ -44,7 +46,7 @@ class WebServerBase:
             "Connection": "keep-alive"
         })
 
-    def get_water_level(self):
+    def get_water_levels(self):
         return jsonify(self._waterLevels), 200
 
     def get_motor_speed(self):
@@ -63,6 +65,22 @@ class WebServerBase:
 
         if can_run_motor:
             self._labo.SetMotorSpeed(motor_index, motor_speed)
+
+        return Response(status=200)
+    
+    def get_motors_speed(self):
+        return jsonify(self._labo._MotorsCurrentSpeed), 200
+
+    def set_motors_speed(self):
+        data = request.get_json()  # attend une liste de dictionnaires
+
+        can_run_motor = self._labo.CanMotorRun(self._waterLevels)
+
+        if can_run_motor and isinstance(data, list):
+            for motor in data:
+                motor_index = motor.get("MotorIndex", -1)
+                motor_speed = motor.get("MotorSpeed", -1)
+                self._labo.SetMotorSpeed(motor_index, motor_speed)
 
         return Response(status=200)
 
