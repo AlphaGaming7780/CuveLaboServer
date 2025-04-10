@@ -3,7 +3,7 @@ import { graphAnimation } from "./GraphAnimation.tsx";
 
 export const graphOptions : ChartOptions<"line"> = {
     responsive: true,
-    parsing: false,
+    // parsing: false,
     plugins: {
       legend: {
         position: 'top' as const,
