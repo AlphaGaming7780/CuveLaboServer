@@ -3,16 +3,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "TortankWebServer"
+name = "CuveLaboServer"
 version = "0.1.0"
 authors = [
   	{ name="Trioen Loïc", email="trioen.loic@gmail.com" },
   	{ name="Mathys Deboever", email="" },
   	{ name="Samy", email="" },
 ]
-description = "A small example package"
+description = ""
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -40,6 +40,6 @@ TortankWebServer = "TortankWebServer.__main__:main"
 CarapuceWebServer = "CarapuceWebServer.__main__:main"
 
 [project.urls]
-Repository = "https://github.com/AlphaGaming7780/TortankWebServer.git"
-Homepage = "https://github.com/AlphaGaming7780/TortankWebServer"
-Issues = "https://github.com/AlphaGaming7780/TortankWebServer/issues"
+Repository = "https://github.com/AlphaGaming7780/CuveLaboServer.git"
+Homepage = "https://github.com/AlphaGaming7780/CuveLaboServer"
+Issues = "https://github.com/AlphaGaming7780/CuveLaboServer/issues"
