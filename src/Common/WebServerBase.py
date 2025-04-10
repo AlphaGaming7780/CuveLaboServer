@@ -53,7 +53,7 @@ class WebServerBase:
         else:
             self._ClientList.append({"Ip": ip, "Name": name, "lastPing": time.time()})
 
-        return 200
+        return jsonify(), 200
     
     def UnregisterClient(self):
 
@@ -66,11 +66,11 @@ class WebServerBase:
                 isInList = True
                 break
         
-        if(not isInList): return 500, "Not in list."
+        if(not isInList):  return jsonify(), 500, "Not in list."
 
         del self._ClientList[i]
         
-        return 200
+        return jsonify(), 200
 
     def DataStream(self):
         def generate():
