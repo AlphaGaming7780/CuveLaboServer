@@ -149,4 +149,4 @@ class WebServerBase:
             if not self._labo.CanMotorRun(self._waterLevels):
                 self._labo.StopAllMotors()
 
-            # time.sleep(0.5)
+            time.sleep(1)
