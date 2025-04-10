@@ -66,7 +66,7 @@ class WebServerBase:
                 isInList = True
                 break
         
-        if(not isInList):  return jsonify(), 500, "Not in list."
+        if(not isInList):  return jsonify(), 200
 
         del self._ClientList[i]
         
