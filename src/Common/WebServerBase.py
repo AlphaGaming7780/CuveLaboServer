@@ -50,10 +50,7 @@ class WebServerBase:
         return jsonify(self._waterLevels), 200
 
     def get_motor_speed(self):
-
-        data = request.get_json()
-        motor_index = data.get("MotorIndex", -1)
-
+        motor_index = request.args.get("MotorIndex", -1, type=int)
         return jsonify(self._labo.GetMotorSpeed(motor_index)), 200
 
     def set_motor_speed(self):

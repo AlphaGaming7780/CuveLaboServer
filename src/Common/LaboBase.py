@@ -52,7 +52,7 @@ class LaboBase(object):
 		pass
 
 	def GetMotorSpeed(self, motorIdx : int) -> float :
-		if(motorIdx < 0 or motorIdx >= self._NbMotor): return 0
+		if(motorIdx < 0 or motorIdx >= self._NbMotor): return -1
 		return self._MotorsCurrentSpeed[motorIdx]
 	
 	def StopAllMotors(self):
