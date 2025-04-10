@@ -14,6 +14,7 @@ class WebServerBase:
         self._app.add_url_rule('/', view_func=self.home)
         self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
         self._app.add_url_rule('/event', view_func=self.event, methods=["GET"])
+        self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
         self._app.add_url_rule('/GetWaterLevels', view_func=self.get_water_levels, methods=["GET"])
         self._app.add_url_rule('/GetMotorSpeed', view_func=self.get_motor_speed, methods=["GET"])
         self._app.add_url_rule('/SetMotorSpeed', view_func=self.set_motor_speed, methods=["POST"])
@@ -45,6 +46,11 @@ class WebServerBase:
             "Cache-Control": "no-cache",
             "Connection": "keep-alive"
         })
+
+    def get_water_level(self):
+        cuveIndex = request.args.get("CuveIndex", -1, type=int)
+        if (cuveIndex < 0 or cuveIndex >= self._labo._NbCuve) : return jsonify(-1), 200
+        return jsonify(self._waterLevels[cuveIndex]), 200
 
     def get_water_levels(self):
         return jsonify(self._waterLevels), 200
