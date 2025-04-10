@@ -13,7 +13,7 @@ export const graphOptions : ChartOptions<"line"> = {
         text: 'Data Graph',
       },
       decimation: {
-        enabled: true,
+        enabled: false, // Marche pas
         algorithm: 'min-max',
       }
       
