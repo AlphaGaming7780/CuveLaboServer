@@ -16,7 +16,7 @@ class WebServerBase:
         self._app.add_url_rule('/event', view_func=self.event, methods=["GET"])
         self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
         self._app.add_url_rule('/GetMotorSpeed', view_func=self.get_motor_speed, methods=["GET"])
-        self._app.add_url_rule('/SetMotorsSpeed', view_func=self.set_motors_speed, methods=["POST"])
+        self._app.add_url_rule('/SetMotorSpeed', view_func=self.set_motor_speed, methods=["POST"])
 
     def home(self):
         return self._app.send_static_file('index.html')
@@ -48,9 +48,13 @@ class WebServerBase:
         return jsonify(self._waterLevels), 200
 
     def get_motor_speed(self):
-        return jsonify(self._labo.GetMotorSpeed()), 200
 
-    def set_motors_speed(self):
+        data = request.get_json()
+        motor_index = data.get("MotorIndex", -1)
+
+        return jsonify(self._labo.GetMotorSpeed(motor_index)), 200
+
+    def set_motor_speed(self):
         data = request.get_json()
         motor_index = data.get("MotorIndex", -1)
         motor_speed = data.get("MotorSpeed", -1)
