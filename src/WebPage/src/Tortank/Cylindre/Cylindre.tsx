@@ -17,7 +17,6 @@ export const Cylindre = ( {WaterLevel} : CyclindreProps  ) : React.JSX.Element =
         if (relativeRef.current && graduationRef.current) {
           const rect = relativeRef.current.getBoundingClientRect();
           var cps = getComputedStyle(relativeRef.current)
-          console.log(cps.borderTopWidth);
           setAbsolutePosition({
             top: rect.top + (1 - WaterLevel) * ( relativeRef.current.clientHeight ) + parseInt(cps.borderTopWidth) - graduationRef.current.clientHeight / 2 + window.scrollY,
             left: rect.left + window.scrollX + 0.75 * rect.width,

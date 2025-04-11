@@ -31,6 +31,7 @@ class WebServerBase:
 		self._app.add_url_rule('/UnregisterClient', view_func=self.UnregisterClient, methods=["POST"])
 		self._app.add_url_rule('/ClientsDataUpdate', view_func=self.ClientsDataUpdate, methods=["GET"])
 		self._app.add_url_rule('/GetClientsData', view_func=self.SendClientsData, methods=["GET"])
+		self._app.add_url_rule('/ClientIsStillActive', view_func=self.SetClientIsStillActive, methods=["POST"])
 		self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
 		self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
 		self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
@@ -100,10 +101,34 @@ class WebServerBase:
 		
 		return jsonify(), 200
 
+	def SetClientIsStillActive(self):
+		ip = request.remote_addr
+
+		isInList = False
+		i : int = 0
+		for i in range(0, self._ClientList.__len__()):
+			if(self._ClientList[i]["Ip"] == ip): 
+				isInList = True
+				self._ClientList[i]["lastPing"] = time.time()
+				break
+
+		if(not isInList): return jsonify(), 403
+		return jsonify(), 200
+
+
+
 	def ClientsDataUpdate(self):
 		def generate():
 			while True:
 				time.sleep(1)
+
+				t = time.time()
+				for client in self._ClientList:
+					if(client["lastPing"] - t > 2):
+						self._ClientList.remove(client)
+						if(self._ActiveClient ==  client):
+							self._ActiveClient == self._defaultClient
+						self._ClientAreDirty = True
 
 				if self._ActiveClient == self._defaultClient and len(self._ClientList) > 0:
 					self._ActiveClient = self._ClientList[0]
