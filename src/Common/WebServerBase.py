@@ -193,9 +193,7 @@ class WebServerBase:
 
 	def set_motors_speed(self):
 
-		ip = request.remote_addr
-		print(ip) 
-		if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
+		if(not self.CanSet()):  return jsonify(), 403
 
 		data = request.get_json()  # attend une liste de dictionnaires
 
