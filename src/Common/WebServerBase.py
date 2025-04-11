@@ -124,9 +124,7 @@ class WebServerBase:
 
 				t = time.time()
 				for client in self._ClientList:
-					val = client["lastPing"] - t
-					print(f"Client {client} last ping delta time: {val}")
-					if(val > 2):
+					if(t - client["lastPing"] > 2):
 						print(f"Client : {client} didn't ping the last two second.")
 						self._ClientList.remove(client)
 						if(self._ActiveClient ==  client):
