@@ -79,7 +79,7 @@ class WebServerBase:
 				break
 		
 		if(self._ActiveClient["Ip"] == ip):
-			self._ClientList = None
+			self._ActiveClient = None
 			self._ClientAreDirty = True
 
 		if(not isInList):  return jsonify(), 200
