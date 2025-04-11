@@ -89,7 +89,7 @@ class WebServerBase:
 		
 		if(self._ActiveClient["Ip"] == ip):
 			self._labo.Reset()
-			self._ActiveClient = None
+			self._ActiveClient = self._defaultClient
 			self._ClientAreDirty = True
 
 		if(not isInList):  return jsonify(), 200
