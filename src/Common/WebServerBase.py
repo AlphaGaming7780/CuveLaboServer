@@ -16,12 +16,16 @@ class WebServerBase:
         self._labo = labo
         self._waterLevels = [0.0, 0.0, 0.0]
         self._app = Flask(__name__, static_url_path='')
+        self._ActiveClient : WebServerBase.Client = None
         self._ClientList : List[WebServerBase.Client] = []
+        self._ClientAreDirty = False
 
         # Bind routes to the correct app instance (self._app)
         self._app.add_url_rule('/', view_func=self.home)
         self._app.add_url_rule('/RegisterClient', view_func=self.RegisterClient, methods=["POST"])
         self._app.add_url_rule('/UnregisterClient', view_func=self.UnregisterClient, methods=["POST"])
+        self._app.add_url_rule('/ClientsDataUpdate', view_func=self.ClientsDataUpdate, methods=["GET"])
+        self._app.add_url_rule('/GetClientsData', view_func=self.SendClientsData, methods=["GET"])
         self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
         self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
         self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
@@ -53,6 +57,8 @@ class WebServerBase:
         else:
             self._ClientList.append({"Ip": ip, "Name": name, "lastPing": time.time()})
 
+        self._ClientAreDirty = True
+
         return jsonify(), 200
     
     def UnregisterClient(self):
@@ -66,11 +72,51 @@ class WebServerBase:
                 isInList = True
                 break
         
+        if(self._ActiveClient["Ip"] == ip):
+            self._ClientList = None
+            self._ClientAreDirty = True
+
         if(not isInList):  return jsonify(), 200
 
         del self._ClientList[i]
+
+        self._ClientAreDirty = True
         
         return jsonify(), 200
+
+    def ClientsDataUpdate(self):
+        def generate():
+            while True:
+
+                time.sleep(1)
+
+                if ( not self._ClientAreDirty ) : continue
+
+                self._ClientAreDirty = False
+
+                obj = self.GetClientsData()
+                
+                yield f"data:{json.dumps(obj)}\n\n"
+                time.sleep(1)
+
+        return Response(generate(), mimetype='text/event-stream', headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive"
+        })
+    
+    def SendClientsData(self) :
+        return jsonify(self.GetClientsData()), 200
+    
+    def GetClientsData(self) : 
+        activeIp = ""
+        if(self._ActiveClient != None):
+            activeIp = self._ActiveClient["Ip"]
+
+        obj = {
+            'ActiveClient': activeIp,
+            'ClientList': self._ClientList
+        }
+        return obj
 
     def DataStream(self):
         def generate():
@@ -108,6 +154,10 @@ class WebServerBase:
         return jsonify(self._labo.GetMotorSpeed(motor_index)), 200
 
     def set_motor_speed(self):
+
+        ip = request.remote_addr
+        if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
+
         data = request.get_json()
         motor_index = data.get("MotorIndex", -1)
         motor_speed = data.get("MotorSpeed", -1)
@@ -123,6 +173,10 @@ class WebServerBase:
         return jsonify(self._labo._MotorsCurrentSpeed), 200
 
     def set_motors_speed(self):
+
+        ip = request.remote_addr
+        if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
+
         data = request.get_json()  # attend une liste de dictionnaires
 
         can_run_motor = self._labo.CanMotorRun(self._waterLevels)
