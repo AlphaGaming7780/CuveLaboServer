@@ -22,7 +22,7 @@ class WebServerBase:
 		print(f"IP : {self._Ip}")
 		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage"}
 
-		self._ActiveClient : WebServerBase.Client = None
+		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
 		self._ClientAreDirty = False
 
@@ -79,6 +79,7 @@ class WebServerBase:
 				break
 		
 		if(self._ActiveClient["Ip"] == ip):
+			self._labo.Reset()
 			self._ActiveClient = None
 			self._ClientAreDirty = True
 
@@ -95,7 +96,7 @@ class WebServerBase:
 			while True:
 				time.sleep(1)
 
-				if self._ActiveClient is None and len(self._ClientList) > 0:
+				if self._ActiveClient == self._defaultClient and len(self._ClientList) > 0:
 					self._ActiveClient = self._ClientList[0]
 					self._ClientAreDirty = True
 

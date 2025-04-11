@@ -59,3 +59,6 @@ class LaboBase(object):
 		for i in range(0, self._NbMotor):
 			self._Motors[i].stop()
 			self._MotorsCurrentSpeed[i] = 0
+
+	def Reset(self):
+		self.StopAllMotors()
