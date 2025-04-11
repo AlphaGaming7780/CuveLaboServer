@@ -16,6 +16,9 @@ class WebServerBase:
         self._labo = labo
         self._waterLevels = [0.0, 0.0, 0.0]
         self._app = Flask(__name__, static_url_path='')
+
+        self._defaultClient : WebServerBase.Client = {}
+
         self._ActiveClient : WebServerBase.Client = None
         self._ClientList : List[WebServerBase.Client] = []
         self._ClientAreDirty = False
@@ -156,7 +159,8 @@ class WebServerBase:
     def set_motor_speed(self):
 
         ip = request.remote_addr
-        if(self._ActiveClient["Ip"] != ip):  return jsonify({}), 403
+        print(ip)
+        if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
 
         data = request.get_json()
         motor_index = data.get("MotorIndex", -1)
@@ -175,7 +179,8 @@ class WebServerBase:
     def set_motors_speed(self):
 
         ip = request.remote_addr
-        if(self._ActiveClient["Ip"] != ip):  return jsonify({}), 403
+        print(ip) 
+        if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
 
         data = request.get_json()  # attend une liste de dictionnaires
 
