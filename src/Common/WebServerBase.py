@@ -125,6 +125,7 @@ class WebServerBase:
 				t = time.time()
 				for client in self._ClientList:
 					if(client["lastPing"] - t > 2):
+						print(f"Client : {client} didn't ping the last two second.")
 						self._ClientList.remove(client)
 						if(self._ActiveClient ==  client):
 							self._labo.Reset()
@@ -132,6 +133,7 @@ class WebServerBase:
 						self._ClientAreDirty = True
 
 				if self._ActiveClient == self._defaultClient and len(self._ClientList) > 0:
+					self._labo.Reset()
 					self._ActiveClient = self._ClientList[0]
 					self._ClientAreDirty = True
 
