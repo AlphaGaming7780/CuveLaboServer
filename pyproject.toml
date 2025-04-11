@@ -23,6 +23,7 @@ dependencies = [
 	'Flask',
 	'gpiozero',
 	'ADS1x15-ADC'
+	'socket,
 ]
 
 [tool.hatch.build]

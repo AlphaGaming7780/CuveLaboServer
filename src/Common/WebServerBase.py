@@ -2,6 +2,7 @@ import threading
 import time
 import json
 from typing import List, TypedDict
+import socket
 from flask import Flask, Response, jsonify, request
 from Common.LaboBase import LaboBase
 
@@ -17,7 +18,9 @@ class WebServerBase:
         self._waterLevels = [0.0, 0.0, 0.0]
         self._app = Flask(__name__, static_url_path='')
 
-        self._defaultClient : WebServerBase.Client = {}
+        self._Ip = socket.gethostbyname(socket.gethostname())
+        print(f"IP : {self._Ip}")
+        self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage"}
 
         self._ActiveClient : WebServerBase.Client = None
         self._ClientList : List[WebServerBase.Client] = []
@@ -92,6 +95,10 @@ class WebServerBase:
             while True:
 
                 time.sleep(1)
+
+                if( self._ActiveClient == None and self._ClientList.__len__() > 0 ):
+                    self._ActiveClient = self._ClientList[0]
+                    self._ClientAreDirty = True
 
                 if ( not self._ClientAreDirty ) : continue
 
