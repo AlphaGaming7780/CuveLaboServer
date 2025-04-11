@@ -84,7 +84,7 @@ class WebServerBase:
 
 		if(not isInList):  return jsonify(), 200
 
-		del self._ClientList[i]
+		self._ClientList.pop(i)
 
 		self._ClientAreDirty = True
 		
