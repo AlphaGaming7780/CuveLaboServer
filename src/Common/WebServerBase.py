@@ -125,9 +125,9 @@ class WebServerBase:
 				t = time.time()
 				for client in self._ClientList:
 					if(t - client["lastPing"] > 2):
-						print(f"Client : {client} didn't ping the last two second.")
+						print(f"Client : {client['Name']} didn't ping the last two second.")
 						self._ClientList.remove(client)
-						if(self._ActiveClient == client):
+						if(self._ActiveClient["Ip"] == client["Ip"]):
 							print("Client was the active one, reseting.")
 							self._labo.Reset()
 							self._ActiveClient == self._defaultClient
