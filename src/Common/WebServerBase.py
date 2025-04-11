@@ -139,7 +139,7 @@ class WebServerBase:
         def flask_thread():
             self._app.run(host='0.0.0.0', debug=True, use_reloader=False)
 
-        web_server_thread = threading.Thread(target=flask_thread)
+        web_server_thread = threading.Thread(target=flask_thread, daemon=True)
         web_server_thread.start()
 
         while web_server_thread.is_alive():
@@ -149,4 +149,5 @@ class WebServerBase:
             if not self._labo.CanMotorRun(self._waterLevels):
                 self._labo.StopAllMotors()
 
+            # Enlever ce timer pour maximisé les mise a jour.
             time.sleep(1)
