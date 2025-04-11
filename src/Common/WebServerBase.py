@@ -156,7 +156,7 @@ class WebServerBase:
     def set_motor_speed(self):
 
         ip = request.remote_addr
-        if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
+        if(self._ActiveClient["Ip"] != ip):  return jsonify({}), 403
 
         data = request.get_json()
         motor_index = data.get("MotorIndex", -1)
@@ -175,7 +175,7 @@ class WebServerBase:
     def set_motors_speed(self):
 
         ip = request.remote_addr
-        if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
+        if(self._ActiveClient["Ip"] != ip):  return jsonify({}), 403
 
         data = request.get_json()  # attend une liste de dictionnaires
 
