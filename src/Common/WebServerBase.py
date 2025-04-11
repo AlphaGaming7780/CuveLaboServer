@@ -127,6 +127,7 @@ class WebServerBase:
 					if(client["lastPing"] - t > 2):
 						self._ClientList.remove(client)
 						if(self._ActiveClient ==  client):
+							self._labo.Reset()
 							self._ActiveClient == self._defaultClient
 						self._ClientAreDirty = True
 
