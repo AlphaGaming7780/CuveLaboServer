@@ -22,8 +22,7 @@ license-files = ["LICEN[CS]E*"]
 dependencies = [
 	'Flask',
 	'gpiozero',
-	'ADS1x15-ADC',
-	'socket'
+	'ADS1x15-ADC'
 ]
 
 [tool.hatch.build]
