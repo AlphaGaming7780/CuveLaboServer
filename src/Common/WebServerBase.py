@@ -18,7 +18,7 @@ class WebServerBase:
 		self._waterLevels = [0.0, 0.0, 0.0]
 		self._app = Flask(__name__, static_url_path='')
 
-		self._Ip = socket.gethostbyname(socket.gethostname())
+		self._Ip = self.get_local_ip()
 		print(f"IP : {self._Ip}")
 		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage"}
 
@@ -41,6 +41,16 @@ class WebServerBase:
 		self._app.add_url_rule('/GetMotorsSpeed', view_func=self.get_motors_speed, methods=["GET"])
 		self._app.add_url_rule('/SetMotorsSpeed', view_func=self.set_motors_speed, methods=["POST"])
 		
+	def get_local_ip(self):
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		try:
+			# Connexion bidon juste pour récupérer l’IP locale assignée
+			s.connect(("8.8.8.8", 80))
+			ip = s.getsockname()[0]
+		finally:
+			s.close()
+		return ip
+
 	def home(self):
 		return self._app.send_static_file('index.html')
 
@@ -165,9 +175,7 @@ class WebServerBase:
 
 	def set_motor_speed(self):
 
-		ip = request.remote_addr
-		print(ip)
-		if(self._ActiveClient["Ip"] != ip):  return jsonify(), 403
+		if(not self.CanSet()):  return jsonify(), 403
 
 		data = request.get_json()
 		motor_index = data.get("MotorIndex", -1)
@@ -200,6 +208,15 @@ class WebServerBase:
 				self._labo.SetMotorSpeed(motor_index, motor_speed)
 
 		return Response(status=200)
+
+	def CanSet(self) -> bool :
+		ip = request.remote_addr
+		value = self._ActiveClient["Ip"] == ip
+		
+		if(not value):
+			print(f"Request IP: {ip}, Active IP: {self._ActiveClient["Ip"]}")
+
+		return value
 
 	def Run(self):
 		def flask_thread():
