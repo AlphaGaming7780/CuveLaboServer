@@ -21,7 +21,6 @@ class WebServerBase:
 		self._Ip = self.get_local_ip()
 		print(f"IP : {self._Ip}")
 		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage"}
-
 		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
 		self._ClientAreDirty = False
@@ -212,7 +211,7 @@ class WebServerBase:
 		value = self._ActiveClient["Ip"] == ip
 		
 		if(not value):
-			print(f"Request IP: {ip}, Active IP: {self._ActiveClient["Ip"]}")
+			print(f"Request IP: {ip}, Active IP: {self._ActiveClient['Ip']}")
 
 		return value
 
