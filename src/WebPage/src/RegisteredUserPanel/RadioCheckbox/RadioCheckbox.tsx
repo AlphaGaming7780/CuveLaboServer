@@ -1,12 +1,21 @@
-import React, { JSX } from 'react';
+import React, { JSX, useState } from 'react';
 import './RadioCheckbox.css';
 
 export const RadioCheckbox = () : JSX.Element => {
 
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+
     return (
         <>
-            <input type="checkbox" id="checkboxInput"></input>
-            <label form="checkboxInput" className="toggleSwitch"></label>
+            <div>
+                <input type="checkbox" id="checkboxInput" checked={isChecked} onChange={handleCheckboxChange}/>
+                <label htmlFor="checkboxInput" className="toggleSwitch">
+                </label>
+            </div>
         </>
     )
 }
