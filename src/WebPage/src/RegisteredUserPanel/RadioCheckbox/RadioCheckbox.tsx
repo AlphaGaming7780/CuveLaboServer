@@ -5,11 +5,10 @@ export const RadioCheckbox = ({children}) : JSX.Element => {
 
     return (
         <>
-            <input type="checkbox" id="checkboxInput">
-                <label form="checkboxInput" className="toggleSwitch"> 
-                    {children}
-                </label>
-            </input>
+            <input type="checkbox" id="checkboxInput"></input>
+            <label form="checkboxInput" className="toggleSwitch"> 
+                {children}
+            </label>
         </>
     )
 }
