@@ -26,7 +26,7 @@
 	border-radius: 50%;
 	transition-duration: .2s;
 	box-shadow: 5px 2px 7px rgba(8, 8, 8, 0.26);
-	border: 5px solid var(--background) /*white*/;
+	border: 5px solid var(--selection) /*white*/;
 }
 
 #checkboxInput:checked+.toggleSwitch::after {
