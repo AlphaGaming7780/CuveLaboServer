@@ -171,6 +171,7 @@ class WebServerBase:
 			return jsonify(), 403
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
+		self._ClientAreDirty = True
 		return jsonify(), 200
 
 	def DataStream(self):
