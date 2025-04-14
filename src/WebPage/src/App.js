@@ -2,6 +2,7 @@
 import './App.css';
 import { Cuve } from './Tortank/Cuve/Cuve.tsx';
 import { Graph } from './Graph/Graph.tsx';
+import { RegisteredUserPanel } from './RegisteredUserPanel/RegisteredUserPanel.tsx';
 import { defaultUpdatedValue, UpdatedValueContext, UpdatedValueContextProvider } from './API/UpdatedValue.tsx';
 import { BaseDataContext, BaseDataContextProvider, defaultBaseData } from './API/GetBaseData.tsx';
 import { useContext } from 'react';
@@ -37,7 +38,7 @@ function App() {
 						<Graph/>
 					</div>
 					<div style={{width:"20%"}}>
-						
+						<RegisteredUserPanel/>
 					</div>
 				</WaitForData>
 			</UpdatedValueContextProvider>	

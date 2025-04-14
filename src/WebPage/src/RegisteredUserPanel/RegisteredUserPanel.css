@@ -1,0 +1,7 @@
+.registered-user-panel {
+    width: 100%;
+    height: auto;
+    background-color: var(--background-alt);
+    border-radius: 0.5rem;
+    display: flex;
+}
