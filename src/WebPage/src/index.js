@@ -4,18 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = "https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css";
+// link.href = "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css";
+document.head.appendChild(link);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
-
-const link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = "https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css";
-// link.href = "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css";
-document.head.appendChild(link);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

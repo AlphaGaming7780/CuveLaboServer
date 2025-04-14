@@ -12,9 +12,9 @@ const WaitForData = ({children}) => {
 	let data2 = useContext(UpdatedValueContext)
 
 	let value = ( data === defaultBaseData || data2 === defaultUpdatedValue )
-	
+	//className='InApp'
 	return (
-		<div className='InApp' style={{display: value ? "none" : "block" }}>
+		<div style={{display: value ? "none" : "block" }}> 
 			{children}
 		</div>
 	)
