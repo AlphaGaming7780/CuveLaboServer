@@ -12,7 +12,7 @@ export const RegisteredUserPanel = () => {
             <button type='button' onClick={ () => ResetActiveClient() } >Reset Active Client</button>
             <span style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
                 <RadioCheckbox onChange={ () => ResetActiveClient() } />
-                <p style={{paddingLeft: "0.4rem" }}>Enable/Disable</p>
+                <p style={{paddingLeft: "0.4rem" }}>Disable/Enable</p>
             </span>
         </div>
     );
