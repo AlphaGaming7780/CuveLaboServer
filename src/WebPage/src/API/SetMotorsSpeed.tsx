@@ -1,3 +1,4 @@
+import { PostData } from "./PostData.tsx"
 
 export interface SetMotorsSpeedProps {
     MotorIndex : number,
@@ -11,12 +12,14 @@ export const SetMotorSpeed = ( {MotorIndex = -1, MotorSpeed = -1 } : SetMotorsSp
         "MotorSpeed": MotorSpeed
     }
 
-    fetch('/SetMotorSpeed', {
+    PostData('/SetMotorSpeed', data)
 
-        cache: "no-cache",
-        method: 'POST', 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+    // fetch('/SetMotorSpeed', {
+
+    //     cache: "no-cache",
+    //     method: 'POST', 
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(data)
   
-    })
+    // })
 }

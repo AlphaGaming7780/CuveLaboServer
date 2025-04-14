@@ -4,4 +4,5 @@
     background-color: var(--background-alt);
     border-radius: 0.5rem;
     display: flex;
+    flex-direction: column;
 }

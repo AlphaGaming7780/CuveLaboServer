@@ -49,20 +49,20 @@ export const UpdatedValueContextProvider = ({ children }) => {
     );
 };
 
-export async function getUpdatedValue() : Promise<UpdatedValue> {
+// export async function getUpdatedValue() : Promise<UpdatedValue> {
 
-    var value : UpdatedValue = defaultUpdatedValue
+//     var value : UpdatedValue = defaultUpdatedValue
 
-    try {
-        const response = await fetch('/GetUpdatedValue');
-        if (!response.ok) {
-            throw new Error(`Bad server response : ${response.statusText}`);
-        }
-        const data : UpdatedValue = await response.json();
-        value = data;
-    } catch (error) {
-        throw new Error("Something went wrong in getUpdatedValue().")
-    }
+//     try {
+//         const response = await fetch('/GetUpdatedValue');
+//         if (!response.ok) {
+//             throw new Error(`Bad server response : ${response.statusText}`);
+//         }
+//         const data : UpdatedValue = await response.json();
+//         value = data;
+//     } catch (error) {
+//         throw new Error("Something went wrong in getUpdatedValue().")
+//     }
 
-    return value
-};
+//     return value
+// };

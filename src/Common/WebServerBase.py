@@ -32,6 +32,7 @@ class WebServerBase:
 		self._app.add_url_rule('/ClientsDataUpdate', view_func=self.ClientsDataUpdate, methods=["GET"])
 		self._app.add_url_rule('/GetClientsData', view_func=self.SendClientsData, methods=["GET"])
 		self._app.add_url_rule('/ClientIsStillActive', view_func=self.SetClientIsStillActive, methods=["POST"])
+		self._app.add_url_rule('/ResetActiveClient', view_func=self.ResetActiveClient, methods=["GET"])
 		self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
 		self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
 		self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
@@ -115,8 +116,6 @@ class WebServerBase:
 		if(not isInList): return jsonify(), 403
 		return jsonify(), 200
 
-
-
 	def ClientsDataUpdate(self):
 		def generate():
 			while True:
@@ -165,6 +164,14 @@ class WebServerBase:
 			'ClientList': self._ClientList
 		}
 		return obj
+
+	def ResetActiveClient(self):
+		ip = request.remote_addr
+		if(self._Ip != ip):
+			return jsonify(), 403
+		self._labo.Reset()
+		self._ActiveClient = self._defaultClient
+		return jsonify(), 200
 
 	def DataStream(self):
 		def generate():
