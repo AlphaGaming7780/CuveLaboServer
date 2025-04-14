@@ -1,4 +1,5 @@
 import React from 'react';
+import './RegisteredUserPanel.css';
 
 export const RegisteredUserPanel = () => {
     return (
