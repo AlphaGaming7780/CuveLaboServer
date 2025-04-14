@@ -27,10 +27,18 @@ function App() {
 		<BaseDataContextProvider>
 			<UpdatedValueContextProvider>
 				<WaitForData>
-					<div style={{width:"50rem", height:"25rem"}}>
-						<Cuve />
+					<div>
+
 					</div>
-					<Graph/>
+					<div>
+						<div style={{width:"50rem", height:"25rem"}}>
+							<Cuve />
+						</div>
+						<Graph/>
+					</div>
+					<div>
+						
+					</div>
 				</WaitForData>
 			</UpdatedValueContextProvider>	
 		</BaseDataContextProvider>

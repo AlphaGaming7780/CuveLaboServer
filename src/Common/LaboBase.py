@@ -13,11 +13,12 @@ class LaboBase(object):
 	_Motors : list[Motor]
 	_MotorsCurrentSpeed : list[float] = []
 
-	def __init__(self, nbCuve : int, motors : list[Motor], waterMaxLevel : float = 0.95):
+	def __init__(self, nbCuve : int, motors : list[Motor], waterMaxLevel : float = 0.95, useOldCapteur : bool = False):
 		self._NbCuve = nbCuve
 		self._Motors = motors
 		self._NbMotor = motors.__len__()
 		self._WaterMaxLevel = waterMaxLevel
+		self._UseOldCapteur = useOldCapteur
 
 		for i in range(0, motors.__len__()):
 			self._MotorsCurrentSpeed.append(0)
@@ -62,3 +63,9 @@ class LaboBase(object):
 
 	def Reset(self):
 		self.StopAllMotors()
+
+	def ConvertADCValue(self, val : float) -> float:
+		if(self._UseOldCapteur) : 
+			return val / (60 * 73 * ( 32767 / 4096 ) )
+		else: 
+			return val / (5.8838 * 2.5 * ( 32767 / 256 ) )

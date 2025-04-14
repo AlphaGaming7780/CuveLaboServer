@@ -17,14 +17,16 @@ class Tortank(LaboBase):
 	ads2 : ADS1115
 
 	def __init__(self):
-		super().__init__(3, [ Motor(17, 27), Motor(23, 24) ])
+		super().__init__(3, [ Motor(17, 27), Motor(23, 24) ], useOldCapteur=True)
 
 		self.ads1 = ADS1115(1)
-		self.ads1.setGain(self.ads1.PGA_0_256V)
+		# self.ads1.setGain(self.ads1.PGA_0_256V)
+		self.ads1.setGain(self.ads1.PGA_4_096V)
 		self.ads1.setMode(self.ads1.MODE_SINGLE)
 
 		self.ads2 = ADS1115(1, 0x49)
-		self.ads2.setGain(self.ads2.PGA_0_256V)
+		# self.ads2.setGain(self.ads2.PGA_0_256V)
+		self.ads2.setGain(self.ads2.PGA_4_096V)
 		self.ads2.setMode(self.ads2.MODE_SINGLE)
 		pass
 
@@ -34,14 +36,14 @@ class Tortank(LaboBase):
 	def GetWaterLevel1(self) -> float : 
 		val = self.ads1.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
+		return self.ConvertADCValue(val)
 	
 	def GetWaterLevel2(self) -> float : 
 		val = self.ads1.readADC_Differential_2_3()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
+		return self.ConvertADCValue(val)
 	
 	def GetWaterLevel3(self) -> float : 
 		val = self.ads2.readADC_Differential_0_1()
 		print(f"Raw value : {val}")
-		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
+		return self.ConvertADCValue(val)
