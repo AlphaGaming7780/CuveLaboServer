@@ -12,6 +12,7 @@
 	height: 30px;
 	background-color: var(--background) /*rgb(82, 82, 82)*/;
 	border-radius: 20px;
+	border-color: var(--selection);;
 	cursor: pointer;
 	transition-duration: .2s;
 }
