@@ -9,7 +9,7 @@ export const RegisteredUserPanel = () => {
             <h2>Registered User Panel</h2>
             <p>This is the registered user panel.</p>
             <button type='button' onClick={ () => ResetActiveClient() } >Reset Active Client</button>
-            <span>
+            <span style={{display:"flex", flexDirection:"row"}}>
                 <RadioCheckbox />
                 <p>Enable/Disable</p>
             </span>
