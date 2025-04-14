@@ -14,7 +14,7 @@ const WaitForData = ({children}) => {
 	let value = ( data === defaultBaseData || data2 === defaultUpdatedValue )
 	
 	return (
-		<div style={{display: value ? "none" : "block", transition: "ease-in-out", transitionProperty: "display", transitionDelay: "1s", transitionBehavior: "normal" }}>
+		<div className='InApp' style={{display: value ? "none" : "block" }}>
 			{children}
 		</div>
 	)
