@@ -31,7 +31,7 @@ function App() {
 
 					</div>
 					<div style={{width:"50%"}}>
-						<div style={{width:"50rem", height:"25rem"}}>
+						<div style={{width:"100%", height:"25rem"}}>
 							<Cuve />
 						</div>
 						<Graph/>
