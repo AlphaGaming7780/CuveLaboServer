@@ -16,7 +16,7 @@ export interface UpdatedClientData {
     ClientList: Client[],
 }
 
-export const UpdatedClientDataContextProvider = async ({ children }) => {
+export const UpdatedClientDataContextProvider = ({ children }) => {
 
     const [state, setState] = useState(defaultUpdatedClientData);
 
