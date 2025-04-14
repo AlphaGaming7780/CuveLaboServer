@@ -20,10 +20,11 @@ export const UpdatedClientDataContextProvider = ({ children }) => {
 
     const [state, setState] = useState(defaultUpdatedClientData);
 
-    GetData<UpdatedClientData>('/GetClientsData').then((data) => { console.log(data); setState(data)})
-
     useEffect(() => {
         var valueOld : UpdatedClientData = defaultUpdatedClientData
+
+        GetData<UpdatedClientData>('/GetClientsData').then((data) => { console.log(data); valueOld = data; setState(data)})
+
         const eventSource = new EventSource('/ClientsDataUpdate');  
         eventSource.onmessage = (event) => {
             // console.log(event)
