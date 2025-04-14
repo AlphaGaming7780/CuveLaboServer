@@ -24,7 +24,7 @@
 
     .tank {
         height: 30%;
-        width: 100%;
+        width: 100% !important;
         position: relative;
         transform-origin: bottom center;
         background-color: var(--background-alt); /*rgba(255, 255, 255, 1);*/
