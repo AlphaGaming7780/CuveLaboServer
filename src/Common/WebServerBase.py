@@ -121,7 +121,7 @@ class WebServerBase:
 	def ClientsDataUpdate(self):
 		def generate():
 			while True:
-				time.sleep(1)
+				time.sleep(0.1)
 
 				t = time.time()
 				for client in self._ClientList:
