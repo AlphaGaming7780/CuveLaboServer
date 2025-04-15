@@ -18,15 +18,13 @@ export const RegisteredUserPanel = () => {
 				<p style={{paddingLeft: "0.4rem" }}>Disable/Enable</p>
 			</span>
 
+			<h3>Active Client</h3>
 			<ClientPanel client={ActiveClient} />
 
 			<div>
 				<h3>Client List</h3>
 				{ClientList.map((client, index) => (
-					<span>
-						<h1>{index}</h1>
-						<ClientPanel client={client} />
-					</span>
+						<ClientPanel index={index} client={client} />
 				))}
 			</div>
 		</div> 
