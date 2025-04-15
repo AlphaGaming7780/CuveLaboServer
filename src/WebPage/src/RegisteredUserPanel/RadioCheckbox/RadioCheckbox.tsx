@@ -1,4 +1,4 @@
-import React, { JSX, useState } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import './RadioCheckbox.css';
 
 export interface RadioCheckboxProps {
@@ -8,13 +8,19 @@ export interface RadioCheckboxProps {
 
 export const RadioCheckbox = ({ checked = false, onChange } : RadioCheckboxProps ) : JSX.Element => {
 
-    // const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
 
     const handleCheckboxChange = () => {
-        onChange && onChange(!checked);
-        // onChange && onChange(!isChecked);
-        // setIsChecked(!isChecked);
+        // onChange && onChange(!checked);
+        onChange && onChange(!isChecked);
+        setIsChecked(!isChecked);
     };
+
+    useEffect(() => {
+
+        setIsChecked(checked);
+
+    }, [checked]);
 
     return (
         <>

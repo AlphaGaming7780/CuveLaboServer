@@ -173,7 +173,7 @@ class WebServerBase:
 		if(self._Ip != ip):
 			print(f"Request IP: {ip}, self IP: {self._Ip}")
 			return jsonify(), 403
-		
+
 		self._ClientEnable = False
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
@@ -182,11 +182,14 @@ class WebServerBase:
 	
 	def ChangeClientMode(self):
 		ip = request.remote_addr
+		data = request.get_json()
+		value = data.get("ClientEnabled", not self._ClientEnable)
+
 		if(self._Ip != ip):
 			print(f"Request IP: {ip}, self IP: {self._Ip}")
 			return jsonify(), 403
 
-		self._ClientEnable = not self._ClientEnable
+		self._ClientEnable = value
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
 		self._ClientAreDirty = True

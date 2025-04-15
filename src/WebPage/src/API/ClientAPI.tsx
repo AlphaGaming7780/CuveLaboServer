@@ -1,5 +1,6 @@
 import React,{ createContext, useEffect, useState } from "react";
 import { GetData } from "./GetData.tsx";
+import { PostData } from "./PostData.tsx";
 
 export const defaultUpdatedClientData : UpdatedClientData = {ClientEnabled: false, ActiveClients:"null", ClientList:[]}
 // Create a Context
@@ -66,9 +67,6 @@ export const ResetActiveClient = async () => {
     }
 }
 
-export const ChangeClientMode = async () => {
-    const response = await fetch('/ChangeClientMode', { method: 'POST' });
-    if (!response.ok) {
-        throw new Error(`Bad server response : ${response.statusText}`);
-    }
+export const ChangeClientMode = async (value : boolean) => {
+    PostData('/ChangeClientMode', { ClientEnabled: value })
 }

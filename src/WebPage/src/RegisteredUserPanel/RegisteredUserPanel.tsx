@@ -13,7 +13,7 @@ export const RegisteredUserPanel = () => {
             <p>This is the registered user panel.</p>
             <button type='button' onClick={ () => ResetActiveClient() } >Reset Active Client</button>
             <span style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-                <RadioCheckbox checked={ClientEnabled} onChange={ () => ChangeClientMode() } />
+                <RadioCheckbox checked={ClientEnabled} onChange={ChangeClientMode} />
                 <p style={{paddingLeft: "0.4rem" }}>Disable/Enable</p>
             </span>
         </div>
