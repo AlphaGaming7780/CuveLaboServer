@@ -14,7 +14,7 @@ export const ClientPanel = ( {client} : ClientPanelProps ) : JSX.Element => {
 
     return (
         <div className="ClientPanel">
-            <h1>{client.Name}</h1>
+            <h3>{client.Name}</h3>
             <p>{client.Ip}</p>
         </div>
     )

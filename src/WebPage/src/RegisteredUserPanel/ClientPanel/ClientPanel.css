@@ -3,6 +3,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: auto;
   height: auto;
+  background-color: var(--background-alt);
+  border-radius: 5px;
+  padding: 10px;
 }
