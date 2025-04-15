@@ -121,7 +121,7 @@ class WebServerBase:
 	def ClientsDataUpdate(self):
 		def generate():
 			while True:
-				time.sleep(1)
+				
 
 				t = time.time()
 				for client in self._ClientList:
@@ -142,6 +142,13 @@ class WebServerBase:
 				# Disabled the dirty check because it look like some event are ignored if they aren't sent continusly.
 				# if not self._ClientAreDirty:
 				# 	continue
+				
+				# This should do an instant data send when the client is dirty.
+				timeNow = time.time()
+				while not self._ClientAreDirty:
+					if time.time() - timeNow > 1:
+						break
+					time.sleep(0.1)
 
 				self._ClientAreDirty = False
 
