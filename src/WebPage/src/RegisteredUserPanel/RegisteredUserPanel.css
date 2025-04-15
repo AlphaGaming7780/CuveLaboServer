@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: center;
 
-    .clientList > {
+    .clientList {
         width: 100%;
         display: flex;
         flex-direction: column;
