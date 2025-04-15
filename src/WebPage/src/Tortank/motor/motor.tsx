@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Motor.css"
 import { Tooltip, TooltipDirection } from "../../Tooltip/Tooltip.tsx";
-import { UpdatedClientDataContext } from "../../API/ClientAPI.tsx";
 
 export interface MotorProps {
     MotorSpeed : number
