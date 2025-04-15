@@ -6,4 +6,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .clientList > {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 }

@@ -21,7 +21,7 @@ export const RegisteredUserPanel = () => {
 			<h3>Active Client</h3>
 			<ClientPanel client={ActiveClient} />
 
-			<div>
+			<div className='clientList'>
 				<h3>Client List</h3>
 				{ClientList.map((client, index) => (
 						<ClientPanel index={index} client={client} />

@@ -17,7 +17,7 @@ export const ClientPanel = ( {client, index = -1} : ClientPanelProps ) : JSX.Ele
         <div className="ClientPanel" style={{flexDirection: index >= 0 ? "row" : "column"}}>
             {
                 index >= 0 ? <>
-                    <h1>{index}</h1>
+                    <h1 style={{paddingRight:"10px"}}>{index}</h1>
                     <div>
                         <h3>{client.Name}</h3>
                         <p>{client.Ip}</p>
