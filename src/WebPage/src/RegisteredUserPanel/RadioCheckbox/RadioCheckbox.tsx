@@ -19,6 +19,7 @@ export const RadioCheckbox = ({ checked = false, onChange } : RadioCheckboxProps
     useEffect(() => {
 
         setIsChecked(checked);
+        console.log("TEST")
 
     }, [checked]);
 
