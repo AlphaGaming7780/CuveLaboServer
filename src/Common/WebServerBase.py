@@ -148,7 +148,7 @@ class WebServerBase:
 				while not self._ClientAreDirty:
 					if time.time() - timeNow > 1:
 						break
-					time.sleep(0.1)
+					time.sleep(0.05)
 
 				self._ClientAreDirty = False
 

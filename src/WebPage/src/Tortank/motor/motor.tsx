@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Motor.css"
 import { Tooltip, TooltipDirection } from "../../Tooltip/Tooltip.tsx";
+import { UpdatedClientDataContext } from "../../API/ClientAPI.tsx";
 
 export interface MotorProps {
     MotorSpeed : number
@@ -11,6 +12,10 @@ export const Motor = (  {MotorSpeed, OnMotorSpeedChange}  : MotorProps) : any =>
 
     if(MotorSpeed < 0) MotorSpeed = 0;
     const [motorSpeed, SetMotorSpeed] = useState(MotorSpeed)
+
+    useEffect(() => {
+        SetMotorSpeed(MotorSpeed)
+    }, [MotorSpeed])
 
     const MotorTooltip = () => {
         return (
