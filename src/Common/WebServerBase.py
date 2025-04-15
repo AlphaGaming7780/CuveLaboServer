@@ -121,7 +121,7 @@ class WebServerBase:
 	def ClientsDataUpdate(self):
 		def generate():
 			while True:
-				time.sleep(0.1)
+				time.sleep(1)
 
 				t = time.time()
 				for client in self._ClientList:
@@ -139,8 +139,9 @@ class WebServerBase:
 					self._ActiveClient = self._ClientList[0]
 					self._ClientAreDirty = True
 
-				if not self._ClientAreDirty:
-					continue
+				# Disabled the dirty check because it look like some event are ignored if they aren't sent continusly.
+				# if not self._ClientAreDirty:
+				# 	continue
 
 				self._ClientAreDirty = False
 
@@ -174,6 +175,7 @@ class WebServerBase:
 		self._ClientEnable = False
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
+		self._ClientList = []
 		self._ClientAreDirty = True
 		return jsonify(), 200
 	
