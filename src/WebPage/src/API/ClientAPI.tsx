@@ -1,7 +1,7 @@
 import React,{ createContext, useEffect, useState } from "react";
 import { GetData } from "./GetData.tsx";
 
-export const defaultUpdatedClientData : UpdatedClientData = {ActiveClients:"null", ClientList:[]}
+export const defaultUpdatedClientData : UpdatedClientData = {ClientEnabled: false, ActiveClients:"null", ClientList:[]}
 // Create a Context
 export const UpdatedClientDataContext = createContext(defaultUpdatedClientData);
 
@@ -12,6 +12,7 @@ export interface Client {
 }
 
 export interface UpdatedClientData {
+    ClientEnabled : boolean,
     ActiveClients: string,
     ClientList: Client[],
 }
@@ -60,6 +61,13 @@ export const UpdatedClientDataContextProvider = ({ children }) => {
 
 export const ResetActiveClient = async () => {
     const response = await fetch('/ResetActiveClient', { method: 'POST' });
+    if (!response.ok) {
+        throw new Error(`Bad server response : ${response.statusText}`);
+    }
+}
+
+export const ChangeClientMode = async () => {
+    const response = await fetch('/ChangeClientMode', { method: 'POST' });
     if (!response.ok) {
         throw new Error(`Bad server response : ${response.statusText}`);
     }

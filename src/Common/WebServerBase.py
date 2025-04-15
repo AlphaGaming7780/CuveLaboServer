@@ -23,6 +23,7 @@ class WebServerBase:
 		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage"}
 		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
+		self._ClientEnable = False
 		self._ClientAreDirty = False
 
 		# Bind routes to the correct app instance (self._app)
@@ -33,6 +34,7 @@ class WebServerBase:
 		self._app.add_url_rule('/GetClientsData', view_func=self.SendClientsData, methods=["GET"])
 		self._app.add_url_rule('/ClientIsStillActive', view_func=self.SetClientIsStillActive, methods=["POST"])
 		self._app.add_url_rule('/ResetActiveClient', view_func=self.ResetActiveClient, methods=["POST"])
+		self._app.add_url_rule('/ChangeClientMode', view_func=self.ChangeClientMode, methods=["POST"])
 		self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
 		self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
 		self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
@@ -132,7 +134,7 @@ class WebServerBase:
 							self._ActiveClient == self._defaultClient
 						self._ClientAreDirty = True
 
-				if self._ActiveClient == self._defaultClient and len(self._ClientList) > 0:
+				if self._ClientEnable and self._ActiveClient == self._defaultClient and len(self._ClientList) > 0:
 					self._labo.Reset()
 					self._ActiveClient = self._ClientList[0]
 					self._ClientAreDirty = True
@@ -160,6 +162,7 @@ class WebServerBase:
 			activeIp = self._ActiveClient["Ip"]
 
 		obj = {
+			'ClientEnabled': self._ClientEnable,
 			'ActiveClient': activeIp,
 			'ClientList': self._ClientList
 		}
@@ -170,9 +173,24 @@ class WebServerBase:
 		if(self._Ip != ip):
 			print(f"Request IP: {ip}, self IP: {self._Ip}")
 			return jsonify(), 403
+		
+		self._ClientEnable = False
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
 		self._ClientAreDirty = True
+		return jsonify(), 200
+	
+	def ChangeClientMode(self):
+		ip = request.remote_addr
+		if(self._Ip != ip):
+			print(f"Request IP: {ip}, self IP: {self._Ip}")
+			return jsonify(), 403
+
+		self._ClientEnable = not self._ClientEnable
+		self._labo.Reset()
+		self._ActiveClient = self._defaultClient
+		self._ClientAreDirty = True
+
 		return jsonify(), 200
 
 	def DataStream(self):
