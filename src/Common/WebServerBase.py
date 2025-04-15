@@ -157,13 +157,10 @@ class WebServerBase:
 		return jsonify(self.GetClientsData()), 200
 	
 	def GetClientsData(self) : 
-		activeIp = ""
-		if(self._ActiveClient != None):
-			activeIp = self._ActiveClient["Ip"]
 
 		obj = {
 			'ClientEnabled': self._ClientEnable,
-			'ActiveClient': activeIp,
+			'ActiveClient': self._ActiveClient,
 			'ClientList': self._ClientList
 		}
 		return obj

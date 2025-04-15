@@ -16,11 +16,11 @@ export const RadioCheckbox = ({ checked = false, onChange } : RadioCheckboxProps
         onChange && onChange(!isChecked);
     };
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     if (isChecked !== checked) setIsChecked(checked);
+        setIsChecked(checked);
 
-    // }, [checked]);
+    }, [checked]);
 
     return (
         <>
