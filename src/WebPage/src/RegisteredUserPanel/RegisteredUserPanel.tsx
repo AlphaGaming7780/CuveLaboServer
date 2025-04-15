@@ -6,7 +6,7 @@ import { ClientPanel } from './ClientPanel/ClientPanel.tsx';
 
 export const RegisteredUserPanel = () => {
 
-	const { ClientEnabled, ActiveClients, ClientList } = useContext(UpdatedClientDataContext)
+	const { ClientEnabled, ActiveClient, ClientList } = useContext(UpdatedClientDataContext)
 
 	return (
 		<div className="registered-user-panel">
@@ -18,7 +18,7 @@ export const RegisteredUserPanel = () => {
 				<p style={{paddingLeft: "0.4rem" }}>Disable/Enable</p>
 			</span>
 
-			<ClientPanel client={ActiveClients} />
+			<ClientPanel client={ActiveClient} />
 
 			<div>
 				<h3>Client List</h3>

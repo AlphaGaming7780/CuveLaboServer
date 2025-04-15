@@ -2,7 +2,7 @@ import React,{ createContext, useEffect, useState } from "react";
 import { GetData } from "./GetData.tsx";
 import { PostData } from "./PostData.tsx";
 
-export const defaultUpdatedClientData : UpdatedClientData = {ClientEnabled: false, ActiveClients:{Ip: "", Name: "", lastPing: 0}, ClientList:[]}
+export const defaultUpdatedClientData : UpdatedClientData = {ClientEnabled: false, ActiveClient:{Ip: "", Name: "", lastPing: 0}, ClientList:[]}
 // Create a Context
 export const UpdatedClientDataContext = createContext(defaultUpdatedClientData);
 
@@ -14,7 +14,7 @@ export interface Client {
 
 export interface UpdatedClientData {
     ClientEnabled : boolean,
-    ActiveClients: Client,
+    ActiveClient: Client,
     ClientList: Client[],
 }
 
