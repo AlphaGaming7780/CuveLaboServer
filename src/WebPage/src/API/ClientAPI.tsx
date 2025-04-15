@@ -31,12 +31,8 @@ export const UpdatedClientDataContextProvider = ({ children }) => {
         eventSource.onmessage = (event) => {
             // console.log(event)
             const data = JSON.parse(event.data)
-            console.log(`Value of client updated, Data: ${data}.`)
-            console.log(data)
             if(data !== valueOld) {
                 valueOld = data;
-                console.log(`Client Updated, Data:`)
-                console.log(data)
                 setState(data)
             }
         };  
