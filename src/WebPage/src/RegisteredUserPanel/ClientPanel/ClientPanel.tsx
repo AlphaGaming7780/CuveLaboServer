@@ -8,6 +8,10 @@ export interface ClientPanelProps {
 
 export const ClientPanel = ( {client} : ClientPanelProps ) : JSX.Element => {
     
+    if(!client) {
+        return <div className="ClientPanel">No client data available</div>;
+    }
+
     return (
         <div className="ClientPanel">
             <h1>{client.Name}</h1>
