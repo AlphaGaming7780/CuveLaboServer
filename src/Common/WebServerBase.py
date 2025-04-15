@@ -168,6 +168,7 @@ class WebServerBase:
 	def ResetActiveClient(self):
 		ip = request.remote_addr
 		if(self._Ip != ip):
+			print(f"Request IP: {ip}, self IP: {self._Ip}")
 			return jsonify(), 403
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
