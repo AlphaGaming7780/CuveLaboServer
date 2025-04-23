@@ -14,7 +14,7 @@ class WebServerBase:
 		Ip : str
 		Name : str
 		lastPing : float
-		isAdmin : bool
+		isAdmin : bool = False
 
 	def __init__(self, labo: LaboBase):
 		self._labo = labo
@@ -229,7 +229,10 @@ class WebServerBase:
 
 		client = self.ClientByIP(ip)
 		if( client == None or client["isAdmin"] == False):
-			print(f"Client {ip} is not admin.")
+			if client != None:
+				print(f"Client {client['Ip']}, Request IP {ip} is not admin.")
+			else:
+				print(f"Client NULL, Request IP {ip} is not admin.")
 			return jsonify(), 403
 
 		self.SetActiveClient(client)
