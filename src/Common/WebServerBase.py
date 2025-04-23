@@ -26,6 +26,7 @@ class WebServerBase:
 		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage", 'isAdmin': True}
 		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
+		self._AdminClientList : List[WebServerBase.Client] = [self._defaultClient]
 		self._ClientEnable = False
 		self._ClientAreDirty = False
 
@@ -226,14 +227,13 @@ class WebServerBase:
 
 	def TakeControl(self):
 		ip = request.remote_addr
+		data = request.get_json()
+		name = data.get("Name", ip)
 
-		client = self.ClientByIP(ip)
-		if( client == None or client["isAdmin"] == False):
-			if client != None:
-				print(f"Client {client['Ip']}, Request IP {ip} is not admin.")
-			else:
-				print(f"Client NULL, Request IP {ip} is not admin.")
+		if( self.IsAdmin(ip) == False):
 			return jsonify(), 403
+
+		client : WebServerBase.Client = WebServerBase.Client(name=name, Ip=ip, lastPing=time.time(), isAdmin=True)
 
 		self.SetActiveClient(client)
 
@@ -318,7 +318,7 @@ class WebServerBase:
 		return value
 	
 	def IsAdmin(self, ip : str) -> bool:
-		for client in self._ClientList:
+		for client in self._AdminClientList:
 			if(client["Ip"] == ip):
 				print(f"Client {ip} is admin : {client['isAdmin']}.")
 				return client["isAdmin"]
