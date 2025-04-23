@@ -8,10 +8,13 @@ from Common.LaboBase import LaboBase
 
 class WebServerBase:
 
+	MDP : str = "admin"
+
 	class Client(TypedDict):
 		Ip : str
 		Name : str
 		lastPing : float
+		isAdmin : bool = False
 
 	def __init__(self, labo: LaboBase):
 		self._labo = labo
@@ -20,7 +23,7 @@ class WebServerBase:
 
 		self._Ip = self.get_local_ip()
 		print(f"IP : {self._Ip}")
-		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage"}
+		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage", 'isAdmin': True}
 		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
 		self._ClientEnable = False
@@ -30,11 +33,13 @@ class WebServerBase:
 		self._app.add_url_rule('/', view_func=self.home)
 		self._app.add_url_rule('/RegisterClient', view_func=self.RegisterClient, methods=["POST"])
 		self._app.add_url_rule('/UnregisterClient', view_func=self.UnregisterClient, methods=["POST"])
+		self._app.add_url_rule('/RegisterAdmin', view_func=self.RegisterAdmin, methods=["POST"])
 		self._app.add_url_rule('/ClientsDataUpdate', view_func=self.ClientsDataUpdate, methods=["GET"])
 		self._app.add_url_rule('/GetClientsData', view_func=self.SendClientsData, methods=["GET"])
 		self._app.add_url_rule('/ClientIsStillActive', view_func=self.SetClientIsStillActive, methods=["POST"])
 		self._app.add_url_rule('/ResetActiveClient', view_func=self.ResetActiveClient, methods=["POST"])
 		self._app.add_url_rule('/ChangeClientMode', view_func=self.ChangeClientMode, methods=["POST"])
+		self._app.add_url_rule('/TakeControl', view_func=self.SetActiveClient, methods=["POST"])
 		self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
 		self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
 		self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
@@ -102,6 +107,18 @@ class WebServerBase:
 
 		self._ClientAreDirty = True
 		
+		return jsonify(), 200
+
+	def RegisterAdmin(self):
+		data = request.get_json()
+		ip = request.remote_addr
+		mdp = data.get("MDP", None)
+
+		if(self.IsAdmin(ip) == False and mdp == self.MDP):
+			client = self.ClientByIP(ip)
+			if(client != None):
+				client["isAdmin"] = True
+
 		return jsonify(), 200
 
 	def SetClientIsStillActive(self):
@@ -175,8 +192,8 @@ class WebServerBase:
 
 	def ResetActiveClient(self):
 		ip = request.remote_addr
-		if(self._Ip != ip):
-			print(f"Request IP: {ip}, self IP: {self._Ip}")
+
+		if(self.IsAdmin(ip) == False):
 			return jsonify(), 403
 
 		self._ClientEnable = False
@@ -191,14 +208,33 @@ class WebServerBase:
 		data = request.get_json()
 		value = data.get("ClientEnabled", not self._ClientEnable)
 
-		if(self._Ip != ip):
-			print(f"Request IP: {ip}, self IP: {self._Ip}")
+		if(self.IsAdmin(ip) == False):
 			return jsonify(), 403
 
 		self._ClientEnable = value
 		self._labo.Reset()
 		self._ActiveClient = self._defaultClient
 		self._ClientAreDirty = True
+
+		return jsonify(), 200
+	
+	def SetActiveClient(self, client : Client):
+		self._ClientEnable = False
+		self._labo.Reset()
+		self._ActiveClient = client
+		self._ClientAreDirty = True
+
+	def TakeControl(self):
+		ip = request.remote_addr
+
+		if(self.IsAdmin(ip) == False):
+			return jsonify(), 403
+		
+		client = self.ClientByIP(ip)
+		if(client == None):
+			client = self._defaultClient
+
+		self.SetActiveClient(client)
 
 		return jsonify(), 200
 
@@ -279,6 +315,20 @@ class WebServerBase:
 			print(f"Request IP: {ip}, Active IP: {self._ActiveClient['Ip']}")
 
 		return value
+	
+	def IsAdmin(self, ip : str) -> bool:
+		for client in self._ClientList:
+			if(client["Ip"] == ip):
+				return client["isAdmin"]
+
+		return False
+
+	def ClientByIP(self, ip : str) -> Client:
+		for client in self._ClientList:
+			if(client["Ip"] == ip):
+				return client
+
+		return None
 
 	def Run(self):
 		def flask_thread():

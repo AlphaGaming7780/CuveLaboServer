@@ -69,3 +69,7 @@ export const ResetActiveClient = async () => {
 export const ChangeClientMode = async (value : boolean) => {
     PostData('/ChangeClientMode', { ClientEnabled: value })
 }
+
+export const TakeControl = async () => {
+    PostData('/TakeControl', {})
+}

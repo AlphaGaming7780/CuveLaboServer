@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './RegisteredUserPanel.css';
-import { ChangeClientMode, ResetActiveClient, UpdatedClientDataContext } from '../API/ClientAPI.tsx';
+import { ChangeClientMode, ResetActiveClient, TakeControl, UpdatedClientDataContext } from '../API/ClientAPI.tsx';
 import { RadioCheckbox } from './RadioCheckbox/RadioCheckbox.tsx';
 import { ClientPanel } from './ClientPanel/ClientPanel.tsx';
 
@@ -11,8 +11,10 @@ export const RegisteredUserPanel = () => {
 	return (
 		<div className="registered-user-panel">
 			<h2>Registered User Panel</h2>
-			<p>This is the registered user panel.</p>
-			<button type='button' onClick={ () => ResetActiveClient() } >Reset Active Client</button>
+			<div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
+				<button type='button' onClick={ () => ResetActiveClient() } >Reset Clients</button>
+				<button type='button' onClick={ () => TakeControl() } >Take control</button>
+			</div>
 			<span style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
 				<RadioCheckbox checked={ClientEnabled} onChange={ChangeClientMode} />
 				<p style={{paddingLeft: "0.4rem" }}>Disable/Enable</p>
