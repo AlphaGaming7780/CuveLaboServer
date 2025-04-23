@@ -8,11 +8,11 @@
 
     .top {
 
+        width: 100% !important;
         display: flex;
         flex-direction: row;
         align-items: flex-end;
         height: 70%;
-        width: 100%;
 
         .cylindre-container {
             width: 100% !important;
