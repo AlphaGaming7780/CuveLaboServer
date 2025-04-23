@@ -39,7 +39,7 @@ class WebServerBase:
 		self._app.add_url_rule('/ClientIsStillActive', view_func=self.SetClientIsStillActive, methods=["POST"])
 		self._app.add_url_rule('/ResetActiveClient', view_func=self.ResetActiveClient, methods=["POST"])
 		self._app.add_url_rule('/ChangeClientMode', view_func=self.ChangeClientMode, methods=["POST"])
-		self._app.add_url_rule('/TakeControl', view_func=self.SetActiveClient, methods=["POST"])
+		self._app.add_url_rule('/TakeControl', view_func=self.TakeControl, methods=["POST"])
 		self._app.add_url_rule('/DataStream', view_func=self.DataStream, methods=["GET"])
 		self._app.add_url_rule('/GetBaseData', view_func=self.send_base_data, methods=["GET"])
 		self._app.add_url_rule('/GetWaterLevel', view_func=self.get_water_level, methods=["GET"])
