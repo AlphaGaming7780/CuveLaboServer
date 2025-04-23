@@ -14,7 +14,7 @@ class WebServerBase:
 		Ip : str
 		Name : str
 		lastPing : float
-		isAdmin : bool = False
+		isAdmin : bool
 
 	def __init__(self, labo: LaboBase):
 		self._labo = labo
