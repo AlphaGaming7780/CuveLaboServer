@@ -22,7 +22,7 @@ export const IsAdminContextProvider = ({ children }) => {
         const fetchData = async (mdp : string) => {
             let succes = true;
             try {
-                await PostData<AdminRequest>("/IsAdmin", { MDP: mdp });
+                await PostData<AdminRequest>("/RegisterAdmin", { MDP: mdp });
             } catch (error) {
                 console.error("Erreur lors du fetch de IsAdmin:", error.message);
                 succes = false;
