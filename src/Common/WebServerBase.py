@@ -115,10 +115,16 @@ class WebServerBase:
 		ip = request.remote_addr
 		mdp = data.get("MDP", None)
 
+		print(f"MDP : {mdp}")
+		print(f"IP : {ip}")
+
 		if(self.IsAdmin(ip) == False and mdp == self.MDP):
 			client = self.ClientByIP(ip)
 			if(client != None):
 				client["isAdmin"] = True
+			else:
+				client = WebServerBase.Client(Name=ip, Ip=ip, lastPing=time.time(), isAdmin=True)
+			self._AdminClientList.append(client)
 		else:
 			return jsonify(), 403
 
