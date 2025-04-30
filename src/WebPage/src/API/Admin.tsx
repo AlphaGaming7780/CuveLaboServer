@@ -32,12 +32,12 @@ export const IsAdminContextProvider = ({ children }) => {
                 setIsAdmin(true);
             }
 
-            adminRequest = null; // Reset adminRequest after use
-
         };
 
         if(Dirty && adminRequest !== null) {
+            setDirty(false); // Reset Dirty after use
             fetchData(adminRequest.MDP);
+            adminRequest = null; // Reset adminRequest after use
         } 
     }, [Dirty]);
 
@@ -50,5 +50,5 @@ export const IsAdminContextProvider = ({ children }) => {
 
 export const RegisterAdmin = (MDP : string) => {
     adminRequest = {MDP: MDP};
-    SetDirty();
+    SetDirty(true);
 }
