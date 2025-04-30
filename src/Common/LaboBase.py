@@ -64,4 +64,8 @@ class LaboBase(object):
 		self.StopAllMotors()
 
 	def ConvertADCValue(self, val : float) -> float:
-		return val / (5.8838 * 2.5 * ( 32767 / 256 ) )
+		# Le capteur est un capteur de pression, il faut donc convertir la valeur brute en pourcentage entre 0 et 1.
+		# Le support jusqu'a 10kPa sur une plage de 0 a 25mV.
+		# Le 5.8838 correspond a la value de 60CM d'eau en kPa
+		# Je sais pas pourquoi il faut diviser par 512 au lieu de 256. je me suis peut être tromper.
+		return val / (5.8838 * 2.5 * ( 32767 / 512 ) )
