@@ -17,7 +17,7 @@ const WaitForData = ({children}) => {
 
 	let value = ( data === defaultBaseData || data2 === defaultUpdatedValue || data3 === defaultUpdatedClientData )
 
-	if (!value) {
+	if (value) {
 		document.title = "Loading..."
 	} else {
 		if(data.numberOfCuve === 1) document.title = "Carapuce - WebApp"
