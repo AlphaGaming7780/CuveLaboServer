@@ -119,6 +119,8 @@ class WebServerBase:
 			client = self.ClientByIP(ip)
 			if(client != None):
 				client["isAdmin"] = True
+		else:
+			return jsonify(), 403
 
 		return jsonify(), 200
 

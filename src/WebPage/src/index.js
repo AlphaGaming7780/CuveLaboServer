@@ -9,6 +9,7 @@ link.rel = 'stylesheet';
 link.href = "https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css";
 // link.href = "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css";
 document.head.appendChild(link);
+document.title = "Tortank - Web Page";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
