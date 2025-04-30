@@ -26,7 +26,7 @@ export const RegisteredUserPanel = () => {
 				</span>	
 			</> : <>
 				<span style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-					<input onChange={ (i) => {setPassword(i.target.value)}} type='password' placeholder='Password'>Password</input>
+					<input onChange={ (i) => {setPassword(i.target.value)}} type='password' placeholder='Password'/>
 					<button onClick={ () => RegisterAdmin(password)} style={{paddingLeft: "0.4rem" }} >Register</button>
 				</span>	
 			</>
