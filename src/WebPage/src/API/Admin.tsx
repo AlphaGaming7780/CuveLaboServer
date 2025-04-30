@@ -2,11 +2,12 @@ import React, { createContext, use, useEffect, useState } from "react";
 import { PostData } from "./PostData.tsx";
 
 interface AdminRequest {
-    MDP : string;
+    Password : string;
+    Name? : string;
 }
 
 let adminRequest : AdminRequest | null = null;
-let SetDirty 
+let SetDirty
 
 // Create a Context
 export const IsAdminContext = createContext(false);
@@ -19,10 +20,10 @@ export const IsAdminContextProvider = ({ children }) => {
     SetDirty = setDirty;
 
     useEffect(() => {
-        const fetchData = async (mdp : string) => {
+        const fetchData = async (adminRequest : AdminRequest) => {
             let succes = true;
             try {
-                await PostData<AdminRequest>("/RegisterAdmin", { MDP: mdp });
+                await PostData<AdminRequest>("/RegisterAdmin", adminRequest);
             } catch (error) {
                 console.error("Erreur lors du fetch de IsAdmin:", error.message);
                 succes = false;
@@ -36,7 +37,7 @@ export const IsAdminContextProvider = ({ children }) => {
 
         if(Dirty && adminRequest !== null) {
             setDirty(false); // Reset Dirty after use
-            fetchData(adminRequest.MDP);
+            fetchData(adminRequest);
             adminRequest = null; // Reset adminRequest after use
         } 
     }, [Dirty]);
@@ -48,7 +49,7 @@ export const IsAdminContextProvider = ({ children }) => {
     );
 };
 
-export const RegisterAdmin = (MDP : string) => {
-    adminRequest = {MDP: MDP};
+export const RegisterAdmin = (password : string, name? : string) => {
+    adminRequest = {Password: password, Name: name};
     SetDirty(true);
 }

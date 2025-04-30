@@ -9,6 +9,7 @@ from Common.LaboBase import LaboBase
 class WebServerBase:
 
 	MDP : str = "admin"
+	MinimumWaterLevel : float = 0.05 # Le niveau d'eau minimum pour activer le (prochain) client, 5%.
 
 	class Client(TypedDict):
 		Ip : str
@@ -26,7 +27,7 @@ class WebServerBase:
 		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage", 'isAdmin': True}
 		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
-		self._AdminClientList : List[WebServerBase.Client] = [self._defaultClient]
+		self._AdminClientList : List[WebServerBase.Client] = [] # Peut être ajouter le default client dedans ?
 		self._ClientEnable = False
 		self._ClientAreDirty = False
 
@@ -113,20 +114,23 @@ class WebServerBase:
 	def RegisterAdmin(self):
 		data = request.get_json()
 		ip = request.remote_addr
-		mdp = data.get("MDP", None)
+		mdp = data.get("Password", None)
+		name = data.get("Name", ip)
 
-		print(f"MDP : {mdp}")
-		print(f"IP : {ip}")
-
-		if(self.IsAdmin(ip) == False and mdp == self.MDP):
-			client = self.ClientByIP(ip)
-			if(client != None):
-				client["isAdmin"] = True
-			else:
-				client = WebServerBase.Client(Name=ip, Ip=ip, lastPing=time.time(), isAdmin=True)
-			self._AdminClientList.append(client)
-		else:
+		if(mdp != self.MDP): 
+			print(f"Client {name} didn't enter the right password : {mdp}.")
 			return jsonify(), 403
+
+		client = self.ClientByIP(ip)
+		if(client == None):
+			client = WebServerBase.Client(Name=name, Ip=ip, lastPing=time.time())
+
+		if(client["isAdmin"] == True):
+			print(f"Client {client['Name']} is already admin.")
+		else:
+			client["isAdmin"] = True
+			self._AdminClientList.append(client)
+			print(f"Client {client['Name']} is now admin.")
 
 		return jsonify(), 200
 
@@ -160,7 +164,7 @@ class WebServerBase:
 							self._ActiveClient == self._defaultClient
 						self._ClientAreDirty = True
 
-				if self._ClientEnable and self._ActiveClient == self._defaultClient and len(self._ClientList) > 0:
+				if self._ClientEnable and self._ActiveClient == self._defaultClient and len(self._ClientList) > 0 and max(self._labo.GetWaterLevels()) < self.MinimumWaterLevel :
 					self._labo.Reset()
 					self._ActiveClient = self._ClientList[0]
 					self._ClientAreDirty = True
@@ -172,9 +176,9 @@ class WebServerBase:
 				# This should do an instant data send when the client is dirty.
 				timeNow = time.time()
 				while not self._ClientAreDirty:
-					if time.time() - timeNow > 1:
+					if time.time() - timeNow > 1: # 1 second delay to avoid flooding the client with data.
 						break
-					time.sleep(0.05)
+					time.sleep(0.05) # Sleep a bit to avoid busy waiting and recheck the while condition.
 
 				self._ClientAreDirty = False
 
@@ -235,13 +239,10 @@ class WebServerBase:
 
 	def TakeControl(self):
 		ip = request.remote_addr
-		data = request.get_json()
-		name = data.get("Name", ip)
 
-		if( self.IsAdmin(ip) == False):
+		client = self.GetAdminClient(ip)
+		if(client == None or client["isAdmin"] == False):
 			return jsonify(), 403
-
-		client : WebServerBase.Client = WebServerBase.Client(name=name, Ip=ip, lastPing=time.time(), isAdmin=True)
 
 		self.SetActiveClient(client)
 
@@ -333,8 +334,19 @@ class WebServerBase:
 
 		return False
 
-	def ClientByIP(self, ip : str) -> Client:
+	def ClientByIP(self, ip : str) -> Client | None:
 		for client in self._ClientList:
+			if(client["Ip"] == ip):
+				return client
+			
+		for client in self._AdminClientList:
+			if(client["Ip"] == ip):
+				return client
+
+		return None
+	
+	def GetAdminClient(self, ip : str) -> Client | None:
+		for client in self._AdminClientList:
 			if(client["Ip"] == ip):
 				return client
 
@@ -349,10 +361,10 @@ class WebServerBase:
 
 		while web_server_thread.is_alive():
 			self._waterLevels = self._labo.GetWaterLevels()
-			print(f"Final value: {self._waterLevels[0]}")
+			# print(f"Water levels : {self._waterLevels}")
 
 			if not self._labo.CanMotorRun(self._waterLevels):
 				self._labo.StopAllMotors()
 
 			# Enlever ce timer pour maximisé les mise a jour.
-			time.sleep(1)
+			# time.sleep(1)
