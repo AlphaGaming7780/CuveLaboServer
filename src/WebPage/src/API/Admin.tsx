@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, use, useEffect, useState } from "react";
 import { PostData } from "./PostData.tsx";
 
 interface AdminRequest {
@@ -6,6 +6,7 @@ interface AdminRequest {
 }
 
 let adminRequest : AdminRequest | null = null;
+let SetDirty 
 
 // Create a Context
 export const IsAdminContext = createContext(false);
@@ -13,6 +14,9 @@ export const IsAdminContext = createContext(false);
 export const IsAdminContextProvider = ({ children }) => {
 
     const [isAdmin, setIsAdmin] = useState(false);
+    const [Dirty, setDirty] = useState(false);
+
+    SetDirty = setDirty;
 
     useEffect(() => {
         const fetchData = async (mdp : string) => {
@@ -32,10 +36,10 @@ export const IsAdminContextProvider = ({ children }) => {
 
         };
 
-        if(adminRequest !== null) {
+        if(Dirty && adminRequest !== null) {
             fetchData(adminRequest.MDP);
         } 
-    }, []);
+    }, [Dirty]);
 
     return (
       <IsAdminContext.Provider value={ isAdmin }>
@@ -46,4 +50,5 @@ export const IsAdminContextProvider = ({ children }) => {
 
 export const RegisterAdmin = (MDP : string) => {
     adminRequest = {MDP: MDP};
+    SetDirty();
 }
