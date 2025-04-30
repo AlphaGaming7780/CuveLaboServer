@@ -13,7 +13,7 @@ class Carapuce(LaboBase):
 	ads : ADS1115
 
 	def __init__(self):
-		super().__init__(self.NUMBER_OF_CUVE, [ Motor(17, 27) ] )
+		super().__init__(self.NUMBER_OF_CUVE, [ Motor(17, 27) ], waterMaxLevel=0.8 )
 
 		self.ads = ADS1115(1)
 		self.ads.setGain(self.ads.PGA_0_256V)
