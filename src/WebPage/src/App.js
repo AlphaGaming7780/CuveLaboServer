@@ -10,6 +10,13 @@ import { defaultUpdatedClientData, UpdatedClientDataContext, UpdatedClientDataCo
 import { IsAdminContextProvider } from './API/Admin.tsx';
 
 
+const SetPageicon = (iconURL) => {
+	const favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+	if (favicon) {
+	  favicon.href = iconURL
+	}
+}
+
 const WaitForData = ({children}) => {
 	let data = useContext(BaseDataContext)
 	let data2 = useContext(UpdatedValueContext)
@@ -20,10 +27,17 @@ const WaitForData = ({children}) => {
 	if (value) {
 		document.title = "Loading..."
 	} else {
-		if(data.numberOfCuve === 1) document.title = "Carapuce - WebApp"
+		if(data.numberOfCuve === 1) {
+			document.title = "Carapuce - WebApp"
+			SetPageicon("%PUBLIC_URL%/Carapuce.png")
+		}
 		else if(data.numberOfCuve === 2) document.title = "Herbizarre - WebApp"
-		else if(data.numberOfCuve === 3) document.title = "Tortank - WebApp"
+		else if(data.numberOfCuve === 3) {
+			document.title = "Tortank - WebApp"
+			SetPageicon("%PUBLIC_URL%/Tortank.png")
+		}
 		else document.title = "Unknown - WebApp"
+
 	}
 
 	return (

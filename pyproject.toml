@@ -4,11 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "CuveLaboServer"
-version = "0.1.0"
+version = "1.0.0"
 authors = [
-  	{ name="Trioen Loïc", email="trioen.loic@gmail.com" },
-  	{ name="Mathys Deboever", email="" },
-  	{ name="Samy", email="" },
+  	{ name="Trioen Loïc", email="trioen.loic@gmail.com" }
 ]
 description = ""
 readme = "README.md"
@@ -17,8 +15,8 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-license = "MIT"
-license-files = ["LICEN[CS]E*"]
+# license = "MIT"
+# license-files = ["LICEN[CS]E*"]
 dependencies = [
 	'Flask',
 	'gpiozero',
@@ -39,7 +37,7 @@ packages = [
 TortankWebServer = "TortankWebServer.__main__:main"
 CarapuceWebServer = "CarapuceWebServer.__main__:main"
 
-[project.urls]
-Repository = "https://github.com/AlphaGaming7780/CuveLaboServer.git"
-Homepage = "https://github.com/AlphaGaming7780/CuveLaboServer"
-Issues = "https://github.com/AlphaGaming7780/CuveLaboServer/issues"
+# [project.urls]
+# Repository = "https://github.com/AlphaGaming7780/CuveLaboServer.git"
+# Homepage = "https://github.com/AlphaGaming7780/CuveLaboServer"
+# Issues = "https://github.com/AlphaGaming7780/CuveLaboServer/issues"
