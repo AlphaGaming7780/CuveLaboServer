@@ -151,18 +151,21 @@ class WebServerBase:
 	def ClientsDataUpdate(self):
 		def generate():
 			while True:
-				
 
 				t = time.time()
+
+				if(self._ActiveClient["isAdmin"] == False and t - self._ActiveClient["lastPing"] > 2):
+					print(f"Active client {self._ActiveClient["Name"]} didn't ping the last two second. Resetting.")
+					self._labo.Reset()
+					self._ActiveClient == self._defaultClient
+					self._ClientAreDirty = True
+
 				for client in self._ClientList:
 					if(t - client["lastPing"] > 2):
 						print(f"Client : {client['Name']} didn't ping the last two second.")
 						self._ClientList.remove(client)
-						if(self._ActiveClient["Ip"] == client["Ip"]):
-							print("Client was the active one, reseting.")
-							self._labo.Reset()
-							self._ActiveClient == self._defaultClient
 						self._ClientAreDirty = True
+
 
 				if self._ClientEnable and self._ActiveClient == self._defaultClient and len(self._ClientList) > 0 and max(self._waterLevels) < self.MinimumWaterLevel :
 					self._labo.Reset()
