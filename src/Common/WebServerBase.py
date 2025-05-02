@@ -137,16 +137,18 @@ class WebServerBase:
 	def SetClientIsStillActive(self):
 		ip = request.remote_addr
 
-		isInList = False
+		if(self._ActiveClient["Ip"] == ip):
+			self._ActiveClient["lastPing"] = time.time()
+			return jsonify(), 200
+
 		i : int = 0
 		for i in range(0, self._ClientList.__len__()):
 			if(self._ClientList[i]["Ip"] == ip): 
 				isInList = True
 				self._ClientList[i]["lastPing"] = time.time()
-				break
+				return jsonify(), 200
 
-		if(not isInList): return jsonify(), 403
-		return jsonify(), 200
+		return jsonify(), 403
 
 	def ClientsDataUpdate(self):
 		def generate():
