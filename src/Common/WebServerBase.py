@@ -17,12 +17,6 @@ class WebServerBase:
 		lastPing : float
 		isAdmin : bool
 
-		def __init__(self, Ip : str, Name : str, lastPing : float, isAdmin : bool = False):
-			self["Ip"] = Ip
-			self["Name"] = Name
-			self["lastPing"] = lastPing
-			self["isAdmin"] = isAdmin
-
 	def __init__(self, labo: LaboBase):
 		self._labo = labo
 		self._waterLevels = [0.0, 0.0, 0.0]
@@ -30,7 +24,7 @@ class WebServerBase:
 
 		self._Ip = self.get_local_ip()
 		print(f"IP : {self._Ip}")
-		self._defaultClient : WebServerBase.Client = {"Ip": self._Ip, "Name": "WebPage", 'isAdmin': True}
+		self._defaultClient : WebServerBase.Client = WebServerBase.Client(Ip=self._Ip, Name="WebPage", lastPing=time.time(), isAdmin=True)
 		self._ActiveClient : WebServerBase.Client = self._defaultClient
 		self._ClientList : List[WebServerBase.Client] = []
 		self._AdminClientList : List[WebServerBase.Client] = [] # Peut être ajouter le default client dedans ?
@@ -87,7 +81,7 @@ class WebServerBase:
 			self._ClientList[i]["lastPing"] = time.time()
 		
 		else:
-			self._ClientList.append(WebServerBase.Client(Name=name, Ip=ip, lastPing=time.time()))
+			self._ClientList.append(WebServerBase.Client(Name=name, Ip=ip, lastPing=time.time(), isAdmin=False))
 
 		self._ClientAreDirty = True
 
@@ -129,9 +123,9 @@ class WebServerBase:
 
 		client = self.ClientByIP(ip)
 		if(client == None):
-			client = WebServerBase.Client(Name=name, Ip=ip, lastPing=time.time())
+			client = WebServerBase.Client(Name=name, Ip=ip, lastPing=time.time(), isAdmin=False)
 
-		if(client["isAdmin"] == True):
+		if(client["isAdmin"] == True and self.GetAdminClient(ip) != None):
 			print(f"Client {client['Name']} is already admin.")
 		else:
 			client["isAdmin"] = True
