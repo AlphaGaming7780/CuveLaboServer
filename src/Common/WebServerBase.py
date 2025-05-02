@@ -164,9 +164,9 @@ class WebServerBase:
 							self._ActiveClient == self._defaultClient
 						self._ClientAreDirty = True
 
-				if self._ClientEnable and self._ActiveClient == self._defaultClient and len(self._ClientList) > 0 and max(self._labo.GetWaterLevels()) < self.MinimumWaterLevel :
+				if self._ClientEnable and self._ActiveClient == self._defaultClient and len(self._ClientList) > 0 and max(self._waterLevels) < self.MinimumWaterLevel :
 					self._labo.Reset()
-					self._ActiveClient = self._ClientList[0]
+					self._ActiveClient = self._ClientList.pop(0)
 					self._ClientAreDirty = True
 
 				# Disabled the dirty check because it look like some event are ignored if they aren't sent continusly.
