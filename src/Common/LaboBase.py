@@ -63,9 +63,31 @@ class LaboBase(object):
 	def Reset(self):
 		self.StopAllMotors()
 
+	def WaterLevelTokPa(self, cmOfWater : float) -> float:
+		"""
+		Converts a water level measurement in centimeters to kilopascals (kPa).
+		This method calculates the pressure in kilopascals based on the height of water in centimeters,
+		using the conversion factor where 1 cm of water corresponds to approximately 0.980638 kPa.
+		Args:
+			cmOfWater (float): The water level in centimeters.
+		Returns:
+			float: The equivalent pressure in kilopascals (kPa).
+		"""
+
+		return cmOfWater * 0.980638
+
 	def ConvertADCValue(self, val : float) -> float:
 		# Le capteur est un capteur de pression, il faut donc convertir la valeur brute en pourcentage entre 0 et 1.
-		# Le support jusqu'a 10kPa sur une plage de 0 a 25mV.
+		# Le support jusqu'a 10kPa sur une plage de 0 a 25mV et a une incrémentation lineaire de 2.5mV/kPa
 		# Le 5.8838 correspond a la value de 60CM d'eau en kPa
-		# Je sais pas pourquoi il faut diviser par 512 au lieu de 256. je me suis peut être tromper.
-		return val / (5.8838 * 2.5 * ( 32767 / 512 ) )
+		# Je sais pas pourquoi il faut diviser par 512 au lieu de 256. je me suis peut être tromper. Cela a un rapport avec le gain de l'ADS1115.
+		# return val / (5.8838 * 2.5 * ( 32767 / 512 ) )
+		# return val / (kPa * 2.5 * ( 32767 / 512 ) )
+		
+		kPa = self.WaterLevelTokPa(60) # 60cm d'eau = 5.8838kPa
+		maxVoltage = kPa * 2.5 # 2.5mV/kPa
+		plageDuCapteur = 256 / 32767 # 256 correspond a la plage de tension du capteur (0-256mV) et 32767 correspond a la valeur max de l'ADC (16 bits)
+
+		return val * plageDuCapteur / maxVoltage
+		
+	
