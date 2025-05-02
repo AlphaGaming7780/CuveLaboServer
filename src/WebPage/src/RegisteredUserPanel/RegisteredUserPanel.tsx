@@ -10,8 +10,8 @@ export const RegisteredUserPanel = () => {
 	const { ClientEnabled, ActiveClient, ClientList } = useContext(UpdatedClientDataContext)
 	const IsAdmin = useContext(IsAdminContext)
 
-	const passwordInputRef = useRef(null);
-	const usernameInputRef = useRef(null);
+	const passwordInputRef = useRef<HTMLInputElement>(null);
+	const usernameInputRef = useRef<HTMLInputElement>(null);
 
 	return (
 		<div className="registered-user-panel">
@@ -26,10 +26,10 @@ export const RegisteredUserPanel = () => {
 					<p style={{paddingLeft: "0.4rem" }}>Disable/Enable clients (students)</p>
 				</span>	
 			</> : <>
-				<span style={{display:"flex", flexDirection:"collum", alignItems:"center"}}>
+				<span style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
 					<input ref={usernameInputRef} type='text' placeholder='Username (optional)'/>
 					<input ref={passwordInputRef} type='password' placeholder='Password' style={{paddingTop: "0.4rem" }} />
-					<button onClick={ () => {RegisterAdmin(passwordInputRef.value, usernameInputRef.value)}} style={{paddingTop: "0.4rem" }} >Register</button>
+					<button onClick={ () => { if(passwordInputRef.current !== null && usernameInputRef.current !== null) RegisterAdmin(passwordInputRef.current.value, usernameInputRef.current.value)}} style={{paddingTop: "0.4rem" }} >Register</button>
 				</span>	
 			</>
 			}
