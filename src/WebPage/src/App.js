@@ -29,12 +29,12 @@ const WaitForData = ({children}) => {
 	} else {
 		if(data.numberOfCuve === 1) {
 			document.title = "Carapuce - WebApp"
-			SetPageicon("%PUBLIC_URL%/Carapuce.png")
+			SetPageicon("/Carapuce.png")
 		}
 		else if(data.numberOfCuve === 2) document.title = "Herbizarre - WebApp"
 		else if(data.numberOfCuve === 3) {
 			document.title = "Tortank - WebApp"
-			SetPageicon("%PUBLIC_URL%/Tortank.png")
+			SetPageicon("/Tortank.png")
 		}
 		else document.title = "Unknown - WebApp"
 
