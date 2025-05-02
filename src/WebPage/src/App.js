@@ -11,7 +11,7 @@ import { IsAdminContextProvider } from './API/Admin.tsx';
 
 
 const SetPageicon = (iconURL) => {
-	const favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+	const favicon = document.querySelector("link[rel~='icon']")
 	if (favicon) {
 	  favicon.href = iconURL
 	}

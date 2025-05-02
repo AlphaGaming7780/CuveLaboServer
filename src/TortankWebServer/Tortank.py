@@ -33,15 +33,12 @@ class Tortank(LaboBase):
 	
 	def GetWaterLevel1(self) -> float : 
 		val = self.ads1.readADC_Differential_0_1()
-		print(f"Raw value : {val}")
 		return self.ConvertADCValue(val)
 	
 	def GetWaterLevel2(self) -> float : 
 		val = self.ads1.readADC_Differential_2_3()
-		print(f"Raw value : {val}")
 		return self.ConvertADCValue(val)
 	
 	def GetWaterLevel3(self) -> float : 
 		val = self.ads2.readADC_Differential_0_1()
-		print(f"Raw value : {val}")
 		return self.ConvertADCValue(val)
