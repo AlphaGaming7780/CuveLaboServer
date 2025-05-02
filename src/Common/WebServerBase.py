@@ -154,8 +154,8 @@ class WebServerBase:
 
 				t = time.time()
 
-				if(self._ActiveClient["isAdmin"] == False and t - self._ActiveClient["lastPing"] > 2):
-					print(f"Active client {self._ActiveClient["Name"]} didn't ping the last two second. Resetting.")
+				if(self._ActiveClient != None and self._ActiveClient["isAdmin"] == False and t - self._ActiveClient["lastPing"] > 2):
+					print(f"Active client {self._ActiveClient['Name']} didn't ping the last two second. Resetting.")
 					self._labo.Reset()
 					self._ActiveClient == self._defaultClient
 					self._ClientAreDirty = True
