@@ -15,7 +15,13 @@ class WebServerBase:
 		Ip : str
 		Name : str
 		lastPing : float
-		isAdmin : bool = False
+		isAdmin : bool
+
+		def __init__(self, Ip : str, Name : str, lastPing : float, isAdmin : bool = False):
+			self["Ip"] = Ip
+			self["Name"] = Name
+			self["lastPing"] = lastPing
+			self["isAdmin"] = isAdmin
 
 	def __init__(self, labo: LaboBase):
 		self._labo = labo
@@ -81,7 +87,7 @@ class WebServerBase:
 			self._ClientList[i]["lastPing"] = time.time()
 		
 		else:
-			self._ClientList.append({"Ip": ip, "Name": name, "lastPing": time.time()})
+			self._ClientList.append(WebServerBase.Client(Name=name, Ip=ip, lastPing=time.time()))
 
 		self._ClientAreDirty = True
 
